@@ -1,4 +1,4 @@
-public class Veiculo
+public abstract class Veiculo
 {
     private long numChassi;
     private String marca;
