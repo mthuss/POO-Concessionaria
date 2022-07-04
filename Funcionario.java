@@ -1,4 +1,4 @@
-public class Funcionario
+public abstract class Funcionario
 {
     private long RG;
     private String nome;
