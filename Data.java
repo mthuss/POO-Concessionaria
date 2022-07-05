@@ -6,7 +6,8 @@ public class Data
         this.dia = dia;
         this.mes = mes;
         this.ano = ano;
-    
+    }
+	
     /*Utilização da data: retorna apenas true ou false e um aviso de data inválida, caso false
     quando usamos a data, forçamos um do while que só seta a data quando é retornado true
     Exemplo da utilização da data:
