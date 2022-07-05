@@ -5,10 +5,7 @@ public class Data
     public Data(int dia, int mes, int ano) {
         this.dia = dia;
         this.mes = mes;
-        this.ano = ano;public class Data {
-	private int dia;
-	private int mes;
-	private int ano;
+        this.ano = ano;
     
     /*Utilização da data: retorna apenas true ou false e um aviso de data inválida, caso false
     quando usamos a data, forçamos um do while que só seta a data quando é retornado true
