@@ -1,5 +1,5 @@
 public class Gerente extends Funcionario
-{ //Teste 😈
+{
     private int anosExp;
 
     public Gerente(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, int anosExp) {
