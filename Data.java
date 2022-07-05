@@ -1,13 +1,9 @@
+package javaapplication1;
 public class Data
 {
     private int dia, mes, ano;
 
-    public Data(int dia, int mes, int ano) {
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
-    }
-	
+    
     /*Utilização da data: retorna apenas true ou false e um aviso de data inválida, caso false
     quando usamos a data, forçamos um do while que só seta a data quando é retornado true
     Exemplo da utilização da data:
@@ -20,14 +16,15 @@ public class Data
           novaData.setDia(dia);
     */
 	// =============== Métodos da Classe
-  public static boolean validarDia(int dia) {
-    if (dia >= 1 && dia <= 31) {
-      return true;
-    } else {
-      System.out.println("\n==!== AVISO: Insira um dia válido!\n");
-      return false;
+  
+    public static boolean validarDia(int dia) {
+        if (dia >= 1 && dia <= 31) {
+            return true;
+        } else {
+            System.out.println("\n==!== AVISO: Insira um dia válido!\n");
+            return false;
+        }
     }
-  }
 
   public static boolean validarMes(int mes) {
     if (mes >= 1 && mes <= 12) {
@@ -53,15 +50,16 @@ public class Data
 	}
 
 	// =============== Construtores
-	public Data() {
-		this(1, 1, 2022);
-	}
-
-	public Data(int dia, int mes, int ano) {
+        public Data(int dia, int mes, int ano) {
 		this.setDia(dia);
 		this.setMes(mes);
 		this.setAno(ano);
 	}
+        
+	public Data() {
+		this(0, 0, 0);
+	}
+
 
 	// =============== Getters e Setters
 
@@ -101,29 +99,4 @@ public class Data
 		}
 	}
 }
-    }
 
-    public int getDia() {
-        return dia;
-    }
-
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-}
