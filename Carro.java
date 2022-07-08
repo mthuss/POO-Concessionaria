@@ -49,7 +49,7 @@ public class Carro extends Veiculo {
     }
 
     public Carro(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-            float peso, boolean status, int potencia, int numCilindros, int numeroOcupantes, String tipo,
+            float peso, String status, int potencia, int numCilindros, int numeroOcupantes, String tipo,
             int[] dimensoes) {
         super(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status);
         this.potencia = potencia;
