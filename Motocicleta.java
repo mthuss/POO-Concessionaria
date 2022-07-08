@@ -1,4 +1,3 @@
-package javaapplication1;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -7,6 +6,7 @@ public class Motocicleta extends Veiculo
 {
     private int cilindradas;
     private String tipo;
+    int moto;
     Scanner input = new Scanner(System.in);
     ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
     //Parte de arquivos 
@@ -15,14 +15,14 @@ public class Motocicleta extends Veiculo
  
     //Construtor
     public Motocicleta(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-            float peso, boolean status, int cilindradas, String tipo) {
+            float peso, String status, int cilindradas, String tipo) {
         super(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status);
         this.cilindradas = cilindradas;
         this.tipo = tipo;
     }
     
     public Motocicleta(){
-        this(0, "", "", 0, 0, "", 0, false, 0, "");
+        this(0, "", "", 0, 0, "", 0, "", 0, "");
     }
     
     //Getters e setters    
@@ -65,6 +65,10 @@ public class Motocicleta extends Veiculo
                 break;
                 case 3:
                     alterarMotocicletas();
+                break;
+                case 4:
+                    removerMotocicleta();
+                break;
                 case 5:
                 break;               
                 default: 
@@ -83,8 +87,32 @@ public class Motocicleta extends Veiculo
         novaMotocicleta.setCilindradas(input.nextInt());
         input.nextLine();
         
-        System.out.println("Digite o tipo: ");
-        novaMotocicleta.setTipo(input.nextLine());       
+        do{
+            System.out.println("Qual o tipo da motocicleta?");
+            System.out.println("1 - Trail");
+            System.out.println("2 - Street");
+            System.out.println("3 - Esportiva");
+            System.out.println("4 - Custom");        
+            switch(input.nextInt()){
+                case 1:
+                    novaMotocicleta.setTipo("Trail");
+                break;       
+                case 2:
+                    novaMotocicleta.setTipo("Street");
+                break;
+                case 3:
+                    novaMotocicleta.setTipo("Esportiva");
+                break;
+                case 4:
+                    novaMotocicleta.setTipo("Custom");
+                break;
+                default:
+                    System.out.println("Digite uma opção válida!");
+                break;
+            }
+        } while(input.nextInt() < 1 || input.nextInt() > 4);
+        
+             
         
         System.out.println("Digite o número do chassi: ");
         novaMotocicleta.setNumChassi(input.nextInt());
@@ -117,9 +145,11 @@ public class Motocicleta extends Veiculo
         input.nextLine();
         
         System.out.println("Digite o status: ");
-        novaMotocicleta.setStatus(input.nextBoolean());
-        
-        
+        if(!(input.nextBoolean()))
+            novaMotocicleta.setStatus("A venda");
+        else
+            novaMotocicleta.setStatus("Vendido");
+       
         listaMotocicletas.add(novaMotocicleta);
         escreverMotosNoArquivo();  
     }
@@ -167,9 +197,7 @@ public class Motocicleta extends Veiculo
         }
     }
     
-    public void alterarMotocicletas(){
-        Scanner input = new Scanner(System.in);
-        int moto;
+    public void alterarMotocicletas(){                
         int opMenu;
         int ano;
         visualizarMotocicletas();
@@ -181,17 +209,17 @@ public class Motocicleta extends Veiculo
         else{
             do {                                     
                 System.out.println("\nQual dado deseja alterar?");
-                System.out.println("(1) Alterar cilindradas");
-                System.out.println("(2) Alterar tipo");
-                System.out.println("(3) Alterar número do chassi");
-                System.out.println("(4) Alterar marca");
-                System.out.println("(5) Alterar modelo");
-                System.out.println("(6) Alterar ano");
-                System.out.println("(7) Alterar kilometragem");
-                System.out.println("(8) Alterar tipo de combustível");
-                System.out.println("(9) Alterar peso");
-                System.out.println("(10) Alterar status");
-                System.out.println("(11) Sair");
+                System.out.println("1 - Alterar cilindradas");
+                System.out.println("2 - Alterar tipo");
+                System.out.println("3 - Alterar número do chassi");
+                System.out.println("4 - Alterar marca");
+                System.out.println("5 - Alterar modelo");
+                System.out.println("6 - Alterar ano");
+                System.out.println("7 - Alterar kilometragem");
+                System.out.println("8 - Alterar tipo de combustível");
+                System.out.println("9 - Alterar peso");
+                System.out.println("10 - Alterar status");
+                System.out.println("11 - Sair");
                 System.out.println("\nDigite a opção desejada: ");
                 opMenu = input.nextInt();
                 input.nextLine();
@@ -204,8 +232,33 @@ public class Motocicleta extends Veiculo
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                     case 2:
-                        System.out.print("\nDigite o novo tipo: ");
-                        listaMotocicletas.get(moto).setTipo(input.nextLine());    
+                    do{
+                        System.out.print("\nDigite o novo tipo: ");                        
+                        System.out.println("1 - Trail");
+                        System.out.println("2 - Street");
+                        System.out.println("3 - Esportiva");
+                        System.out.println("4 - Custom");   
+                        switch(input.nextInt()){
+                            case 1:
+                                listaMotocicletas.get(moto).setTipo("Trail");
+                            break;       
+                            case 2:
+                                listaMotocicletas.get(moto).setTipo("Street");
+                            break;
+                            case 3:
+                                listaMotocicletas.get(moto).setTipo("Esportiva");
+                            break;
+                            case 4:
+                                listaMotocicletas.get(moto).setTipo("Custom");
+                            break;
+                            default:
+                                System.out.println("Digite uma opção válida!");
+                            break;
+                        }
+                            
+                    } while(input.nextInt() < 1 || input.nextInt() > 4);   
+                        
+                           
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                     case 3:
@@ -251,9 +304,15 @@ public class Motocicleta extends Veiculo
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                     case 10:
-                        System.out.print("\nDigite o novo status: ");
-                        listaMotocicletas.get(moto).setStatus(input.nextBoolean());    
+                        System.out.print("\nDigite o novo status: ");                        
+                        if(!(input.nextBoolean()))
+                            listaMotocicletas.get(moto).setStatus("A venda");    
+                        else
+                            listaMotocicletas.get(moto).setStatus("Vendido");    
+                        
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 11:
                     break;
                     default:
                         System.out.println("\nDigite uma opção válida!\n");
@@ -261,8 +320,7 @@ public class Motocicleta extends Veiculo
                 }
             } while(opMenu != 11);
         }
-
-        visualizarMotocicletas();
+        
         arq.delete();
         escreverMotosNoArquivo();
        
@@ -283,4 +341,23 @@ public class Motocicleta extends Veiculo
         }
         */    
     }   
+
+    public void removerMotocicleta(){
+        visualizarMotocicletas();
+        System.out.println("Qual motocicleta deseja remover?");
+        moto = (input.nextInt() - 1);		
+		input.nextLine();		
+
+		if (listaMotocicletas.size() == 0) {
+			System.out.println("\nNão há motocicletas cadastradas.");            
+		}
+        else{
+            listaMotocicletas.remove(moto);
+		    System.out.println("\n\nMotocicleta removida com sucesso!");
+        }
+
+        arq.delete();
+        escreverMotosNoArquivo();
+
+    }
 }
