@@ -7,10 +7,10 @@ public abstract class Veiculo
     private float kilometragem;
     private String tipoCombustivel;
     private float peso;
-    private boolean status = false; //true: vendido / false: a venda
+    private String status; //true: vendido / false: a venda
 
     public Veiculo(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-    float peso, boolean status) {
+    float peso, String status) {
         this.numChassi = numChassi;
         this.marca = marca;
         this.modelo = modelo;
@@ -62,10 +62,10 @@ public abstract class Veiculo
     public void setPeso(float peso) {
         this.peso = peso;
     }
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
