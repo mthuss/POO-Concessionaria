@@ -7,7 +7,9 @@ public class Data
         this.mes = mes;
         this.ano = ano;
     }
-
+    public String criarData() {
+		return String.format("%02d", this.dia) + "/" + String.format("%02d", this.mes) + "/" + this.ano;
+	}
     public int getDia() {
         return dia;
     }
