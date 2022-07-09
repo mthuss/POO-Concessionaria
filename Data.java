@@ -1,4 +1,3 @@
-package javaapplication1;
 public class Data
 {
     private int dia, mes, ano;
