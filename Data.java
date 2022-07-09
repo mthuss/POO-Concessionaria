@@ -61,7 +61,6 @@ public class Data
 	}
 
 
-Teste2
     public int getAno() {
         return ano;
     }
