@@ -1,4 +1,4 @@
-package javaapplication1;
+//Comentario de teste
 public class Data
 {
     private int dia, mes, ano;
@@ -61,6 +61,11 @@ public class Data
 	}
 
 
+    public int getAno() {
+        return ano;
+    }
+	//testeando um negocio só
+  
 	// =============== Getters e Setters
 
 	public int getDia() {
@@ -99,4 +104,5 @@ public class Data
 		}
 	}
 }
+
 
