@@ -58,4 +58,14 @@ public class Carro extends Veiculo {
         this.dimensoes = dimensoes;
     }
 
+    public Carro()  { //builder vazio só porque sim
+        super(0L, "", "", 0000, 0.0f, "", 0.0f, false);
+        this.potencia = 0;
+        this.numCilindros = 0;
+        this.numeroOcupantes = 0;
+        this.tipo = -1;
+        this.dimensoes[0] = 0;
+        this.dimensoes[1] = 0;
+        this.dimensoes[2] = 0;
+    }
 }

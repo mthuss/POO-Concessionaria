@@ -17,45 +17,70 @@ public class Sistema {
             Scanner sc = new Scanner(System.in);
             
             System.out.println("Digite os dados referentes ao carro:");
-            System.out.print("Numero do chassi: ");
+            System.out.print("Numero do chassi: "); //Long
+            long auxChassi = sc.nextLong();
 
-            System.out.print("Marca: ");
+            System.out.print("Marca: "); //String
+            String auxMarca = sc.nextLine();
 
-            System.out.print("Modelo: ");
+            System.out.print("Modelo: "); //String
+            String auxModelo = sc.nextLine();
+            
+            System.out.print("Ano de fabricação: "); //int
+            int auxAno = sc.nextInt();
+            sc.nextLine();
 
-            System.out.print("Ano de fabricação: ");
+            System.out.print("Kilometragem: "); //float
+            float auxKilo = sc.nextFloat();
+            sc.nextLine();
 
-            System.out.print("Kilometragem: ");
+            System.out.print("Tipo de combustivel: "); //String
+            String auxCombustivel = sc.nextLine();
 
-            System.out.print("Tipo de combustivel: ");
+            System.out.print("Peso em kilogramas: "); //float
+            float auxPeso = sc.nextFloat();
 
-            System.out.print("Peso em kilogramas: ");
-
-            //esse seria o status mas será falso por padrão
+            //aqui seria o status mas será falso por padrão
 
             System.out.print("Potência em cavalos: "); //em cavalos?
+            int auxPotencia = sc.nextInt();
 
             System.out.print("Número de cilindros: ");
+            int auxCilindros = sc.nextInt();
 
             System.out.print("Numero de assentos: ");
+            int auxAssentos = sc.nextInt();
 
             int auxTipo; //para o tipo de carro
             do {
+                System.out.println("\tTipo de carro: ");
                 System.out.println("1-utilitário\n2-pickup\n3-sedan\n4-hatch\n5-esportivo");
-                System.out.print("Tipo de carro: ");
+                System.out.print("Comando: ");
                 auxTipo = sc.nextInt();
 
                 if (auxTipo < 1 || auxTipo > 5)
                     System.out.println("\tValor invalido");
             } while(auxTipo < 1 || auxTipo > 5);
 
-            System.out.println("Dimensões:");
+            int auxDimensoes [] = new int[3];
+            System.out.println("\tDimensões:");
             System.out.print("Altura: ");
+            auxDimensoes[0] = sc.nextInt();
 
             System.out.print("Largura ");
+            auxDimensoes[1] = sc.nextInt();
 
             System.out.print("Comprimento: ");
+            auxDimensoes[2] = sc.nextInt();
 
+            //caso queira colocar em um arrayList já tem o construtor
+            Carro car = new Carro(auxChassi, auxMarca, auxModelo, auxAno, auxKilo, auxCombustivel, 
+            auxPeso, false, auxPotencia, auxCilindros, auxAssentos, auxTipo, auxDimensoes);
+
+            escritor.write(car.getNumChassi() + " " + car.getMarca() + " " + car.getModelo() + " " + car.getAno() +
+            " " + car.getKilometragem() + " " + car.getTipoCombustivel() + " " + car.getPeso() + " " + car.getStatus() + 
+            " " + car.getPotencia() + " " + car.getNumCilindros() + " " + car.getNumeroOcupantes() + " " + car.getTipo() +
+            " " + car.getDimensoes());
 
             escritor.close();
             sc.close();
@@ -75,7 +100,7 @@ public class Sistema {
 
 
         do  {
-            System.out.println("Menu Gerente: ");
+            System.out.println("\nMenu Gerente: ");
             System.out.println("\n\t--Cadastros:--");
             System.out.println("1 - Cadastrar Vendedor");
             System.out.println("2 - Cadastrar Carro");
