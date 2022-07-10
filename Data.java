@@ -2,20 +2,6 @@
 public class Data
 {
     private int dia, mes, ano;
-
-    
-    /*Utilização da data: retorna apenas true ou false e um aviso de data inválida, caso false
-    quando usamos a data, forçamos um do while que só seta a data quando é retornado true
-    Exemplo da utilização da data:
-     do {
-            System.out.print("\t--> Dia: ");
-		        dia = input.nextInt();
-		        input.nextLine();
-          } while(Data.validarDia(dia));
-    
-          novaData.setDia(dia);
-    */
-	// =============== Métodos da Classe
   
     public static boolean validarDia(int dia) {
         if (dia >= 1 && dia <= 31) {
@@ -59,12 +45,6 @@ public class Data
 	public Data() {
 		this(0, 0, 0);
 	}
-
-
-    public int getAno() {
-        return ano;
-    }
-	//testeando um negocio só
   
 	// =============== Getters e Setters
 

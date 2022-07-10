@@ -26,43 +26,50 @@ public abstract class Veiculo
     public void setNumChassi(long numChassi) {
         this.numChassi = numChassi;
     }
+
     public String getMarca() {
         return marca;
     }
     public void setMarca(String marca) {
         this.marca = marca;
     }
+
     public String getModelo() {
         return modelo;
     }
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
+
     public int getAno() {
         return ano;
     }
     public void setAno(int ano) {
         this.ano = ano;
     }
+
     public float getKilometragem() {
         return kilometragem;
     }
     public void setKilometragem(float kilometragem) {
         this.kilometragem = kilometragem;
     }
+
     public String getTipoCombustivel() {
         return tipoCombustivel;
     }
     public void setTipoCombustivel(String tipoCombustivel) {
         this.tipoCombustivel = tipoCombustivel;
     }
+
     public float getPeso() {
         return peso;
     }
     public void setPeso(float peso) {
         this.peso = peso;
     }
-    public boolean isStatus() {
+
+    public boolean getStatus() {
         return status;
     }
     public void setStatus(boolean status) {

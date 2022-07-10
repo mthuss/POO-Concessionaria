@@ -14,51 +14,76 @@ public class Sistema {
         try {
             File arq = new File("registroCarros.txt");
             FileWriter escritor = new FileWriter(arq, false); //False pra não sobrescrever
-            Scanner sc = new Scanner(System.in);
+            Scanner scan = new Scanner(System.in);
             
             System.out.println("Digite os dados referentes ao carro:");
-            System.out.print("Numero do chassi: ");
+            System.out.print("Numero do chassi: "); //Long
+            long auxChassi = scan.nextLong();
 
-            System.out.print("Marca: ");
+            System.out.print("Marca: "); //String
+            String auxMarca = scan.nextLine();
 
-            System.out.print("Modelo: ");
+            System.out.print("Modelo: "); //String
+            String auxModelo = scan.nextLine();
+            
+            System.out.print("Ano de fabricação: "); //int
+            int auxAno = scan.nextInt();
+            scan.nextLine();
 
-            System.out.print("Ano de fabricação: ");
+            System.out.print("Kilometragem: "); //float
+            float auxKilo = scan.nextFloat();
+            scan.nextLine();
 
-            System.out.print("Kilometragem: ");
+            System.out.print("Tipo de combustivel: "); //String
+            String auxCombustivel = scan.nextLine();
 
-            System.out.print("Tipo de combustivel: ");
+            System.out.print("Peso em kilogramas: "); //float
+            float auxPeso = scan.nextFloat();
 
-            System.out.print("Peso em kilogramas: ");
-
-            //esse seria o status mas será falso por padrão
+            //aqui seria o status mas será falso por padrão
 
             System.out.print("Potência em cavalos: "); //em cavalos?
+            int auxPotencia = scan.nextInt();
 
             System.out.print("Número de cilindros: ");
+            int auxCilindros = scan.nextInt();
 
             System.out.print("Numero de assentos: ");
+            int auxAssentos = scan.nextInt();
 
             int auxTipo; //para o tipo de carro
             do {
+                System.out.println("\tTipo de carro: ");
                 System.out.println("1-utilitário\n2-pickup\n3-sedan\n4-hatch\n5-esportivo");
-                System.out.print("Tipo de carro: ");
-                auxTipo = sc.nextInt();
+                System.out.print("Comando: ");
+                auxTipo = scan.nextInt();
 
                 if (auxTipo < 1 || auxTipo > 5)
                     System.out.println("\tValor invalido");
             } while(auxTipo < 1 || auxTipo > 5);
 
-            System.out.println("Dimensões:");
+            int auxDimensoes [] = new int[3];
+            System.out.println("\tDimensões:");
             System.out.print("Altura: ");
+            auxDimensoes[0] = scan.nextInt();
 
             System.out.print("Largura ");
+            auxDimensoes[1] = scan.nextInt();
 
             System.out.print("Comprimento: ");
+            auxDimensoes[2] = scan.nextInt();
 
+            //caso queira colocar em um arrayList já tem o construtor
+            Carro car = new Carro(auxChassi, auxMarca, auxModelo, auxAno, auxKilo, auxCombustivel, 
+            auxPeso, false, auxPotencia, auxCilindros, auxAssentos, auxTipo, auxDimensoes);
+
+            escritor.write(car.getNumChassi() + " " + car.getMarca() + " " + car.getModelo() + " " + car.getAno() +
+            " " + car.getKilometragem() + " " + car.getTipoCombustivel() + " " + car.getPeso() + " " + car.getStatus() + 
+            " " + car.getPotencia() + " " + car.getNumCilindros() + " " + car.getNumeroOcupantes() + " " + car.getTipo() +
+            " " + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
 
             escritor.close();
-            sc.close();
+            scan.close();
         }
         catch(IOException e)  {
             System.out.println("Erro: " + e);
@@ -75,7 +100,7 @@ public class Sistema {
 
 
         do  {
-            System.out.println("Menu Gerente: ");
+            System.out.println("\nMenu Gerente: ");
             System.out.println("\n\t--Cadastros:--");
             System.out.println("1 - Cadastrar Vendedor");
             System.out.println("2 - Cadastrar Carro");
@@ -97,6 +122,7 @@ public class Sistema {
 
             System.out.print("\nComando: ");
             op_adm = sc.nextInt();
+            sc.nextLine();
 
             switch(op_adm)  {
                 case 1: break;
