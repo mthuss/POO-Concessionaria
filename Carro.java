@@ -42,6 +42,15 @@ public class Carro extends Veiculo {
     public int[] getDimensoes() {
         return dimensoes;
     }
+    public int getAltura() {
+        return dimensoes[0];
+    }
+    public int getLargura() {
+        return dimensoes[1];
+    }
+    public int getComprimento() {
+        return dimensoes[2];
+    }
 
     public void setDimensoes(int[] dimensoes) {
         this.dimensoes = dimensoes;

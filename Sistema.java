@@ -122,6 +122,7 @@ public class Sistema {
 
             System.out.print("\nComando: ");
             op_adm = sc.nextInt();
+            sc.nextLine();
 
             switch(op_adm)  {
                 case 1: break;
