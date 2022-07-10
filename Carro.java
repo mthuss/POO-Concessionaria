@@ -1,9 +1,8 @@
 public class Carro extends Veiculo {
     private int potencia; // em CAVALOS (?)
-
     private int numCilindros;
     private int numeroOcupantes;
-    private String tipo;
+    private int tipo;
     private int dimensoes[] = new int[3]; // AxLxC
 
     // getters e setters
@@ -32,11 +31,11 @@ public class Carro extends Veiculo {
         this.numeroOcupantes = numeroOcupantes;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(int tipo) {
         this.tipo = tipo;
     }
 
@@ -49,7 +48,7 @@ public class Carro extends Veiculo {
     }
 
     public Carro(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-            float peso, boolean status, int potencia, int numCilindros, int numeroOcupantes, String tipo,
+            float peso, boolean status, int potencia, int numCilindros, int numeroOcupantes, int tipo,
             int[] dimensoes) {
         super(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status);
         this.potencia = potencia;
