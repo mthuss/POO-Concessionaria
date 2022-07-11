@@ -1,7 +1,12 @@
 import java.util.Scanner;
 import java.io.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Sistema {
+
+	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
+
     public static void menuUsuario()
     {
         System.out.println("Menu Usuario: ");
@@ -164,5 +169,37 @@ public class Sistema {
         } while (op_adm != 0);
     
     //sc.close();
+    }
+
+    public static void addGerente(Gerente novoGerente)
+    {
+		gerentes.put(novoGerente.getLogin(),novoGerente);
+    }
+    public static Map<String,Gerente> getMapGerentes()
+    {
+        return gerentes;
+    }
+    public static void gerentesWriteFile()
+    {
+        {
+            try
+            {
+                File arquivo = new File("gerentes");
+                FileWriter writer = new FileWriter(arquivo,false);
+                for(Gerente g : gerentes.values())
+                {
+                    writer.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha());
+                }
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println("Erro: " + e);
+            }
+        }
+    }
+    public static void loadFiles()
+    {
+        //Fazer os negocio de ler arquivo e botar tudo nas Coleções aqui
     }
 }

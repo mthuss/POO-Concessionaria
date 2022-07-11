@@ -12,7 +12,7 @@ public class Gerente extends Funcionario
         String nome = sc.nextLine();
         System.out.print("Digite seu RG: ");
         long RG = sc.nextLong();
-        System.out.print("Digite sua data de nascimento: ");
+        System.out.println("Digite sua data de nascimento: ");
         int dia, mes, ano;
         System.out.print("Dia: ");
         dia = sc.nextInt();
@@ -23,7 +23,7 @@ public class Gerente extends Funcionario
         Data dataNasc = new Data(dia, mes, ano);
 
 
-        System.out.print("Digite sua data de admissão: ");
+        System.out.println("Digite sua data de admissão: ");
         System.out.print("Dia: ");
         dia = sc.nextInt();
         System.out.print("Mês: ");

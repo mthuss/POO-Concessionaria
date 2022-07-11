@@ -7,9 +7,10 @@ public class Main
 {
 	public static void main(String args[])
 	{
-		Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
 														//Aí fazer uma função lá que adiciona um objeto a esse HashMap
 													   //e chamar nessa classe com Sistema.adicionarGerente(gerente); ou algo do tipo.
+		Sistema.loadFiles();
+
 		Scanner sc = new Scanner(System.in);
 
 		int opt;
@@ -31,7 +32,7 @@ public class Main
 					System.out.println("Digite seu login: ");
 					sc.nextLine();
 					String login = sc.nextLine();
-					Gerente pesquisa = gerentes.get(login);
+					Gerente pesquisa = Sistema.getMapGerentes().get(login);
 					if(pesquisa != null)
 					{
 						String auxSenha;
@@ -50,8 +51,10 @@ public class Main
 						{
 							Gerente novoGerente = new Gerente();
 							novoGerente.cadastrar(login);
-							gerentes.put(novoGerente.getLogin(),novoGerente);
-							if(gerentes.get(novoGerente.getLogin()) != null) //Verifica se o gerente foi adicionado com sucesso
+							System.out.println(novoGerente.getDataAdmissao().criarData());
+							Sistema.addGerente(novoGerente);
+							Sistema.gerentesWriteFile();
+							if(Sistema.getMapGerentes().get(novoGerente.getLogin()) != null) //Verifica se o gerente foi adicionado com sucesso
 								System.out.println("Cadastrado com sucesso! Tente fazer login novamente");
 							else System.out.println("Algo deu errado!!");
 						}

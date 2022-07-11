@@ -36,9 +36,12 @@ public class Data
 
 	// =============== Construtores
         public Data(int dia, int mes, int ano) {
-		this.setDia(dia);
-		this.setMes(mes);
-		this.setAno(ano);
+//		this.setDia(dia);
+//		this.setMes(mes);
+//		this.setAno(ano);
+		this.dia = dia;
+		this.mes = mes;
+		this.ano = ano;
 	}
         
 	public Data() {
