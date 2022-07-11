@@ -56,7 +56,7 @@ public class Gerente extends Funcionario
         this.setAnosExp(anosExp);
         this.setLogin(login);
         this.setSenha(senha);
-        
+        //sc.close();
     }
     public void cadastrar(String login) //Versao da funcao de cadastrar que recebe login como parametro (ver case 1 na Main.java para mais detalhes)
     {
@@ -108,6 +108,7 @@ public class Gerente extends Funcionario
         this.setAnosExp(anosExp);
         this.setLogin(login);
         this.setSenha(senha);
+        //sc.close();
     }
 
     public void imprimirDados()

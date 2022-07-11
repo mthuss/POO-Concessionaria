@@ -96,7 +96,7 @@ public class Sistema {
     public static void menuADM() //Lembrar da senha: Gerente123
     {
         Scanner sc = new Scanner(System.in);
-        int op_adm = 0;
+        int op_adm;
 
 
         do  {
@@ -163,6 +163,6 @@ public class Sistema {
 
         } while (op_adm != 0);
     
-    sc.close();
+    //sc.close();
     }
 }

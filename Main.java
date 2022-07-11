@@ -65,6 +65,6 @@ public class Main
 			}
 		}while(opt != 3);
 
-		sc.close();
+//		sc.close();
 	}
 }
