@@ -188,7 +188,7 @@ public class Sistema {
                 FileWriter writer = new FileWriter(arquivo,false);
                 for(Gerente g : gerentes.values())
                 {
-                    writer.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha());
+                    writer.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
                 }
                 writer.close();
             }
@@ -201,5 +201,28 @@ public class Sistema {
     public static void loadFiles()
     {
         //Fazer os negocio de ler arquivo e botar tudo nas Coleções aqui
+        //Ler gerentes
+        try
+        {
+        FileReader arquivo = new FileReader("gerentes");
+        BufferedReader reader = new BufferedReader(arquivo);
+        while(reader.ready())
+        {
+            String dados[] = reader.readLine().split(";");
+            String DMA[] = dados[2].split("/");
+            Data dataNasc = new Data(Integer.parseInt(DMA[0]),Integer.parseInt(DMA[1]),Integer.parseInt(DMA[2]));
+            String DMA2[] = dados[3].split("/");
+            Data dataAdmissao = new Data(Integer.parseInt(DMA2[0]),Integer.parseInt(DMA2[1]),Integer.parseInt(DMA2[2]));
+            long RG = Long.parseLong(dados[0]);
+            float salario = Float.parseFloat(dados[4]);
+            int anosExp = Integer.parseInt(dados[5]);
+            Gerente gerente = new Gerente(RG,dados[1],dataNasc,dataAdmissao,salario,anosExp,dados[6],dados[7]);
+            gerentes.put(gerente.getLogin(),gerente);
+        }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro: " + e);
+        }
     }
 }
