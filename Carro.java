@@ -1,9 +1,8 @@
 public class Carro extends Veiculo {
     private int potencia; // em CAVALOS (?)
-
     private int numCilindros;
     private int numeroOcupantes;
-    private String tipo;
+    private int tipo;
     private int dimensoes[] = new int[3]; // AxLxC
 
     // getters e setters
@@ -32,16 +31,25 @@ public class Carro extends Veiculo {
         this.numeroOcupantes = numeroOcupantes;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(int tipo) {
         this.tipo = tipo;
     }
 
     public int[] getDimensoes() {
         return dimensoes;
+    }
+    public int getAltura() {
+        return dimensoes[0];
+    }
+    public int getLargura() {
+        return dimensoes[1];
+    }
+    public int getComprimento() {
+        return dimensoes[2];
     }
 
     public void setDimensoes(int[] dimensoes) {
@@ -49,7 +57,7 @@ public class Carro extends Veiculo {
     }
 
     public Carro(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-            float peso, boolean status, int potencia, int numCilindros, int numeroOcupantes, String tipo,
+            float peso, boolean status, int potencia, int numCilindros, int numeroOcupantes, int tipo,
             int[] dimensoes) {
         super(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status);
         this.potencia = potencia;
@@ -59,4 +67,14 @@ public class Carro extends Veiculo {
         this.dimensoes = dimensoes;
     }
 
+    public Carro()  { //builder vazio só porque sim
+        super(0L, "", "", 0000, 0.0f, "", 0.0f, false);
+        this.potencia = 0;
+        this.numCilindros = 0;
+        this.numeroOcupantes = 0;
+        this.tipo = -1;
+        this.dimensoes[0] = 0;
+        this.dimensoes[1] = 0;
+        this.dimensoes[2] = 0;
+    }
 }
