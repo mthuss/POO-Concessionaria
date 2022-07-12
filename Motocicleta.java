@@ -6,7 +6,7 @@ public class Motocicleta extends Veiculo
 {
     private int cilindradas;
     private String tipo;
-    int moto;
+    
     Scanner input = new Scanner(System.in);
     ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
     //Parte de arquivos 
