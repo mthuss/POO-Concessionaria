@@ -2,10 +2,12 @@ import java.util.Scanner;
 import java.io.*;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Sistema {
 
 	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
+    public static ArrayList <Carro> carros = new ArrayList<>();
 
     public static void menuUsuario()
     {
@@ -15,10 +17,7 @@ public class Sistema {
     //------------------------------------------
     //Funções do Menu ADM
 
-    static void cadastrarCarro()   {    //Falta eu passar os valores to cansado
-        try {
-            File arq = new File("registroCarros.txt");
-            FileWriter escritor = new FileWriter(arq, false); //False pra não sobrescrever
+    static void cadastrarCarro()   {
             Scanner scan = new Scanner(System.in);
             
             System.out.println("Digite os dados referentes ao carro:");
@@ -26,6 +25,7 @@ public class Sistema {
             long auxChassi = scan.nextLong();
 
             System.out.print("Marca: "); //String
+            scan.nextLine();
             String auxMarca = scan.nextLine();
 
             System.out.print("Modelo: "); //String
@@ -78,23 +78,19 @@ public class Sistema {
             System.out.print("Comprimento: ");
             auxDimensoes[2] = scan.nextInt();
 
-            //caso queira colocar em um arrayList já tem o construtor
             Carro car = new Carro(auxChassi, auxMarca, auxModelo, auxAno, auxKilo, auxCombustivel, 
             auxPeso, false, auxPotencia, auxCilindros, auxAssentos, auxTipo, auxDimensoes);
 
+            carros.add(car);
+            carrosWriteFile();
+/*
             escritor.write(car.getNumChassi() + " " + car.getMarca() + " " + car.getModelo() + " " + car.getAno() +
             " " + car.getKilometragem() + " " + car.getTipoCombustivel() + " " + car.getPeso() + " " + car.getStatus() + 
             " " + car.getPotencia() + " " + car.getNumCilindros() + " " + car.getNumeroOcupantes() + " " + car.getTipo() +
             " " + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
-
-            escritor.close();
-            scan.close();
-        }
-        catch(IOException e)  {
-            System.out.println("Erro: " + e);
-        }
+*/
+     //       scan.close();
     }
-
 
     //------------------------------------------
     //Menu ADM    
@@ -117,9 +113,9 @@ public class Sistema {
             System.out.println("6 - Alterar dados do Motocicleta");
         
             System.out.println("\n\t--Exclusão:--");
-            System.out.println("7 - Alterar dados do Vendedor");
-            System.out.println("8 - Alterar dados do Carro");
-            System.out.println("9 - Alterar dados do Motocicleta");
+            System.out.println("7 - Remover dados do Vendedor");
+            System.out.println("8 - Remover dados do Carro");
+            System.out.println("9 - Remover dados do Motocicleta");
 
             System.out.println("10 - Testar meu arquivo 👍");
 
@@ -146,7 +142,7 @@ public class Sistema {
             
                 case 10:
                     try {
-                        FileReader arq = new FileReader("registroCarros.txt"); //Ler o txt dos carros
+                        FileReader arq = new FileReader("registroCarros"); //Ler o txt dos carros
                         BufferedReader lerArq = new BufferedReader(arq);
                         String line;
 
@@ -184,7 +180,7 @@ public class Sistema {
         {
             try
             {
-                File arquivo = new File("gerentes");
+                File arquivo = new File("registroGerentes");
                 FileWriter writer = new FileWriter(arquivo,false);
                 for(Gerente g : gerentes.values())
                 {
@@ -198,13 +194,34 @@ public class Sistema {
             }
         }
     }
+
+    public static void carrosWriteFile()
+    {
+        try {
+            File arq = new File("registroCarros");
+            FileWriter escritor = new FileWriter(arq);
+
+            for(Carro car : carros)
+            escritor.write(car.getNumChassi() + ";" + car.getMarca() + ";" + car.getModelo() + ";" + car.getAno() +
+                ";" + car.getKilometragem() + ";" + car.getTipoCombustivel() + ";" + car.getPeso() + ";" + car.getStatus() + 
+                ";" + car.getPotencia() + ";" + car.getNumCilindros() + ";" + car.getNumeroOcupantes() + ";" + car.getTipo() +
+                ";" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
+
+           escritor.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
+
+    }
+
     public static void loadFiles()
     {
         //Fazer os negocio de ler arquivo e botar tudo nas Coleções aqui
         //Ler gerentes
         try
         {
-            FileReader arquivo = new FileReader("gerentes");
+            FileReader arquivo = new FileReader("registroGerentes");
             BufferedReader reader = new BufferedReader(arquivo);
             while(reader.ready())
             {
@@ -219,9 +236,42 @@ public class Sistema {
                 Gerente gerente = new Gerente(RG,dados[1],dataNasc,dataAdmissao,salario,anosExp,dados[6],dados[7]);
                 gerentes.put(gerente.getLogin(),gerente);
             }
+            reader.close();
         }
         catch(IOException e)
         {
+            System.out.println("Erro: " + e);
+        }
+
+        try {
+
+            FileReader arquivo = new FileReader("registroCarros");
+            BufferedReader reader = new BufferedReader(arquivo);
+            while(reader.ready())
+            {
+                String dados[] = reader.readLine().split(";");
+                long numChassi = Long.parseLong(dados[0]);
+                String marca = dados[1];
+                String modelo = dados[2];
+                int ano = Integer.parseInt(dados[3]);
+                float kilometragem = Float.parseFloat(dados[4]);
+                String tipoCombustivel = dados[5];
+                float peso = Float.parseFloat(dados[6]);
+                boolean status = Boolean.parseBoolean(dados[7]);
+                int potencia = Integer.parseInt(dados[8]);
+                int numCilindros = Integer.parseInt(dados[9]);
+                int numeroOcupantes = Integer.parseInt(dados[10]);
+                int tipo = Integer.parseInt(dados[11]);
+                String dims[] = dados[12].split("x");
+                int dimensoes[] = new int[3];
+                dimensoes[0] = Integer.parseInt(dims[0]);
+                dimensoes[1] = Integer.parseInt(dims[1]);
+                dimensoes[2] = Integer.parseInt(dims[2]);
+                Carro carro = new Carro(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status, potencia, numCilindros, numeroOcupantes, tipo, dimensoes);
+                carros.add(carro);
+            }
+            reader.close();
+        } catch (Exception e) {
             System.out.println("Erro: " + e);
         }
     }
