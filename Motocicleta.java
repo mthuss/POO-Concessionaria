@@ -15,14 +15,14 @@ public class Motocicleta extends Veiculo
  
     //Construtor
     public Motocicleta(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
-            float peso, String status, int cilindradas, String tipo) {
+            float peso, boolean status, int cilindradas, String tipo) {
         super(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel, peso, status);
         this.cilindradas = cilindradas;
         this.tipo = tipo;
     }
     
     public Motocicleta(){
-        this(0, "", "", 0, 0, "", 0, "", 0, "");
+        this(0, "", "", 0, 0, "", 0, false, 0, "");
     }
     
     //Getters e setters    
