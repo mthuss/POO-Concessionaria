@@ -4,6 +4,9 @@ public class Main
 {
 	public static void main(String args[])
 	{
+    //teste da moto
+    //Motocicleta motoTemp = new Motocicleta();
+    //motoTemp.menuMotocicletaGerente();
 		Sistema.loadFiles();
 
 		Scanner sc = new Scanner(System.in);
@@ -64,5 +67,6 @@ public class Main
 		}while(opt != 3);
 
 //		sc.close();
+
 	}
 }

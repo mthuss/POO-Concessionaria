@@ -7,7 +7,7 @@ public abstract class Veiculo
     private float kilometragem;
     private String tipoCombustivel;
     private float peso;
-    private boolean status = false; //true: vendido / false: a venda
+    private boolean status; //true: vendido / false: a venda
 
     public Veiculo(long numChassi, String marca, String modelo, int ano, float kilometragem, String tipoCombustivel,
     float peso, boolean status) {
