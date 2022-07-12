@@ -59,7 +59,7 @@ public class Main
 					}
 					break;
 				case 2:
-					Sistema.menuUsuario();
+					Sistema.menuVendedor();
 					break;
 				default: 
 					break;
