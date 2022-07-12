@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Cliente
 {
@@ -9,14 +12,13 @@ public class Cliente
     //Dados endereço
     //-----------------------------
     private String rua;
-    private String numeroCasa;
+    private int numeroCasa;
     private String bairro;
     private String cidade;
 
     //------------------------------
     private float renda;
-    private ArrayList<Cliente> dependentes; //não sei se é assim que faria (recursão?)
-
+    private int dependentes;
     //getters e setters
     //-------------------------------------
     public long getCPF() {
@@ -43,10 +45,10 @@ public class Cliente
     public void setRua(String rua) {
         this.rua = rua;
     }
-    public String getNumeroCasa() {
+    public int getNumeroCasa() {
         return numeroCasa;
     }
-    public void setNumeroCasa(String numeroCasa) {
+    public void setNumeroCasa(int numeroCasa) {
         this.numeroCasa = numeroCasa;
     }
     public String getBairro() {
@@ -67,16 +69,16 @@ public class Cliente
     public void setRenda(float renda) {
         this.renda = renda;
     }
-     public ArrayList<Cliente> getDependentes() {
+     public int getDependentes() {
         return dependentes;
     }
-    public void setDependentes(ArrayList<Cliente> dependentes) {
+    public void setDependentes(int dependentes) {
         this.dependentes = dependentes;
     }
   
     //Construtor
     //-----------------------------------------------------------------------
-    public Cliente(long CPF, String nome, Data dataNasc, String rua, String numeroCasa, String bairro, String cidade,
+    public Cliente(long CPF, String nome, Data dataNasc, String rua, int numeroCasa, String bairro, String cidade,
             float renda) {
         this.CPF = CPF;
         this.nome = nome;
@@ -87,4 +89,17 @@ public class Cliente
         this.cidade = cidade;
         this.renda = renda;
     }
+
+    public Cliente(){
+        this.CPF = 0;
+        this.nome = "";
+        this.dataNasc = null;
+        this.rua = "";
+        this.numeroCasa = 0;
+        this.bairro = "";
+        this.cidade = "";
+        this.renda = 0f;
+    }
+
+    
 }
