@@ -37,7 +37,7 @@ public class Main
 						System.out.print("Digite a senha: ");
 						auxSenha = sc.nextLine();
 						if(auxSenha.equals(pesquisa.getSenha()))
-							Sistema.menuADM();
+							Sistema.menuADM(pesquisa);
 						else System.out.println("Senha incorreta!");
 					}
 					else 
@@ -51,7 +51,7 @@ public class Main
 							novoGerente.cadastrar(login); //usa o login previamente digitado e cria uma nova "conta"
 							System.out.println(novoGerente.getDataAdmissao().criarData());
 							Sistema.addGerente(novoGerente);
-							Sistema.gerentesWriteFile(); //atualiza o arquivo de gerentes
+//							Sistema.gerentesWriteFile(); //atualiza o arquivo de gerentes
 							if(Sistema.getMapGerentes().get(novoGerente.getLogin()) != null) //Verifica se o gerente foi adicionado com sucesso
 								System.out.println("Cadastrado com sucesso! Tente fazer login novamente");
 							else System.out.println("Algo deu errado!!");
@@ -67,6 +67,11 @@ public class Main
 		}while(opt != 3);
 
 //		sc.close();
+
+		//Atualiza os arquivos de registro
+		Sistema.gerentesWriteFile();
+		Sistema.carrosWriteFile();
+//		Sistema.motosWriteFile();
 
 	}
 }

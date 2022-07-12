@@ -91,7 +91,7 @@ public class Sistema {
             auxPeso, false, auxPotencia, auxCilindros, auxAssentos, auxTipo, auxDimensoes);
 
             carros.add(car);
-            carrosWriteFile();
+//            carrosWriteFile();
 /*
             escritor.write(car.getNumChassi() + " " + car.getMarca() + " " + car.getModelo() + " " + car.getAno() +
             " " + car.getKilometragem() + " " + car.getTipoCombustivel() + " " + car.getPeso() + " " + car.getStatus() + 
@@ -103,7 +103,7 @@ public class Sistema {
 
     //------------------------------------------
     //Menu ADM    
-    public static void menuADM() //Lembrar da senha: Gerente123
+    public static void menuADM(Gerente adm)
     {
         Scanner sc = new Scanner(System.in);
         int op_adm;
@@ -120,6 +120,7 @@ public class Sistema {
             System.out.println("4 - Alterar dados do Vendedor");
             System.out.println("5 - Alterar dados do Carro");
             System.out.println("6 - Alterar dados do Motocicleta");
+            System.out.println("99 - Alterar meu cadastro");
         
             System.out.println("\n\t--Exclusão:--");
             System.out.println("7 - Remover dados do Vendedor");
@@ -167,6 +168,8 @@ public class Sistema {
                     }
                     break;
 
+                case 99:
+                    adm.alterar();
                 default: break;
             }
 
@@ -183,19 +186,6 @@ public class Sistema {
     public static Map<String,Gerente> getMapGerentes()
     {
         return gerentes;
-    }
-
-    public static void alterarGerente()
-    {
-        System.out.println("O que deseja alterar?");
-        System.out.println("1 - RG");
-        System.out.println("2 - Nome");
-        System.out.println("3 - Data de Nascimento");
-        System.out.println("4 - Data de Admissão");
-        System.out.println("5 - Salario");
-        System.out.println("6 - Anos de Experiencia");
-        System.out.println("7 - Login");
-        System.out.println("8 - Senha");
     }
 
     public static void gerentesWriteFile()
