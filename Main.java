@@ -1,14 +1,9 @@
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Main
 {
 	public static void main(String args[])
 	{
-														//Aí fazer uma função lá que adiciona um objeto a esse HashMap
-													   //e chamar nessa classe com Sistema.adicionarGerente(gerente); ou algo do tipo.
 		Sistema.loadFiles();
 
 		Scanner sc = new Scanner(System.in);
@@ -33,7 +28,7 @@ public class Main
 					sc.nextLine();
 					String login = sc.nextLine();
 					Gerente pesquisa = Sistema.getMapGerentes().get(login);
-					if(pesquisa != null)
+					if(pesquisa != null) //Se existe gerente com o login especificado
 					{
 						String auxSenha;
 						System.out.print("Digite a senha: ");
@@ -50,10 +45,10 @@ public class Main
 						if(sn.equals("S") || sn.equals("s"))
 						{
 							Gerente novoGerente = new Gerente();
-							novoGerente.cadastrar(login);
+							novoGerente.cadastrar(login); //usa o login previamente digitado e cria uma nova "conta"
 							System.out.println(novoGerente.getDataAdmissao().criarData());
 							Sistema.addGerente(novoGerente);
-							Sistema.gerentesWriteFile();
+							Sistema.gerentesWriteFile(); //atualiza o arquivo de gerentes
 							if(Sistema.getMapGerentes().get(novoGerente.getLogin()) != null) //Verifica se o gerente foi adicionado com sucesso
 								System.out.println("Cadastrado com sucesso! Tente fazer login novamente");
 							else System.out.println("Algo deu errado!!");
