@@ -184,6 +184,20 @@ public class Sistema {
     {
         return gerentes;
     }
+
+    public static void alterarGerente()
+    {
+        System.out.println("O que deseja alterar?");
+        System.out.println("1 - RG");
+        System.out.println("2 - Nome");
+        System.out.println("3 - Data de Nascimento");
+        System.out.println("4 - Data de Admissão");
+        System.out.println("5 - Salario");
+        System.out.println("6 - Anos de Experiencia");
+        System.out.println("7 - Login");
+        System.out.println("8 - Senha");
+    }
+
     public static void gerentesWriteFile()
     {
         {
@@ -227,6 +241,7 @@ public class Sistema {
     public static void loadFiles()
     {
         //Fazer os negocio de ler arquivo e botar tudo nas Coleções aqui
+
         //Ler gerentes
         try
         {
@@ -252,6 +267,7 @@ public class Sistema {
             System.out.println("Erro: " + e);
         }
 
+        //Ler carros
         try {
 
             FileReader arquivo = new FileReader("registroCarros");

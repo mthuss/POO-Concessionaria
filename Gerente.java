@@ -14,22 +14,40 @@ public class Gerente extends Funcionario
         long RG = sc.nextLong();
         System.out.println("Digite sua data de nascimento: ");
         int dia, mes, ano;
-        System.out.print("Dia: ");
-        dia = sc.nextInt();
-        System.out.print("Mês: ");
-        mes = sc.nextInt();
-        System.out.print("Ano: ");
-        ano = sc.nextInt();
+        do{
+            System.out.print("Dia: ");
+            dia = sc.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = sc.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = sc.nextInt();
+        }while(!Data.validarAno(ano));
+
         Data dataNasc = new Data(dia, mes, ano);
 
 
         System.out.println("Digite sua data de admissão: ");
-        System.out.print("Dia: ");
-        dia = sc.nextInt();
-        System.out.print("Mês: ");
-        mes = sc.nextInt();
-        System.out.print("Ano: ");
-        ano = sc.nextInt();
+        do{
+            System.out.print("Dia: ");
+            dia = sc.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = sc.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = sc.nextInt();
+        }while(!Data.validarAno(ano));
+
         Data dataAdmissao = new Data(dia, mes, ano);
 
         System.out.print("Digite seu salário mensal:\nR$");
@@ -66,24 +84,41 @@ public class Gerente extends Funcionario
         String nome = sc.nextLine();
         System.out.print("Digite seu RG: ");
         long RG = sc.nextLong();
-        System.out.print("Digite sua data de nascimento: ");
+        System.out.println("Digite sua data de nascimento: ");
         int dia, mes, ano;
-        System.out.print("Dia: ");
-        dia = sc.nextInt();
-        System.out.print("Mês: ");
-        mes = sc.nextInt();
-        System.out.print("Ano: ");
-        ano = sc.nextInt();
-        Data dataNasc = new Data(dia, mes, ano);
+
+        do{
+            System.out.print("Dia: ");
+            dia = sc.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = sc.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = sc.nextInt();
+        }while(!Data.validarAno(ano));
+       Data dataNasc = new Data(dia, mes, ano);
 
 
-        System.out.print("Digite sua data de admissão: ");
-        System.out.print("Dia: ");
-        dia = sc.nextInt();
-        System.out.print("Mês: ");
-        mes = sc.nextInt();
-        System.out.print("Ano: ");
-        ano = sc.nextInt();
+        System.out.println("Digite sua data de admissão: ");
+        do {
+            System.out.print("Dia: ");
+            dia = sc.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = sc.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = sc.nextInt();
+        } while (!Data.validarAno(ano));
         Data dataAdmissao = new Data(dia, mes, ano);
 
         System.out.print("Digite seu salário mensal:\nR$");
