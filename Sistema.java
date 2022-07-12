@@ -8,10 +8,19 @@ public class Sistema {
 
 	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
     public static ArrayList <Carro> carros = new ArrayList<>();
+    private int cilindradas;
+    private String tipo;
+    int moto;
+    Scanner input = new Scanner(System.in);
+    ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
+    //Parte de arquivos 
+    String arquivoMotocicletas = "motocicletas.txt";
+    File arq = new File(arquivoMotocicletas);
 
-    public static void menuUsuario()
+
+    public static void menuVendedor()
     {
-        System.out.println("Menu Usuario: ");
+        System.out.println("Menu Vendedor: ");
     }    
 
     //------------------------------------------
@@ -592,4 +601,4 @@ public class Sistema {
 }
     
    
-}
+
