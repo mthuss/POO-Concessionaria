@@ -6,8 +6,7 @@ public class Vendedor extends Funcionario
 {
     private float tempoRestante; //em horas(?)
     private Gerente gerente;
-    
-    ArrayList<Vendedor> listaVendedores = new ArrayList<>();
+    private String login, senha;
     String dadosVendedores = "vendedores.txt";
     File arq = new File(dadosVendedores);
 
@@ -35,5 +34,17 @@ public class Vendedor extends Funcionario
     }
     public void setGerente(Gerente gerente) {
         this.gerente = gerente;
+    }
+    public String getLogin() {
+        return login;
+    }
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public String getSenha() {
+        return senha;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
