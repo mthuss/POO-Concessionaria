@@ -6,19 +6,11 @@ import java.util.ArrayList;
 
 public class Sistema {
 
-	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
+	public static Map<String,Funcionario> usuarios = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
     public static ArrayList <Carro> carros = new ArrayList<>();
-    private int cilindradas;
-    private String tipo;
-    int moto;
-    Scanner input = new Scanner(System.in);
-    ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
-    //Parte de arquivos 
-    String arquivoMotocicletas = "motocicletas.txt";
-    File arq = new File(arquivoMotocicletas);
+    public static ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
 
-
-    public static void menuVendedor()
+    public static void menuVendedor(Vendedor vendedor)
     {
         System.out.println("Menu Vendedor: ");
     }    
@@ -365,25 +357,37 @@ public class Sistema {
 
     public static void addGerente(Gerente novoGerente)
     {
-		gerentes.put(novoGerente.getLogin(),novoGerente);
+		usuarios.put(novoGerente.getLogin(),novoGerente);
     }
-    public static Map<String,Gerente> getMapGerentes()
+    public static Map<String,Funcionario> getMapUsuarios()
     {
-        return gerentes;
+        return usuarios;
     }
 
-    public static void gerentesWriteFile()
+    public static void usuariosWriteFile()
     {
         {
             try
             {
                 File arquivo = new File("registroGerentes");
-                FileWriter writer = new FileWriter(arquivo,false);
-                for(Gerente g : gerentes.values())
+                FileWriter gWriter = new FileWriter(arquivo,false);
+                FileWriter vWriter = new FileWriter(new File("registroVendedores"),false);
+                for(Funcionario f : usuarios.values())
                 {
-                    writer.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
+                    if(f instanceof Gerente)
+                    {
+                        Gerente g = (Gerente) f;
+                        gWriter.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
+                    }
+                    else if(f instanceof Vendedor)
+                    {
+                        Vendedor v = (Vendedor) f;
+                        //Pra parte do gerente, ele vai salvar o login do gerente no arquivo.
+                        vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";" + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";" + v.getGerente().getLogin() + ";" + v.getLogin() + ";" + v.getSenha()+"\n");
+                    }
                 }
-                writer.close();
+                gWriter.close();
+                vWriter.close();
             }
             catch(IOException e)
             {
@@ -432,7 +436,7 @@ public class Sistema {
                 float salario = Float.parseFloat(dados[4]);
                 int anosExp = Integer.parseInt(dados[5]);
                 Gerente gerente = new Gerente(RG,dados[1],dataNasc,dataAdmissao,salario,anosExp,dados[6],dados[7]);
-                gerentes.put(gerente.getLogin(),gerente);
+                usuarios.put(gerente.getLogin(),gerente);
             }
             reader.close();
         }
@@ -440,6 +444,35 @@ public class Sistema {
         {
             System.out.println("Erro: " + e);
         }
+
+
+        //Ler vendedores
+        try
+        {
+            FileReader arquivo = new FileReader("registroGerentes");
+            BufferedReader reader = new BufferedReader(arquivo);
+            while(reader.ready())
+            {
+                String dados[] = reader.readLine().split(";");
+
+                String DMA[] = dados[2].split("/");
+                Data dataNasc = new Data(Integer.parseInt(DMA[0]),Integer.parseInt(DMA[1]),Integer.parseInt(DMA[2]));
+                String DMA2[] = dados[3].split("/");
+                Data dataAdmissao = new Data(Integer.parseInt(DMA2[0]),Integer.parseInt(DMA2[1]),Integer.parseInt(DMA2[2]));
+                long RG = Long.parseLong(dados[0]);
+                float salario = Float.parseFloat(dados[4]);
+                float TempoRestante = Float.parseFloat(dados[5]);
+                Gerente gResponsavel = usuarios.get(dados[6]);
+                Vendedor vendedor = new Vendedor(RG,dados[1],dataNasc,dataAdmissao,salario,TempoRestante,gResponsavel,dados[7],dados[8]);
+                usuarios.put(vendedor.getLogin(),vendedor);
+            }
+            reader.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro: " + e);
+        }
+
 
         //Ler carros
         try {
@@ -478,7 +511,7 @@ public class Sistema {
     public void menuMotocicletaGerente(){
         //o Gerente pode alterar
         int op;
-       
+        Scanner input = new Scanner(System.in);
         do{
             System.out.println("Menu Motocicleta");
             System.out.println("1 - Cadastrar motocicleta");
@@ -516,6 +549,7 @@ public class Sistema {
     
     public void cadastrarMotocicletas(){
         int ano;
+        Scanner input = new Scanner(System.in);
         Motocicleta novaMotocicleta = new Motocicleta();
         
         System.out.println("Digite as cilidradas: ");
@@ -588,7 +622,7 @@ public class Sistema {
 
     public void escreverMotosNoArquivo(){
         try{            
-            
+            File arq = new File("registroMotos");
             FileWriter escritor = new FileWriter(arq, true);
             //lembrar que a escrita do arquivo prossegue do ponto que parou
             for(int i = 0; i < listaMotocicletas.size(); i++){
@@ -632,6 +666,8 @@ public class Sistema {
     public void alterarMotocicletas(){                
         int opMenu;
         int ano;
+        int moto;
+        Scanner input = new Scanner(System.in);
         visualizarMotocicletas();
         System.out.println("Qual motocicleta deseja alterar?");
         moto = (input.nextInt() - 1);
@@ -749,7 +785,6 @@ public class Sistema {
             } while(opMenu != 11);
         }
         
-        arq.delete();
         escreverMotosNoArquivo();
        
         //leitura do arquivo
@@ -772,6 +807,9 @@ public class Sistema {
 
     public void removerMotocicleta(){
         visualizarMotocicletas();
+        File arq = new File("registroMotos");
+        int moto;
+        Scanner input = new Scanner(System.in);
         System.out.println("Qual motocicleta deseja remover?");
         moto = (input.nextInt() - 1);		
 		input.nextLine();		
