@@ -91,15 +91,197 @@ public class Sistema {
             auxPeso, false, auxPotencia, auxCilindros, auxAssentos, auxTipo, auxDimensoes);
 
             carros.add(car);
-//            carrosWriteFile();
-/*
-            escritor.write(car.getNumChassi() + " " + car.getMarca() + " " + car.getModelo() + " " + car.getAno() +
-            " " + car.getKilometragem() + " " + car.getTipoCombustivel() + " " + car.getPeso() + " " + car.getStatus() + 
-            " " + car.getPotencia() + " " + car.getNumCilindros() + " " + car.getNumeroOcupantes() + " " + car.getTipo() +
-            " " + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
-*/
-     //       scan.close();
+            carrosWriteFile();
+
     }
+    //------------------------------------------
+    public static void alterarCarros() {
+        int indice=0;
+        Scanner sc = new Scanner(System.in);
+
+        mostraArrayCarros();
+
+        do  {
+            System.out.print("Digite o indice do carro que deseja alterar: ");
+            indice = sc.nextInt();
+            sc.nextLine();
+
+            if (indice<1 || indice>carros.size()+1)
+                System.out.println("\tIndice inválido!");
+
+        } while (indice<1 || indice>carros.size()+1);
+        indice--; //adequa o valor do indice do elemento que será alterado
+        
+    
+        if (carros.size() == 0) 
+            System.out.println("\nNão há carros cadastradas.");
+        
+        else{
+                int opMenu;
+                do {
+                System.out.println("\nQual dado deseja alterar?");
+                System.out.println("1 - Alterar Numero do chassi");
+                System.out.println("2 - Alterar Marca");
+                System.out.println("3 - Alterar Modelo");
+                System.out.println("4 - Alterar Ano de fabricação");
+                System.out.println("5 - Alterar Kilometragem");
+                System.out.println("6 - Alterar Tipo de combustivel");
+                System.out.println("7 - Alterar valor do Peso");
+                System.out.println("8 - Alterar Potencia");
+                System.out.println("9 - Alterar Numero de cilindros");
+                System.out.println("10 - Alterar Numero de assentos");
+                System.out.println("11 - Alterar Tipo de carro");
+                System.out.println("12 - Alterar Dados de tamanho");
+                System.out.println("0 - Sair");
+
+
+                System.out.print("\nComando: ");
+                opMenu = sc.nextInt();
+    
+                switch (opMenu) {
+                    case 1:
+                        Long auxChassi;
+                        System.out.print("\nDigite o numero do chassi: ");
+                        auxChassi = sc.nextLong();
+                        carros.get(indice).setNumChassi(auxChassi);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 2:
+                        String auxMarca;
+                        System.out.print("\nDigite a marca: ");
+                        auxMarca = sc.nextLine();
+                        carros.get(indice).setMarca(auxMarca);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 3:
+                    String auxModelo;
+                    System.out.print("\nDigite o modelo: ");
+                    auxModelo = sc.nextLine();
+                    carros.get(indice).setMarca(auxModelo);
+
+                    System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 4:
+                        int auxAno;
+                        System.out.print("\nDigite o novo ano: ");
+                        auxAno = sc.nextInt();
+                        carros.get(indice).setAno(auxAno);
+                        
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 5:
+                        Float auxKilo;
+                        System.out.print("\nDigite a kilometragem: ");
+                        auxKilo = sc.nextFloat();
+                        carros.get(indice).setKilometragem(auxKilo);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 6:
+                        String auxCombustivel;
+                        System.out.print("\nDigite o tipo de combustivel: ");
+                        auxCombustivel = sc.nextLine();
+                        carros.get(indice).setTipoCombustivel(auxCombustivel);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 7:
+                        Float auxPeso;
+                        System.out.print("\nDigite o Peso: ");
+                        auxPeso = sc.nextFloat();
+                        carros.get(indice).setPeso(auxPeso);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 8:                        
+                        int auxPotencia;
+                        System.out.print("\nDigite a Potencia: ");
+                        auxPotencia = sc.nextInt();
+                        carros.get(indice).setPotencia(auxPotencia);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 9:
+                        int auxCilindros;
+                        System.out.print("\nDigite o número de Cilindros: ");
+                        auxCilindros = sc.nextInt();
+                        carros.get(indice).setNumCilindros(auxCilindros);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 10:
+                        int auxAssentos;
+                        System.out.print("\nDigite o número de Assentos: ");
+                        auxAssentos = sc.nextInt();
+                        carros.get(indice).setKilometragem(auxAssentos);
+
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 11:
+                    int auxTipo;
+                    do {
+                        System.out.println("1-utilitário\n2-pickup\n3-sedan\n4-hatch\n5-esportivo");
+                        System.out.print("\nDigite o tipo: ");
+                        auxTipo = sc.nextInt();
+                        carros.get(indice).setTipo(auxTipo);
+
+                        if (auxTipo < 1 || auxTipo > 5)
+                            System.out.println("\tValor inválido");
+                    }   while (auxTipo < 1 || auxTipo > 5);
+                        
+                    System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    case 12:
+                    int [] auxMedidas = new int[3];
+                    System.out.print("\nDigite a Altura: ");
+                    auxMedidas[0] = sc.nextInt();
+                    System.out.print("\nDigite a Largura: ");
+                    auxMedidas[1] = sc.nextInt();                    
+                    System.out.print("\nDigite o Comprimento: ");
+                    auxMedidas[2] = sc.nextInt();
+
+                    carros.get(indice).setDimensoes(auxMedidas);;
+
+                    System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+
+                    default:
+                        System.out.println("\nDigite uma opção válida!\n");
+                    break;
+                }
+            } while(opMenu != 0);
+        
+            carrosWriteFile(); //repassa pro File os dados alterados    
+        }
+    }
+
+    //------------------------------------------
+    public static void mostraArrayCarros()  {
+        int i=1;
+
+        for (Carro car : carros)    {
+            System.out.printf("Carro %d:\n", i);
+            System.out.println(car.getNumChassi() + "\n" + car.getMarca() + "\n" + car.getModelo() + "\n" + car.getAno() +
+                "\n" + car.getKilometragem() + "\n" + car.getTipoCombustivel() + "\n" + car.getPeso() + "\n" + car.getStatus() + 
+                "\n" + car.getPotencia() + "\n" + car.getNumCilindros() + "\n" + car.getNumeroOcupantes() + "\n" + car.getTipo() +
+                "\n" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
+        i++;
+        System.out.printf("\n");
+        }
+    }
+
 
     //------------------------------------------
     //Menu ADM    
@@ -143,7 +325,9 @@ public class Sistema {
                 case 3: break;
 
                 case 4: break;
-                case 5: break;
+                case 5: 
+                    alterarCarros();
+                    break;
                 case 6: break;
                 
                 case 7: break;
