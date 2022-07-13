@@ -14,16 +14,65 @@ public class Sistema {
     Scanner input = new Scanner(System.in);
     ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
     ArrayList<Vendedor> listaVendedores = new ArrayList<>();
+    ArrayList<Venda> listaVendas = new ArrayList<>();
     //Parte de arquivos 
     String arquivoMotocicletas = "motocicletas.txt";
     File arq = new File(arquivoMotocicletas);
     String dadosVendedores = "vendedores.txt";
     File arqVendedor = new File(dadosVendedores);
+    String dadosVendas = "vendas.txt";
+    File arqVenda = new File(dadosVendas);
 
 
-    public static void menuVendedor()
+    public void menuVendedor()
     {
+        int op;
+
+        do{
         System.out.println("Menu Vendedor: ");
+        System.out.println("1 - Visualizar Veículos");
+        System.out.println("2 - Visualizar Clientes");
+        System.out.println("3 - Visualizar Vendas");
+        System.out.println("4 - Realizar uma Venda");
+        System.out.println("5 - Sair");
+        
+        op = input.nextInt();
+        input.nextLine();
+        switch(op){
+            case 1:
+                System.out.println("Visualizar Veículos");
+                System.out.println("1 - Visualizar Carros");
+                System.out.println("2 - Visualizar Motos");
+                int subop = input.nextInt();
+                input.nextLine();
+                switch(subop){
+                    case 1:
+                        //Método de exibir carros
+                    break;
+                    case 2:
+                        visualizarMotocicletas();
+                    break;
+                }
+            break;
+            case 2:
+                //método listar clientes
+            break;
+            case 3:
+                //método listar vendas
+            break;
+            case 4:
+                //???
+            break;
+            case 5:
+            break;
+            default:
+                System.out.println("Digite uma opção válida!");
+            break;
+        }
+
+
+        }while(op != 5);
+        
     }    
 
     //------------------------------------------
@@ -634,12 +683,13 @@ public class Sistema {
                     alterarVendedor();
                 break;
                 case 4:
-                    //removerVendedor();
+                    removerVendedor();
                 break;
                 case 5:
                 break;
                 default:
                     System.out.println("Digite uma opção válida!");
+                break;
             }
         }while(op != 5);  
     }
@@ -884,6 +934,9 @@ public class Sistema {
                         listaVendedores.get(vendedor).setSenha(senha);
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
+                    default:
+                        System.out.println("Digite uma opção válida!");
+                    break;
 
                 }
             }while(op != 10);
@@ -910,6 +963,7 @@ public class Sistema {
         escreverVendedoresNoArquivo();
 
     }
+
 }
     
    
