@@ -449,7 +449,7 @@ public class Sistema {
         //Ler vendedores
         try
         {
-            FileReader arquivo = new FileReader("registroGerentes");
+            FileReader arquivo = new FileReader("registroVendedores");
             BufferedReader reader = new BufferedReader(arquivo);
             while(reader.ready())
             {
@@ -462,7 +462,7 @@ public class Sistema {
                 long RG = Long.parseLong(dados[0]);
                 float salario = Float.parseFloat(dados[4]);
                 float TempoRestante = Float.parseFloat(dados[5]);
-                Gerente gResponsavel = usuarios.get(dados[6]);
+                Gerente gResponsavel = (Gerente) usuarios.get(dados[6]);
                 Vendedor vendedor = new Vendedor(RG,dados[1],dataNasc,dataAdmissao,salario,TempoRestante,gResponsavel,dados[7],dados[8]);
                 usuarios.put(vendedor.getLogin(),vendedor);
             }
