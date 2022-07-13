@@ -604,6 +604,101 @@ public class Sistema {
         escreverMotosNoArquivo();
 
     }
+
+    //Vendedor -------------------------------------------------
+    public void menuVendedoresGerente(){
+        int op;
+
+        do{
+            System.out.println("Menu Vendedores");
+            System.out.println("1 - Cadastrar um novo vendedor");
+            System.out.println("2 - Visualizar vendedores");
+            System.out.println("3 - Alterar informações de um vendedor");
+            System.out.println("4 - Excluir um vendedor");
+            System.out.println("5 - Sair");
+
+            op = input.nextInt();
+            input.nextLine();
+
+            switch(op){
+                case 1:
+                    cadastrarVendedor();
+                break;
+                case 2:
+                    //listarVendedor();
+                break;
+                case 3:
+                    //alterarVendedor();
+                break;
+                case 4:
+                    //removerVendedor();
+                break;
+                case 5:
+                break;
+                default:
+                    System.out.println("Digite uma opção válida!");
+            }
+        }while(op != 5);  
+    }
+
+    public void cadastrarVendedor(){
+        Scanner scan = new Scanner(System.in);
+        String senha,confirSenha;
+        Vendedor novoVendedor = new Vendedor();
+        System.out.print("Digite o nome do vendedor: ");
+        novoVendedor.setNome(scan.nextLine());
+        System.out.print("Digite o RG do vendedor: ");
+        novoVendedor.setRG(scan.nextLong());
+        System.out.println("Digite a data de nascimento do vendedor: ");
+        int dia, mes, ano;
+        do{
+            System.out.print("Dia: ");
+            dia = scan.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = scan.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = scan.nextInt();
+        }while(!Data.validarAno(ano));
+
+        Data dataNasc = new Data(dia, mes, ano);
+        novoVendedor.setDataNasc(dataNasc);
+
+        System.out.println("Digite a data de admissão o vendedor: ");
+        do{
+            System.out.print("Dia: ");
+            dia = scan.nextInt();
+        }while(!Data.validarDia(dia));
+
+        do{
+            System.out.print("Mês: ");
+            mes = scan.nextInt();
+        }while(!Data.validarMes(mes));
+
+        do{
+            System.out.print("Ano: ");
+            ano = scan.nextInt();
+        }while(!Data.validarAno(ano));
+
+        Data dataAdmissao = new Data(dia, mes, ano);
+        novoVendedor.setDataAdmissao(dataAdmissao);
+
+        System.out.print("Digite o salário do vendedor:\nR$");
+        novoVendedor.setSalario(scan.nextFloat());
+
+        System.out.print("Digite o tempo de experiência restante:");
+        novoVendedor.setTempoRestante(scan.nextFloat());
+
+        //Fata Adicionar gerente
+
+        //listaVendedores.add(novoVendedor);
+
+    }
 }
     
    
