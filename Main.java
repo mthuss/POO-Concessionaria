@@ -60,6 +60,7 @@ public class Main
 								Sistema.menuVendedor(vendedor);
 							else System.out.println("Senha incorreta!");
 						}
+						else System.out.println("Temos um problema!!");
 					}
 					else 
 					{

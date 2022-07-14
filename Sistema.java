@@ -715,7 +715,14 @@ public class Sistema {
                     break;
             
                 case 99:
+                    String auxLogin = adm.getLogin();
                     adm.alterar();
+                    if(!auxLogin.equals(adm.getLogin())) //Chave do hashmap (login) foi alterada
+                    {
+                        //atualiza a chave no hashmap (remove e reinsere com a chave nova)
+                        usuarios.remove(auxLogin);
+                        usuarios.put(adm.getLogin(),adm);
+                    }
                 default: break;
             }
 
