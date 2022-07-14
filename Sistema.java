@@ -336,8 +336,6 @@ public class Sistema {
             System.out.println("8 - Remover dados do Carro");
             System.out.println("9 - Remover dados do Motocicleta");
 
-            System.out.println("10 - Testar meu arquivo 👍");
-
             System.out.println("\n0 - Sair");
 
             System.out.print("\nComando: ");
@@ -363,24 +361,6 @@ public class Sistema {
                     break;
                 case 9: break;
             
-                case 10:
-                    try {
-                        FileReader arq = new FileReader("registroCarros"); //Ler o txt dos carros
-                        BufferedReader lerArq = new BufferedReader(arq);
-                        String line;
-
-                        while(lerArq.ready())   {
-                            line = lerArq.readLine();
-                            System.out.println(line);
-                        }
-
-                        arq.close();
-                    }
-                    catch (IOException e)   {
-                        System.out.println("erro: " + e);
-                    }
-                    break;
-
                 case 99:
                     adm.alterar();
                 default: break;
