@@ -2,7 +2,6 @@ import java.util.Scanner;
 public class Gerente extends Funcionario
 {
     private int anosExp;
-    private String login, senha;
 
     public void cadastrar()
     {
@@ -226,13 +225,13 @@ public class Gerente extends Funcionario
                 
                 
                 case 7:
-                Gerente pesquisa;
+                Funcionario pesquisa;
                 sc.nextLine();
                 String login;
                 do{
                     System.out.println("Digite seu novo login: ");
                     login = sc.nextLine();
-                    pesquisa = Sistema.getMapGerentes().get(login);
+                    pesquisa = Sistema.getMapUsuarios().get(login);
                     if(pesquisa != null)
                     System.out.println("Este login já está em uso! Tente novamente.");
                 }while(pesquisa != null);
@@ -269,10 +268,8 @@ public class Gerente extends Funcionario
     }
     public Gerente(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, int anosExp, String login,
             String senha) {
-        super(RG, nome, dataNasc, dataAdmissao, salario);
+        super(RG, nome, dataNasc, dataAdmissao, salario,login,senha);
         this.anosExp = anosExp;
-        this.login = login;
-        this.senha = senha;
     }
 
     public Gerente()
@@ -288,19 +285,4 @@ public class Gerente extends Funcionario
         this.anosExp = anosExp;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 }

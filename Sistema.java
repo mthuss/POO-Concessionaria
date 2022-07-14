@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Sistema {
 
-	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
+	  public static Map<String,Funcionario> usuarios = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
     public static ArrayList <Carro> carros = new ArrayList<>();
     public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
-
-    public static void menuVendedor()
+    
+    public static void menuVendedor(Vendedor vendedor)
     {
         System.out.println("Menu Vendedor: ");
     }    
@@ -308,7 +308,7 @@ public class Sistema {
         i++;
         System.out.printf("\n");
         }
-    }
+     }
 
     //------------------------------------------
 
@@ -331,14 +331,54 @@ public class Sistema {
         }
     }
 
+
+	 
     //------------------------------------------
     //Motos
     //------------------------------------------
+    public void menuMotocicletaGerente(){
+        //o Gerente pode alterar
+        int op;
+        Scanner input = new Scanner(System.in);
+        do{
+            System.out.println("Menu Motocicleta");
+            System.out.println("1 - Cadastrar motocicleta");
+            System.out.println("2 - Visualizar motocicletas");
+            System.out.println("3 - Alterar informações de motocicletas");
+            System.out.println("4 - Excluir motocicleta");
+            System.out.println("5 - Sair");
+
+            op = input.nextInt();
+            input.nextLine();
+        
+        
+            switch(op){
+                case 1: 
+                    cadastrarMotocicletas();
+                break;
+                case 2:
+                    visualizarMotocicletas();
+                break;
+                case 3:
+                    alterarMotocicletas();
+                break;
+                case 4:
+                    removerMotocicleta();
+                break;
+                case 5:
+                break;               
+                default: 
+                    System.out.println("Digite uma opção válida!");
+                break;
+            }
+        }while(op != 5);      
+    }
+
     
     public static void cadastrarMotocicletas(){        
         int ano;
-        String arquivoMotocicletas = "motocicletas.txt";
-        File arq = new File(arquivoMotocicletas);
+        Scanner input = new Scanner(System.in);
+
         Motocicleta novaMotocicleta = new Motocicleta();
         Scanner input = new Scanner(System.in);
         
@@ -408,13 +448,16 @@ public class Sistema {
         escreverMotosNoArquivo();  
     }
 
+
     //------------------------------------------
+
 
     public static void alterarMotocicletas(){                
         int opMenu;
         int ano;
         Scanner input = new Scanner(System.in);
         int moto;
+
 
         visualizarMotocicletas();
         
@@ -683,35 +726,46 @@ public class Sistema {
         } while (op_adm != 0);
     }
 
-    public static void addGerente(Gerente novoGerente)
+   public static void addGerente(Gerente novoGerente)
     {
-		gerentes.put(novoGerente.getLogin(),novoGerente);
+		usuarios.put(novoGerente.getLogin(),novoGerente);
     }
-    public static Map<String,Gerente> getMapGerentes()
+    public static Map<String,Funcionario> getMapUsuarios()
     {
-        return gerentes;
+        return usuarios;
     }
 
-    public static void gerentesWriteFile()
+    public static void usuariosWriteFile()
     {
         {
             try
             {
                 File arquivo = new File("registroGerentes");
-                FileWriter writer = new FileWriter(arquivo,false);
-                for(Gerente g : gerentes.values())
+                FileWriter gWriter = new FileWriter(arquivo,false);
+                FileWriter vWriter = new FileWriter(new File("registroVendedores"),false);
+                for(Funcionario f : usuarios.values())
                 {
-                    writer.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
+                    if(f instanceof Gerente)
+                    {
+                        Gerente g = (Gerente) f;
+                        gWriter.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
+                    }
+                    else if(f instanceof Vendedor)
+                    {
+                        Vendedor v = (Vendedor) f;
+                        //Pra parte do gerente, ele vai salvar o login do gerente no arquivo.
+                        vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";" + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";" + v.getGerente().getLogin() + ";" + v.getLogin() + ";" + v.getSenha()+"\n");
+                    }
                 }
-                writer.close();
+                gWriter.close();
+                vWriter.close();
             }
             catch(IOException e)
             {
                 System.out.println("Erro: " + e);
             }
-        }
     }
-
+    
     public static void loadFiles()
     {
         //Fazer os negocio de ler arquivo e botar tudo nas Coleções aqui
@@ -741,6 +795,34 @@ public class Sistema {
             System.out.println("Erro: " + e);
         }
 
+        //Ler vendedores
+        try
+        {
+            FileReader arquivo = new FileReader("registroVendedores");
+            BufferedReader reader = new BufferedReader(arquivo);
+            while(reader.ready())
+            {
+                String dados[] = reader.readLine().split(";");
+
+                String DMA[] = dados[2].split("/");
+                Data dataNasc = new Data(Integer.parseInt(DMA[0]),Integer.parseInt(DMA[1]),Integer.parseInt(DMA[2]));
+                String DMA2[] = dados[3].split("/");
+                Data dataAdmissao = new Data(Integer.parseInt(DMA2[0]),Integer.parseInt(DMA2[1]),Integer.parseInt(DMA2[2]));
+                long RG = Long.parseLong(dados[0]);
+                float salario = Float.parseFloat(dados[4]);
+                float TempoRestante = Float.parseFloat(dados[5]);
+                Gerente gResponsavel = (Gerente) usuarios.get(dados[6]);
+                Vendedor vendedor = new Vendedor(RG,dados[1],dataNasc,dataAdmissao,salario,TempoRestante,gResponsavel,dados[7],dados[8]);
+                usuarios.put(vendedor.getLogin(),vendedor);
+            }
+            reader.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro: " + e);
+        }
+        
+        
         //Ler carros
         try {
 
@@ -774,6 +856,7 @@ public class Sistema {
             System.out.println("Erro: " + e);
         }
     
+        //Ler motos
         try {
             FileReader arquivo = new FileReader("registroMotocicletas");
             BufferedReader reader = new BufferedReader(arquivo);
