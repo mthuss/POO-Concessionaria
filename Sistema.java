@@ -109,13 +109,12 @@ public class Sistema {
                 System.out.print("Digite o indice do carro que deseja alterar: ");
                 indice = sc.nextInt();
                 sc.nextLine();
+                indice--;
 
-                if (indice<1 || indice>carros.size()+1)
+                if (indice<0 || indice>carros.size()-1)
                     System.out.println("\tIndice inválido!");
 
-            } while (indice<1 || indice>carros.size()+1);
-            indice--; //adequa o valor do indice do elemento que será alterado
-        
+            } while (indice<0 || indice>carros.size()-1);        
     
                 int opMenu;
                 do {
@@ -132,11 +131,10 @@ public class Sistema {
                 System.out.println("10 - Alterar Numero de assentos");
                 System.out.println("11 - Alterar Tipo de carro");
                 System.out.println("12 - Alterar Dados de tamanho");
-                System.out.println("0 - Sair");
-
 
                 System.out.print("\nComando: ");
                 opMenu = sc.nextInt();
+                sc.nextLine();
     
                 switch (opMenu) {
                     case 1:
@@ -254,14 +252,14 @@ public class Sistema {
 
                     carros.get(indice).setDimensoes(auxMedidas);;
 
-                    System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    System.out.println("\n==> Dados atualizados com sucesso!");
                     break;
 
                     default:
                         System.out.println("\nDigite uma opção válida!\n");
                     break;
                 }
-            } while(opMenu != 0);
+            } while(opMenu < 1 || opMenu > 12);
         
             carrosWriteFile(); //repassa pro File os dados alterados    
         }
@@ -284,11 +282,13 @@ public class Sistema {
                 indice--; //diminui em 1 pra adequar ao valor do arrayList pois o "mostraArrayCarros"
                           //Mostra os valores começando no indice 1 👍
 
-                if (indice<0 || indice>carros.size())
+                if (indice<0 || indice>carros.size()-1)
                     System.out.println("\tValor Inválido");
-            } while(indice<0 || indice>carros.size());
+            } while(indice<0 || indice>carros.size()-1);
     
             carros.remove(indice);
+
+            System.out.println("\n==> Carro removido com sucesso!");
 
             carrosWriteFile();
         }
@@ -300,10 +300,10 @@ public class Sistema {
 
         for (Carro car : carros)    {
             System.out.printf("Carro %d:\n", i);
-            System.out.println(car.getNumChassi() + "\n" + car.getMarca() + "\n" + car.getModelo() + "\n" + car.getAno() +
-                "\n" + car.getKilometragem() + "\n" + car.getTipoCombustivel() + "\n" + car.getPeso() + "\n" + car.getStatus() + 
-                "\n" + car.getPotencia() + "\n" + car.getNumCilindros() + "\n" + car.getNumeroOcupantes() + "\n" + car.getTipo() +
-                "\n" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
+            System.out.println("Numero do chassi: " + car.getNumChassi() + "\nMarca: " + car.getMarca() + "\nModelo: " + car.getModelo() + "\nAno: " + car.getAno() +
+                "\nKilometragem: " + car.getKilometragem() + "\nTipo de Combustivel: " + car.getTipoCombustivel() + "\nPeso: " + car.getPeso() + "\nStatus de venda: " + car.getStatus() + 
+                "\nPotencia: " + car.getPotencia() + "\nNumero de Cilindros: " + car.getNumCilindros() + "\nNumero de assentos: " + car.getNumeroOcupantes() + "\nTipo de carro: " + car.getTipo() +
+                "\nDimensões (altura x largura x comprimento): " + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
         i++;
         System.out.printf("\n");
         }
