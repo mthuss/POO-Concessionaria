@@ -8,15 +8,7 @@ public class Sistema {
 
 	public static Map<String,Gerente> gerentes = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
     public static ArrayList <Carro> carros = new ArrayList<>();
-    private int cilindradas;
-    private String tipo;
-    int moto;
-    Scanner input = new Scanner(System.in);
-    ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
-    //Parte de arquivos 
-    String arquivoMotocicletas = "motocicletas.txt";
-    File arq = new File(arquivoMotocicletas);
-
+    public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
 
     public static void menuVendedor()
     {
@@ -26,6 +18,10 @@ public class Sistema {
     //------------------------------------------
     //Funções do Menu ADM
 
+    //------------------------------------------
+    //Carros
+    //------------------------------------------
+    
     static void cadastrarCarro()   {
             Scanner scan = new Scanner(System.in);
             
@@ -94,7 +90,9 @@ public class Sistema {
             carrosWriteFile();
 
     }
+
     //------------------------------------------
+
     public static void alterarCarros() {
         int indice=0;
         Scanner sc = new Scanner(System.in);
@@ -264,7 +262,9 @@ public class Sistema {
             carrosWriteFile(); //repassa pro File os dados alterados    
         }
     }
+    
     //------------------------------------------
+
     public static void removerCarro()   {
         mostraArrayCarros();
         Scanner sc = new Scanner(System.in);
@@ -295,6 +295,7 @@ public class Sistema {
     }
 
     //------------------------------------------
+
     public static void mostraArrayCarros()  {
         int i=1;
 
@@ -309,9 +310,315 @@ public class Sistema {
         }
     }
 
+    //------------------------------------------
+
+    public static void carrosWriteFile()
+    {
+        try {
+            File arq = new File("registroCarros");
+            FileWriter escritor = new FileWriter(arq);
+
+            for(Carro car : carros)
+            escritor.write(car.getNumChassi() + ";" + car.getMarca() + ";" + car.getModelo() + ";" + car.getAno() +
+                ";" + car.getKilometragem() + ";" + car.getTipoCombustivel() + ";" + car.getPeso() + ";" + car.getStatus() + 
+                ";" + car.getPotencia() + ";" + car.getNumCilindros() + ";" + car.getNumeroOcupantes() + ";" + car.getTipo() +
+                ";" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
+
+           escritor.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
+    }
 
     //------------------------------------------
-    //Menu ADM    
+    //Motos
+    //------------------------------------------
+    
+    public static void cadastrarMotocicletas(){        
+        int ano;
+        String arquivoMotocicletas = "motocicletas.txt";
+        File arq = new File(arquivoMotocicletas);
+        Motocicleta novaMotocicleta = new Motocicleta();
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("Digite as cilidradas: ");
+        novaMotocicleta.setCilindradas(input.nextInt());
+        input.nextLine();
+        
+        do{
+            System.out.println("Qual o tipo da motocicleta?");
+            System.out.println("1 - Trail");
+            System.out.println("2 - Street");
+            System.out.println("3 - Esportiva");
+            System.out.println("4 - Custom");        
+            switch(input.nextInt()){
+                case 1:
+                    novaMotocicleta.setTipo("Trail");
+                break;       
+                case 2:
+                    novaMotocicleta.setTipo("Street");
+                break;
+                case 3:
+                    novaMotocicleta.setTipo("Esportiva");
+                break;
+                case 4:
+                    novaMotocicleta.setTipo("Custom");
+                break;
+                default:
+                    System.out.println("Digite uma opção válida!");
+                break;
+            }
+        } while(input.nextInt() < 1 || input.nextInt() > 4);
+        
+        System.out.println("Digite o número do chassi: ");
+        novaMotocicleta.setNumChassi(input.nextInt());
+        input.nextLine();
+        
+        System.out.println("Digite a marca: ");
+        novaMotocicleta.setMarca(input.nextLine());
+        
+        System.out.println("Digite o modelo: ");
+        novaMotocicleta.setModelo(input.nextLine());
+        
+        do {
+            System.out.println("Digite o ano: ");
+            ano = input.nextInt();
+            input.nextLine();
+        } while(!Data.validarAno(ano));
+        
+        novaMotocicleta.setAno(ano);
+       
+        
+        System.out.println("Digite a kilometragem: ");
+        novaMotocicleta.setKilometragem(input.nextInt());
+        input.nextLine();
+        
+        System.out.println("Digite o tipo de combustível: ");
+        novaMotocicleta.setTipoCombustivel(input.nextLine());
+        
+        System.out.println("Digite o peso: ");
+        novaMotocicleta.setPeso(input.nextFloat());
+        input.nextLine();
+        
+        System.out.println("Digite o status: ");
+        novaMotocicleta.setStatus(input.nextBoolean());
+
+        motocicletas.add(novaMotocicleta);
+        escreverMotosNoArquivo();  
+    }
+
+    //------------------------------------------
+
+    public static void alterarMotocicletas(){                
+        int opMenu;
+        int ano;
+        Scanner input = new Scanner(System.in);
+        int moto;
+
+        visualizarMotocicletas();
+        
+        if (motocicletas.size() == 0) 
+        System.out.println("\nNão há motocicletas cadastradas.");
+        else{
+            
+            do {
+                System.out.println("Qual motocicleta deseja alterar?");
+                moto = (input.nextInt() - 1);
+
+                if (moto < 0 || moto > motocicletas.size()-1)
+                    System.out.println("\tValor Invalido");
+
+            } while (moto < 0 || moto > motocicletas.size()-1);
+
+                System.out.println("\nQual dado deseja alterar?");
+                System.out.println("1 - Alterar cilindradas");
+                System.out.println("2 - Alterar tipo");
+                System.out.println("3 - Alterar número do chassi");
+                System.out.println("4 - Alterar marca");
+                System.out.println("5 - Alterar modelo");
+                System.out.println("6 - Alterar ano");
+                System.out.println("7 - Alterar kilometragem");
+                System.out.println("8 - Alterar tipo de combustível");
+                System.out.println("9 - Alterar peso");
+                System.out.println("10 - Alterar status");
+                System.out.println("\nDigite a opção desejada: ");
+                opMenu = input.nextInt();
+                input.nextLine();
+    
+                switch (opMenu) {
+                    case 1:
+                        System.out.print("\nDigite as novas cilindradas: ");
+                        motocicletas.get(moto).setCilindradas(input.nextInt());  
+                        input.nextLine();  
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 2:
+                    do{
+                        System.out.print("\nDigite o novo tipo: ");                        
+                        System.out.println("1 - Trail");
+                        System.out.println("2 - Street");
+                        System.out.println("3 - Esportiva");
+                        System.out.println("4 - Custom");   
+                        switch(input.nextInt()){
+                            case 1:
+                                motocicletas.get(moto).setTipo("Trail");
+                            break;       
+                            case 2:
+                                motocicletas.get(moto).setTipo("Street");
+                            break;
+                            case 3:
+                                motocicletas.get(moto).setTipo("Esportiva");
+                            break;
+                            case 4:
+                                motocicletas.get(moto).setTipo("Custom");
+                            break;
+                            default:
+                                System.out.println("Digite uma opção válida!");
+                            break;
+                        }
+                            
+                    } while(input.nextInt() < 1 || input.nextInt() > 4);   
+                        
+                           
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 3:
+                        System.out.print("\nDigite o novo número de chassi: ");
+                        motocicletas.get(moto).setNumChassi(input.nextLong());    
+                        input.nextLine();  
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 4:
+                        System.out.print("\nDigite a nova marca: ");
+                        motocicletas.get(moto).setMarca(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 5:
+                        System.out.print("\nDigite o novo modelo: ");
+                        motocicletas.get(moto).setModelo(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 6:
+                        do {
+                            System.out.print("\nDigite o novo ano: ");
+                            ano = input.nextInt();
+                            input.nextLine();
+                        } while(!Data.validarAno(ano));                    
+                        motocicletas.get(moto).setAno(input.nextInt());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 7:
+                        System.out.print("\nDigite a nova kilometragem: ");
+                        motocicletas.get(moto).setKilometragem(input.nextFloat());   
+                        input.nextLine();   
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 8:
+                        System.out.print("\nDigite o novo tipo de combustível: ");
+                        motocicletas.get(moto).setTipoCombustivel(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 9:
+                        System.out.print("\nDigite o novo peso: ");
+                        motocicletas.get(moto).setPeso(input.nextFloat()); 
+                        input.nextLine();     
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 10:
+                        System.out.print("\nDigite o novo status: ");                        
+                        motocicletas.get(moto).setStatus(input.nextBoolean());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 11:
+                    break;
+                    default:
+                        System.out.println("\nDigite uma opção válida!\n");
+                    break;
+                }
+        }
+        
+        escreverMotosNoArquivo();
+    }
+
+    //------------------------------------------
+
+    public static void removerMotocicleta(){
+        Scanner input = new Scanner(System.in);
+        int moto=0;
+
+        visualizarMotocicletas();
+        if (motocicletas.size() == 0) {
+            System.out.println("\nNão há motocicletas cadastradas.");            
+        }
+        
+        else{
+            do {
+                System.out.println("Qual motocicleta deseja remover?");
+                moto = (input.nextInt() - 1);
+                input.nextLine();
+
+                if (moto < 0 || moto > motocicletas.size()-1)
+                    System.out.println("\tValor Invalido");
+
+            } while (moto < 0 || moto > motocicletas.size()-1);
+
+                motocicletas.remove(moto);
+                System.out.println("\n\nMotocicleta removida com sucesso!");
+        }
+
+    escreverMotosNoArquivo();
+    }
+
+    //------------------------------------------
+
+    public static void escreverMotosNoArquivo(){
+        try{            
+            File arq = new File("registroMotocicletas");
+            FileWriter escritor = new FileWriter(arq, true);
+            //lembrar que a escrita do arquivo prossegue do ponto que parou
+            for(int i = 0; i < motocicletas.size(); i++){
+                escritor.write(motocicletas.get(i).getCilindradas() + ";");
+                escritor.write(motocicletas.get(i).getTipo() + ";");
+                escritor.write(motocicletas.get(i).getNumChassi() + ";");
+                escritor.write(motocicletas.get(i).getMarca() + ";");
+                escritor.write(motocicletas.get(i).getModelo() + ";");
+                escritor.write(motocicletas.get(i).getAno() + ";");
+                escritor.write(motocicletas.get(i).getKilometragem() + ";");
+                escritor.write(motocicletas.get(i).getTipoCombustivel() + ";");
+                escritor.write(motocicletas.get(i).getPeso() + ";");
+                escritor.write(motocicletas.get(i).getStatus() + ";");
+                escritor.write("\n");
+            }                    
+            escritor.close();                        
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro" + e);
+        }
+    }
+
+    //------------------------------------------
+
+    public static void visualizarMotocicletas(){
+        for(int i = 0; i < motocicletas.size(); i++){
+            System.out.printf("\nMotocicleta %d\n", i+1);
+            System.out.println("Cilidradas: " + motocicletas.get(i).getCilindradas());
+            System.out.println("Tipo: " + motocicletas.get(i).getTipo());
+            System.out.println("Número do chassi: " + motocicletas.get(i).getNumChassi());
+            System.out.println("Marca: " + motocicletas.get(i).getMarca());
+            System.out.println("Modelo: " + motocicletas.get(i).getModelo());
+            System.out.println("Ano: " + motocicletas.get(i).getAno());
+            System.out.println("Kilometragem: " + motocicletas.get(i).getKilometragem());
+            System.out.println("Tipo de Combustível: " + motocicletas.get(i).getTipoCombustivel());
+            System.out.println("Peso: " + motocicletas.get(i).getPeso());
+            System.out.println("Status: " + motocicletas.get(i).getStatus());
+        }
+    }
+    
+    //------------------------------------------
+    //Menu ADM
+    //------------------------------------------
     public static void menuADM(Gerente adm)
     {
         Scanner sc = new Scanner(System.in);
@@ -347,19 +654,25 @@ public class Sistema {
                 case 2: 
                     cadastrarCarro();
                     break;
-                case 3: break;
+                case 3: 
+                    cadastrarMotocicletas();
+                    break;
 
                 case 4: break;
                 case 5: 
                     alterarCarros();
                     break;
-                case 6: break;
+                case 6: 
+                    alterarMotocicletas();
+                    break;
                 
                 case 7: break;
                 case 8: 
                     removerCarro();
                     break;
-                case 9: break;
+                case 9: 
+                    removerMotocicleta();
+                    break;
             
                 case 99:
                     adm.alterar();
@@ -368,8 +681,6 @@ public class Sistema {
 
 
         } while (op_adm != 0);
-    
-    //sc.close();
     }
 
     public static void addGerente(Gerente novoGerente)
@@ -399,26 +710,6 @@ public class Sistema {
                 System.out.println("Erro: " + e);
             }
         }
-    }
-
-    public static void carrosWriteFile()
-    {
-        try {
-            File arq = new File("registroCarros");
-            FileWriter escritor = new FileWriter(arq);
-
-            for(Carro car : carros)
-            escritor.write(car.getNumChassi() + ";" + car.getMarca() + ";" + car.getModelo() + ";" + car.getAno() +
-                ";" + car.getKilometragem() + ";" + car.getTipoCombustivel() + ";" + car.getPeso() + ";" + car.getStatus() + 
-                ";" + car.getPotencia() + ";" + car.getNumCilindros() + ";" + car.getNumeroOcupantes() + ";" + car.getTipo() +
-                ";" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
-
-           escritor.close();
-
-        } catch (IOException e) {
-            System.out.println("Erro: " + e);
-        }
-
     }
 
     public static void loadFiles()
@@ -482,322 +773,40 @@ public class Sistema {
         } catch (Exception e) {
             System.out.println("Erro: " + e);
         }
-    }
-	 // MOTO
-    public void menuMotocicletaGerente(){
-        //o Gerente pode alterar
-        int op;
-       
-        do{
-            System.out.println("Menu Motocicleta");
-            System.out.println("1 - Cadastrar motocicleta");
-            System.out.println("2 - Visualizar motocicletas");
-            System.out.println("3 - Alterar informações de motocicletas");
-            System.out.println("4 - Excluir motocicleta");
-            System.out.println("5 - Sair");
-
-            op = input.nextInt();
-            input.nextLine();
-        
-        
-            switch(op){
-                case 1: 
-                    cadastrarMotocicletas();
-                break;
-                case 2:
-                    visualizarMotocicletas();
-                break;
-                case 3:
-                    alterarMotocicletas();
-                break;
-                case 4:
-                    removerMotocicleta();
-                break;
-                case 5:
-                break;               
-                default: 
-                    System.out.println("Digite uma opção válida!");
-                break;
+    
+        try {
+            FileReader arquivo = new FileReader("registroMotocicletas");
+            BufferedReader reader = new BufferedReader(arquivo);
+            while(reader.ready())
+            {
+                String dados[] = reader.readLine().split(";");
+                int cilindradas = Integer.parseInt(dados[0]);
+                String tipo = dados[1];
+                long numChassi = Long.parseLong(dados[2]);
+                String marca = dados[3];
+                String modelo = dados[4];
+                int ano = Integer.parseInt(dados[5]);
+                float kilometragem = Float.parseFloat(dados[6]);
+                String tipoCombustivel = dados[7];
+                float peso = Float.parseFloat(dados[8]);
+                boolean status = Boolean.parseBoolean(dados[9]);
+                
+                Motocicleta moto = new Motocicleta(numChassi, marca, modelo, ano, kilometragem, tipoCombustivel,
+                peso, status, cilindradas, tipo);
+                motocicletas.add(moto);
             }
-        }while(op != 5);      
-    }
+            reader.close();
+        }
+        catch (Exception e) {
+            System.out.println("Erro: " + e);
+        }
+    
+    /*
+    escritor.write(motocicletas.get(i).getCilindradas() + ";");
+    escritor.write(motocicletas.get(i).getTipo() + ";");
+     */
     
     
-    public void cadastrarMotocicletas(){
-        int ano;
-        Motocicleta novaMotocicleta = new Motocicleta();
-        
-        System.out.println("Digite as cilidradas: ");
-        novaMotocicleta.setCilindradas(input.nextInt());
-        input.nextLine();
-        
-        do{
-            System.out.println("Qual o tipo da motocicleta?");
-            System.out.println("1 - Trail");
-            System.out.println("2 - Street");
-            System.out.println("3 - Esportiva");
-            System.out.println("4 - Custom");        
-            switch(input.nextInt()){
-                case 1:
-                    novaMotocicleta.setTipo("Trail");
-                break;       
-                case 2:
-                    novaMotocicleta.setTipo("Street");
-                break;
-                case 3:
-                    novaMotocicleta.setTipo("Esportiva");
-                break;
-                case 4:
-                    novaMotocicleta.setTipo("Custom");
-                break;
-                default:
-                    System.out.println("Digite uma opção válida!");
-                break;
-            }
-        } while(input.nextInt() < 1 || input.nextInt() > 4);
-        
-             
-        
-        System.out.println("Digite o número do chassi: ");
-        novaMotocicleta.setNumChassi(input.nextInt());
-        input.nextLine();
-        
-        System.out.println("Digite a marca: ");
-        novaMotocicleta.setMarca(input.nextLine());
-        
-        System.out.println("Digite o modelo: ");
-        novaMotocicleta.setModelo(input.nextLine());
-        
-        do {
-            System.out.println("Digite o ano: ");
-            ano = input.nextInt();
-            input.nextLine();
-        } while(!Data.validarAno(ano));
-        
-        novaMotocicleta.setAno(ano);
-       
-        
-        System.out.println("Digite a kilometragem: ");
-        novaMotocicleta.setKilometragem(input.nextInt());
-        input.nextLine();
-        
-        System.out.println("Digite o tipo de combustível: ");
-        novaMotocicleta.setTipoCombustivel(input.nextLine());
-        
-        System.out.println("Digite o peso: ");
-        novaMotocicleta.setPeso(input.nextFloat());
-        input.nextLine();
-        
-        System.out.println("Digite o status: ");
-        novaMotocicleta.setStatus(input.nextBoolean());
-
-        listaMotocicletas.add(novaMotocicleta);
-        escreverMotosNoArquivo();  
-    }
-
-    public void escreverMotosNoArquivo(){
-        try{            
-            
-            FileWriter escritor = new FileWriter(arq, true);
-            //lembrar que a escrita do arquivo prossegue do ponto que parou
-            for(int i = 0; i < listaMotocicletas.size(); i++){
-                escritor.write(listaMotocicletas.get(i).getCilindradas() + "\n");
-                escritor.write(listaMotocicletas.get(i).getTipo() + "\n");
-                escritor.write(listaMotocicletas.get(i).getNumChassi() + "\n");
-                escritor.write(listaMotocicletas.get(i).getMarca() + "\n");
-                escritor.write(listaMotocicletas.get(i).getModelo() + "\n");
-                escritor.write(listaMotocicletas.get(i).getAno() + "\n");
-                escritor.write(listaMotocicletas.get(i).getKilometragem() + "\n");
-                escritor.write(listaMotocicletas.get(i).getTipoCombustivel() + "\n");
-                escritor.write(listaMotocicletas.get(i).getPeso() + "\n");
-                escritor.write(listaMotocicletas.get(i).getStatus() + "\n");
-                escritor.write("\n");
-            }                    
-            escritor.close();                        
-        }
-        catch(IOException e)
-        {
-            System.out.println("Erro" + e);
-        }
-    }
-
-
-    public void visualizarMotocicletas(){
-        for(int i = 0; i < listaMotocicletas.size(); i++){
-            System.out.printf("\nMotocicleta %d\n", i+1);
-            System.out.println("Cilidradas: " + listaMotocicletas.get(i).getCilindradas());
-            System.out.println("Tipo: " + listaMotocicletas.get(i).getTipo());
-            System.out.println("Número do chassi: " + listaMotocicletas.get(i).getNumChassi());
-            System.out.println("Marca: " + listaMotocicletas.get(i).getMarca());
-            System.out.println("Modelo: " + listaMotocicletas.get(i).getModelo());
-            System.out.println("Ano: " + listaMotocicletas.get(i).getAno());
-            System.out.println("Kilometragem: " + listaMotocicletas.get(i).getKilometragem());
-            System.out.println("Tipo de Combustível: " + listaMotocicletas.get(i).getTipoCombustivel());
-            System.out.println("Peso: " + listaMotocicletas.get(i).getPeso());
-            System.out.println("Status: " + listaMotocicletas.get(i).getStatus());
-        }
-    }
-    
-    public void alterarMotocicletas(){                
-        int opMenu;
-        int ano;
-        visualizarMotocicletas();
-        System.out.println("Qual motocicleta deseja alterar?");
-        moto = (input.nextInt() - 1);
-        
-        if (listaMotocicletas.size() == 0) 
-            System.out.println("\nNão há motocicletas cadastradas.");
-        else{
-            do {                                     
-                System.out.println("\nQual dado deseja alterar?");
-                System.out.println("1 - Alterar cilindradas");
-                System.out.println("2 - Alterar tipo");
-                System.out.println("3 - Alterar número do chassi");
-                System.out.println("4 - Alterar marca");
-                System.out.println("5 - Alterar modelo");
-                System.out.println("6 - Alterar ano");
-                System.out.println("7 - Alterar kilometragem");
-                System.out.println("8 - Alterar tipo de combustível");
-                System.out.println("9 - Alterar peso");
-                System.out.println("10 - Alterar status");
-                System.out.println("11 - Sair");
-                System.out.println("\nDigite a opção desejada: ");
-                opMenu = input.nextInt();
-                input.nextLine();
-    
-                switch (opMenu) {
-                    case 1:
-                        System.out.print("\nDigite as novas cilindradas: ");
-                        listaMotocicletas.get(moto).setCilindradas(input.nextInt());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 2:
-                    do{
-                        System.out.print("\nDigite o novo tipo: ");                        
-                        System.out.println("1 - Trail");
-                        System.out.println("2 - Street");
-                        System.out.println("3 - Esportiva");
-                        System.out.println("4 - Custom");   
-                        switch(input.nextInt()){
-                            case 1:
-                                listaMotocicletas.get(moto).setTipo("Trail");
-                            break;       
-                            case 2:
-                                listaMotocicletas.get(moto).setTipo("Street");
-                            break;
-                            case 3:
-                                listaMotocicletas.get(moto).setTipo("Esportiva");
-                            break;
-                            case 4:
-                                listaMotocicletas.get(moto).setTipo("Custom");
-                            break;
-                            default:
-                                System.out.println("Digite uma opção válida!");
-                            break;
-                        }
-                            
-                    } while(input.nextInt() < 1 || input.nextInt() > 4);   
-                        
-                           
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 3:
-                        System.out.print("\nDigite o novo número de chassi: ");
-                        listaMotocicletas.get(moto).setNumChassi(input.nextLong());    
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 4:
-                        System.out.print("\nDigite a nova marca: ");
-                        listaMotocicletas.get(moto).setMarca(input.nextLine());    
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 5:
-                        System.out.print("\nDigite o novo modelo: ");
-                        listaMotocicletas.get(moto).setModelo(input.nextLine());    
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 6:
-                        do {
-                            System.out.print("\nDigite o novo ano: ");
-                            ano = input.nextInt();
-                            input.nextLine();
-                        } while(!Data.validarAno(ano));                    
-                        listaMotocicletas.get(moto).setAno(input.nextInt());    
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 7:
-                        System.out.print("\nDigite a nova kilometragem: ");
-                        listaMotocicletas.get(moto).setKilometragem(input.nextFloat());   
-                        input.nextLine();   
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 8:
-                        System.out.print("\nDigite o novo tipo de combustível: ");
-                        listaMotocicletas.get(moto).setTipoCombustivel(input.nextLine());    
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 9:
-                        System.out.print("\nDigite o novo peso: ");
-                        listaMotocicletas.get(moto).setPeso(input.nextFloat()); 
-                        input.nextLine();     
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 10:
-                        System.out.print("\nDigite o novo status: ");                        
-                        listaMotocicletas.get(moto).setStatus(input.nextBoolean());    
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 11:
-                    break;
-                    default:
-                        System.out.println("\nDigite uma opção válida!\n");
-                    break;
-                }
-            } while(opMenu != 11);
-        }
-        
-        arq.delete();
-        escreverMotosNoArquivo();
-       
-        //leitura do arquivo
-        /* 
-        try{
-            FileReader arq_leitor = new FileReader(arq);
-            BufferedReader leitor = new BufferedReader(arq_leitor);
-            //sobrescrever uma linha do arquivo
-            
-            while(leitor.ready()){
-                System.out.println(leitor.readLine());
-            }
-            leitor.close();
-        }
-        catch(IOException e){
-            System.out.println("Erro" + e);
-        }
-        */    
     }   
 
-    public void removerMotocicleta(){
-        visualizarMotocicletas();
-        System.out.println("Qual motocicleta deseja remover?");
-        moto = (input.nextInt() - 1);		
-		input.nextLine();		
-
-		if (listaMotocicletas.size() == 0) {
-			System.out.println("\nNão há motocicletas cadastradas.");            
-		}
-        else{
-            listaMotocicletas.remove(moto);
-		    System.out.println("\n\nMotocicleta removida com sucesso!");
-        }
-
-        arq.delete();
-        escreverMotosNoArquivo();
-
     }
-}
-    
-   
-
