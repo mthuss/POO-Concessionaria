@@ -100,23 +100,23 @@ public class Sistema {
         Scanner sc = new Scanner(System.in);
 
         mostraArrayCarros();
-
-        do  {
-            System.out.print("Digite o indice do carro que deseja alterar: ");
-            indice = sc.nextInt();
-            sc.nextLine();
-
-            if (indice<1 || indice>carros.size()+1)
-                System.out.println("\tIndice inválido!");
-
-        } while (indice<1 || indice>carros.size()+1);
-        indice--; //adequa o valor do indice do elemento que será alterado
         
-    
         if (carros.size() == 0) 
             System.out.println("\nNão há carros cadastradas.");
         
         else{
+            do  {
+                System.out.print("Digite o indice do carro que deseja alterar: ");
+                indice = sc.nextInt();
+                sc.nextLine();
+
+                if (indice<1 || indice>carros.size()+1)
+                    System.out.println("\tIndice inválido!");
+
+            } while (indice<1 || indice>carros.size()+1);
+            indice--; //adequa o valor do indice do elemento que será alterado
+        
+    
                 int opMenu;
                 do {
                 System.out.println("\nQual dado deseja alterar?");
@@ -266,6 +266,33 @@ public class Sistema {
             carrosWriteFile(); //repassa pro File os dados alterados    
         }
     }
+    //------------------------------------------
+    public static void removerCarro()   {
+        mostraArrayCarros();
+        Scanner sc = new Scanner(System.in);
+
+        int indice=0;
+
+        if (carros.size() == 0) 
+            System.out.println("\nNão há carros cadastradas.");
+    
+        else{        
+
+            do  {
+                System.out.print("Digite o indice do carro que deseja remover: ");
+                indice = sc.nextInt();
+                indice--; //diminui em 1 pra adequar ao valor do arrayList pois o "mostraArrayCarros"
+                          //Mostra os valores começando no indice 1 👍
+
+                if (indice<0 || indice>carros.size())
+                    System.out.println("\tValor Inválido");
+            } while(indice<0 || indice>carros.size());
+    
+            carros.remove(indice);
+
+            carrosWriteFile();
+        }
+    }
 
     //------------------------------------------
     public static void mostraArrayCarros()  {
@@ -331,7 +358,9 @@ public class Sistema {
                 case 6: break;
                 
                 case 7: break;
-                case 8: break;
+                case 8: 
+                    removerCarro();
+                    break;
                 case 9: break;
             
                 case 10:
