@@ -376,12 +376,9 @@ public class Sistema {
 
     
     public static void cadastrarMotocicletas(){        
-        int ano;
-        Scanner input = new Scanner(System.in);
-
         Motocicleta novaMotocicleta = new Motocicleta();
         Scanner input = new Scanner(System.in);
-        
+        int ano;
         System.out.println("Digite as cilidradas: ");
         novaMotocicleta.setCilindradas(input.nextInt());
         input.nextLine();
@@ -737,7 +734,6 @@ public class Sistema {
 
     public static void usuariosWriteFile()
     {
-        {
             try
             {
                 File arquivo = new File("registroGerentes");
@@ -786,7 +782,7 @@ public class Sistema {
                 float salario = Float.parseFloat(dados[4]);
                 int anosExp = Integer.parseInt(dados[5]);
                 Gerente gerente = new Gerente(RG,dados[1],dataNasc,dataAdmissao,salario,anosExp,dados[6],dados[7]);
-                gerentes.put(gerente.getLogin(),gerente);
+                usuarios.put(gerente.getLogin(),gerente);
             }
             reader.close();
         }
@@ -884,12 +880,12 @@ public class Sistema {
             System.out.println("Erro: " + e);
         }
     
+    }   
     /*
     escritor.write(motocicletas.get(i).getCilindradas() + ";");
     escritor.write(motocicletas.get(i).getTipo() + ";");
      */
     
     
-    }   
 
-    }
+}
