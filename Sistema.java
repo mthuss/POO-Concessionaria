@@ -866,7 +866,8 @@ public class Sistema {
 
         input.nextLine();
         String login_adm;
-        Gerente pesquisa;
+        Gerente gerente;
+        Funcionario pesquisa;
         boolean temGerente = false;
         for (Funcionario f : usuarios.values()) {
             if (f instanceof Gerente)
@@ -876,9 +877,12 @@ public class Sistema {
             do {
                 System.out.print("Digite o login do gerente responsável: ");
                 login_adm = input.nextLine();
-                pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm);
+                pesquisa = Sistema.getMapUsuarios().get(login_adm);
                 if (pesquisa != null && pesquisa instanceof Gerente) {
-                    novoVendedor.setGerente(pesquisa);
+                {
+                    gerente = (Gerente) pesquisa;
+                    novoVendedor.setGerente(gerente);
+                }
                 } else {
                     System.out.println("Digite um login válido!");
                 }

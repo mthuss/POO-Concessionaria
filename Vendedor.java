@@ -80,7 +80,8 @@ public class Vendedor extends Funcionario {
         input.nextLine();
 
         String login_adm;
-        Gerente pesquisa;
+        Gerente gerente;
+        Funcionario pesquisa;
         Map<String, Funcionario> usuarios = Sistema.getMapUsuarios();
         boolean temGerente = false;
         for (Funcionario f : usuarios.values()) {
@@ -91,9 +92,10 @@ public class Vendedor extends Funcionario {
             do {
                 System.out.print("Digite o login do gerente responsável: ");
                 login_adm = input.nextLine();
-                pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm);
+                pesquisa = Sistema.getMapUsuarios().get(login_adm);
                 if (pesquisa != null && pesquisa instanceof Gerente) {
-                    this.setGerente(pesquisa);
+                    gerente = (Gerente) pesquisa;
+                    this.setGerente(gerente);
                 } else {
                     System.out.println("Digite um login válido!");
                 }
