@@ -1372,12 +1372,11 @@ public class Sistema {
         return usuarios;
     }
 
-    public static void usuariosWriteFile() {
+    public static void gerentesWriteFile() {
 
         try {
             File arquivo = new File("registroGerentes");
             FileWriter gWriter = new FileWriter(arquivo, false);
-            FileWriter vWriter = new FileWriter(new File("registroVendedores"), false);
             for (Funcionario f : usuarios.values()) {
                 if (f instanceof Gerente) {
 
@@ -1387,20 +1386,43 @@ public class Sistema {
                             + g.getLogin() + ";" + g.getSenha() + "\n");
                 }
             }
+           gWriter.close();
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
+    }
+
+    public static void vendedoresWriteFile()
+    {
+        try{
+            FileWriter vWriter = new FileWriter(new File("registroVendedores"), false);
             for (Funcionario f : usuarios.values()) {
                 if (f instanceof Vendedor) {
                     Vendedor v = (Vendedor) f;
                     // Pra parte do gerente, ele vai salvar o login do gerente no arquivo.
+                    if(v.getLogin() != null)
                     vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";"
                             + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";"
                             + v.getGerente().getLogin() + ";" + v.getLogin() + ";" + v.getSenha() + "\n");
+                    else
+                    vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";"
+                            + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";"
+                            + "null" + ";" + v.getLogin() + ";" + v.getSenha() + "\n");
+//                if(v.getLogin() == null)
+//                    System.out.println("PROBLEMA NO LOGIN");
+//                if(v.getDataAdmissao() == null)
+//                    System.out.println("PROBLEMA NA DATA DE ADMISSAO");
+//                if(v.getDataNasc() == null)
+//                    System.out.println("PROBLEMA NA DATA DE NASCIMENTO");
                 }
             }
-            gWriter.close();
             vWriter.close();
-        } catch (IOException e) {
+        }
+        catch(IOException e)
+        {
             System.out.println("Erro: " + e);
         }
+ 
     }
 
     public static void loadFiles() {

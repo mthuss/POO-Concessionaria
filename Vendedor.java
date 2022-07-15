@@ -29,11 +29,10 @@ public class Vendedor extends Funcionario {
     public void cadastrar(String login) {
         Scanner input = new Scanner(System.in);
         String senha, confirSenha;
-        Vendedor novoVendedor = new Vendedor();
         System.out.print("Digite o nome do vendedor: ");
-        novoVendedor.setNome(input.nextLine());
+        this.setNome(input.nextLine());
         System.out.print("Digite o RG do vendedor: ");
-        novoVendedor.setRG(input.nextLong());
+        this.setRG(input.nextLong());
         System.out.println("Digite a data de nascimento do vendedor: ");
         int dia, mes, ano;
         do {
@@ -52,7 +51,7 @@ public class Vendedor extends Funcionario {
         } while (!Data.validarAno(ano));
 
         Data dataNasc = new Data(dia, mes, ano);
-        novoVendedor.setDataNasc(dataNasc);
+        this.setDataNasc(dataNasc);
 
         System.out.println("Digite a data de admissão o vendedor: ");
         do {
@@ -71,13 +70,13 @@ public class Vendedor extends Funcionario {
         } while (!Data.validarAno(ano));
 
         Data dataAdmissao = new Data(dia, mes, ano);
-        novoVendedor.setDataAdmissao(dataAdmissao);
+        this.setDataAdmissao(dataAdmissao);
 
         System.out.print("Digite o salário do vendedor:\nR$");
-        novoVendedor.setSalario(input.nextFloat());
+        this.setSalario(input.nextFloat());
 
         System.out.print("Digite o tempo de treinamento:");
-        novoVendedor.setTempoRestante(input.nextFloat());
+        this.setTempoRestante(input.nextFloat());
         input.nextLine();
 
         String login_adm;
@@ -94,13 +93,13 @@ public class Vendedor extends Funcionario {
                 login_adm = input.nextLine();
                 pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm);
                 if (pesquisa != null && pesquisa instanceof Gerente) {
-                    novoVendedor.setGerente(pesquisa);
+                    this.setGerente(pesquisa);
                 } else {
                     System.out.println("Digite um login válido!");
                 }
             } while (pesquisa == null || !(pesquisa instanceof Gerente));
         } else
-            novoVendedor.setGerente(null);
+            this.setGerente(null);
 
         System.out.println("Crie uma senha para o vendedor:");
         // input.nextLine();
@@ -112,8 +111,8 @@ public class Vendedor extends Funcionario {
             if (!senha.equals(confirSenha))
                 System.out.println("As senhas digitadas não são iguais! Tente novamente");
         } while (!senha.equals(confirSenha));
-        novoVendedor.setLogin(login);
-        novoVendedor.setSenha(senha);
+        this.setLogin(login);
+        this.setSenha(senha);
 
     }
 

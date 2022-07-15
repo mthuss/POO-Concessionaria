@@ -87,6 +87,10 @@ public class Main {
 						Vendedor novoVendedor = new Vendedor();
 						novoVendedor.cadastrar(login);
 						Sistema.addVendedor(novoVendedor);
+						if(Sistema.getMapUsuarios().get(novoVendedor.getLogin()) != null)
+							System.out.println("Cadastrado com sucesso! Tente fazer login novamente");
+						else
+							System.out.println("Algo deu errado!!");
 						// Fazer processo similar mas pra classe de vendedor
 
 					}
@@ -105,7 +109,8 @@ public class Main {
 		// sc.close();
 
 		// Atualiza os arquivos de registro
-		Sistema.usuariosWriteFile();
+		Sistema.gerentesWriteFile();
+		Sistema.vendedoresWriteFile();
 		Sistema.carrosWriteFile();
 		// Sistema.motosWriteFile();
 
