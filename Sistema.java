@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Sistema {
 
-	  public static Map<String,Funcionario> usuarios = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
+	public static Map<String,Funcionario> usuarios = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
     public static ArrayList <Carro> carros = new ArrayList<>();        
     public static ArrayList<Cliente> listaClientes = new ArrayList<>();
     public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
@@ -14,7 +14,7 @@ public class Sistema {
     public static void menuVendedor(Vendedor vendedor)
     {
         int op;
-
+        Scanner input = new Scanner(System.in);
         do{
         System.out.println("Menu Vendedor: ");
         System.out.println("1 - Visualizar Veículos");
@@ -694,27 +694,41 @@ public class Sistema {
             sc.nextLine();
 
             switch(op_adm)  {
-                case 1: break;
+                case 1: 
+                    cadastrarCliente();
+                    break;
                 case 2: 
-                    cadastrarCarro();
+                    cadastrarVendedor();
                     break;
                 case 3: 
+                    cadastrarCarro();
+                    break;
+                case 4:
                     cadastrarMotocicletas();
                     break;
-
-                case 4: break;
                 case 5: 
-                    alterarCarros();
+                    alterarCliente();
                     break;
                 case 6: 
-                    alterarMotocicletas();
+                    alterarVendedor();
                     break;
                 
-                case 7: break;
+                case 7: 
+                    alterarCarros();
+                    break;
                 case 8: 
-                    removerCarro();
+                    alterarMotocicletas();
                     break;
                 case 9: 
+                    removerCliente();
+                    break;
+                case 10:
+                    removerVendedor();
+                    break;
+                case 11:
+                    removerCarro();
+                    break;
+                case 12:
                     removerMotocicleta();
                     break;
             
@@ -740,43 +754,47 @@ public class Sistema {
     }
 
     //Vendedor -------------------------------------------------
-    public void menuVendedoresGerente(){
-        int op;
+    //PASSAR AS FUNÇÕES DESSE MENU PRO MENU GERENTE PRINCIPAL
 
-        do{
-            System.out.println("Menu Vendedores");
-            System.out.println("1 - Cadastrar um novo vendedor");
-            System.out.println("2 - Visualizar vendedores");
-            System.out.println("3 - Alterar informações de um vendedor");
-            System.out.println("4 - Excluir um vendedor");
-            System.out.println("5 - Sair");
+//    public void menuVendedoresGerente(){
+//        int op;
+//
+//        Scanner input = new Scanner(System.in);
+//        do{
+//            System.out.println("Menu Vendedores");
+//            System.out.println("1 - Cadastrar um novo vendedor");
+//            System.out.println("2 - Visualizar vendedores");
+//            System.out.println("3 - Alterar informações de um vendedor");
+//            System.out.println("4 - Excluir um vendedor");
+//            System.out.println("5 - Sair");
+//
+//            op = input.nextInt();
+//            input.nextLine();
+//
+//            switch(op){
+//                case 1:
+//                    cadastrarVendedor();
+//                break;
+//                case 2:
+//                    listarVendedores();
+//                break;
+//                case 3:
+//                    alterarVendedor();
+//                break;
+//                case 4:
+//                    removerVendedor();
+//                break;
+//                case 5:
+//                break;
+//                default:
+//                    System.out.println("Digite uma opção válida!");
+//                break;
+//            }
+//        }while(op != 5);  
+//    }
 
-            op = input.nextInt();
-            input.nextLine();
-
-            switch(op){
-                case 1:
-                    cadastrarVendedor();
-                break;
-                case 2:
-                    listarVendedores();
-                break;
-                case 3:
-                    alterarVendedor();
-                break;
-                case 4:
-                    removerVendedor();
-                break;
-                case 5:
-                break;
-                default:
-                    System.out.println("Digite uma opção válida!");
-                break;
-            }
-        }while(op != 5);  
-    }
-
-    public void cadastrarVendedor(){
+    public static void cadastrarVendedor(){
+        Scanner input = new Scanner(System.in);
         String senha,confirSenha;
         Vendedor novoVendedor = new Vendedor();
         System.out.print("Digite o nome do vendedor: ");
@@ -831,7 +849,7 @@ public class Sistema {
         System.out.print("Digite o login do gerente responsável: ");
         input.nextLine();
 		String login_adm = input.nextLine();
-		Gerente pesquisa = Sistema.getMapGerentes().get(login_adm);
+		Gerente pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm);
         if(pesquisa != null){
             novoVendedor.setGerente(pesquisa);
         }
@@ -839,7 +857,7 @@ public class Sistema {
             System.out.print("Digite um login válido!");
         }
 
-        listaVendedores.add(novoVendedor);
+        usuarios.put(novoVendedor.getLogin(),novoVendedor);
 
         System.out.println("Crie um login e senha para o vendedor:");
         input.nextLine();
@@ -855,191 +873,233 @@ public class Sistema {
         }while(!senha.equals(confirSenha));
         novoVendedor.setLogin(login);
         novoVendedor.setSenha(senha);
-
-        escreverVendedoresNoArquivo();
     }
 
-    public void escreverVendedoresNoArquivo(){
-        try{            
-            
-            FileWriter escritor = new FileWriter(arqVendedor, true);
-            for(int i = 0; i < listaVendedores.size(); i++){
-                escritor.write(listaVendedores.get(i).getNome() + "\n");
-                escritor.write(listaVendedores.get(i).getRG() + "\n");
-                escritor.write(listaVendedores.get(i).getDataNasc() + "\n");
-                escritor.write(listaVendedores.get(i).getDataAdmissao() + "\n");
-                escritor.write(listaVendedores.get(i).getSalario() + "\n");
-                escritor.write(listaVendedores.get(i).getTempoRestante() + "\n");
-                escritor.write(listaVendedores.get(i).getGerente().getNome() + "\n");
-                escritor.write("\n");
-            }                    
-            escritor.close();                        
-        }
-        catch(IOException e)
-        {
-            System.out.println("Erro" + e);
-        }
-    }
+    //Função substituida por usuariosWriteFile();
+//    public void escreverVendedoresNoArquivo(){
+//        try{            
+//            
+//            FileWriter escritor = new FileWriter("registroVendedores", true);
+//            for(int i = 0; i < listaVendedores.size(); i++){
+//                escritor.write(listaVendedores.get(i).getNome() + "\n");
+//                escritor.write(listaVendedores.get(i).getRG() + "\n");
+//                escritor.write(listaVendedores.get(i).getDataNasc() + "\n");
+//                escritor.write(listaVendedores.get(i).getDataAdmissao() + "\n");
+//                escritor.write(listaVendedores.get(i).getSalario() + "\n");
+//                escritor.write(listaVendedores.get(i).getTempoRestante() + "\n");
+//                escritor.write(listaVendedores.get(i).getGerente().getNome() + "\n");
+//                escritor.write("\n");
+//            }                    
+//            escritor.close();                        
+//        }
+//        catch(IOException e)
+//        {
+//            System.out.println("Erro" + e);
+//        }
+//    }
 
     public void listarVendedores(){
-        for(int i = 0; i < listaVendedores.size(); i++){
-            System.out.println("Nome: " + listaVendedores.get(i).getNome());
-            System.out.println("RG: " + listaVendedores.get(i).getRG());
-            System.out.println("Data de Nascimento: " + listaVendedores.get(i).getDataNasc());
-            System.out.println("Data de Admissão: " + listaVendedores.get(i).getDataAdmissao());
-            System.out.println("Salário: " + listaVendedores.get(i).getSalario());
-            System.out.println("Tempo de Experiência Restante: " + listaVendedores.get(i).getTempoRestante() + "h");
-            System.out.println("Gerente Responsável: " + listaVendedores.get(i).getGerente().getNome());
-        }
-    }
-
-    public void alterarVendedor(){
-        int op;
-        int dia, mes, ano;
-        Data novaData;
-        String senha,confirSenha;
-        listarVendedores();
-        System.out.println("Qual vendedor deseja alterar?");
-        vendedor = (input.nextInt() - 1);
-        if (listaMotocicletas.size() == 0) 
-            System.out.println("\nNão há motocicletas cadastradas.");
-        else{
-            do{
-                System.out.println("\nQual dado deseja alterar?");
-                System.out.println("1 - Alterar Nome");
-                System.out.println("2 - Alterar RG");
-                System.out.println("3 - Alterar Data de Nascimento");
-                System.out.println("4 - Alterar Data de Admissão");
-                System.out.println("5 - Alterar Salário");
-                System.out.println("6 - Alterar Tempo restante de experiência");
-                System.out.println("7 - Alterar Gerente Responsável");
-                System.out.println("8 - Alterar login");
-                System.out.println("9 - Alterar senha");
-                System.out.println("10 - Sair");
-                System.out.println("\nDigite a opção desejada: ");
-                op = input.nextInt();
-                input.nextLine();
+        Vendedor v;
+        for(Funcionario f : usuarios.values())
+            if(f instanceof Vendedor)
+            {
+                v = (Vendedor) f;
+                v.imprimirDados();
+            }
                 
-                switch(op){
-                    case 1:
-                        System.out.print("\nDigite o novo nome: ");
-                        listaVendedores.get(vendedor).setNome(input.nextLine());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 2:
-                        System.out.print("\nDigite o novo RG: ");
-                        listaVendedores.get(vendedor).setRG(input.nextLong());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 3:
-                        System.out.println("\nDigite a nova data de nascimento: ");
-                        do{
-                            System.out.print("Dia: ");
-                            dia = input.nextInt();
-                        }while(!Data.validarDia(dia));
-
-                        do{
-                            System.out.print("Mês: ");
-                            mes = input.nextInt();
-                        }while(!Data.validarMes(mes));
-
-                        do{
-                            System.out.print("Ano: ");
-                            ano = input.nextInt();
-                        }while(!Data.validarAno(ano));
-                        novaData = new Data(dia, mes, ano);
-                        listaVendedores.get(vendedor).setDataNasc(novaData);
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 4:
-                        System.out.println("\nDigite a nova data de admissão: ");
-                        do{
-                            System.out.print("Dia: ");
-                            dia = input.nextInt();
-                        }while(!Data.validarDia(dia));
-
-                        do{
-                            System.out.print("Mês: ");
-                            mes = input.nextInt();
-                        }while(!Data.validarMes(mes));
-
-                        do{
-                            System.out.print("Ano: ");
-                            ano = input.nextInt();
-                        }while(!Data.validarAno(ano));
-                        novaData = new Data(dia, mes, ano);
-                        listaVendedores.get(vendedor).setDataAdmissao(novaData);
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 5:
-                        System.out.print("\nDigite o novo Salário: R$ ");
-                        listaVendedores.get(vendedor).setSalario(input.nextLong());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 6:
-                        System.out.print("\nDigite o novo tempo restante: ");
-                        listaVendedores.get(vendedor).setSalario(input.nextInt());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 7:
-                        System.out.print("\nDigite o login do novo gerente responsável: ");
-                        input.nextLine();
-                        String login_adm = input.nextLine();
-                        Gerente pesquisa = Sistema.getMapGerentes().get(login_adm);
-                        if(pesquisa != null){
-                            listaVendedores.get(vendedor).setGerente(pesquisa);
-                            System.out.println("\n\n==> Dados atualizados com sucesso!");
-                        }
-                        else{
-                            System.out.print("Digite um login válido!");
-                        }
-                    break;
-                    case 8:
-                        System.out.print("\nDigite o novo login: ");
-                        listaVendedores.get(vendedor).setLogin(input.nextLine());  
-                        input.nextLine();  
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    case 9:
-                        do{
-                            System.out.print("Digite a nova senha: ");
-                            senha = input.nextLine();
-                            System.out.print("Confirme a senha: ");
-                            confirSenha = input.nextLine();
-                            if(!senha.equals(confirSenha))
-                                System.out.println("As senhas digitadas não são iguais! Tente novamente");
-                        }while(!senha.equals(confirSenha));
-                        listaVendedores.get(vendedor).setSenha(senha);
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    break;
-                    default:
-                        System.out.println("Digite uma opção válida!");
-                    break;
-
-                }
-            }while(op != 10);
-    }
-    arqVendedor.delete();
-    escreverVendedoresNoArquivo();
+       
     }
 
-    public void removerVendedor(){
-        listarVendedores();
-        System.out.println("Qual vendedor deseja excluir?");
-        vendedor = (input.nextInt() - 1);		
-    		input.nextLine();		
+    //VAI SER SUBSTITUIDA POR UMA OPÇÃO NO MENU VENDEDOR USANDO O MÉTODO DA CLASSE
+    //NAO VAI NAO. PRECISA EXISTIR PRO GERENTE PODER ALTERAR OS DADOS DO VENDEDOR TBM
+//    public static void alterarVendedor(){
+//        int op;
+//        int dia, mes, ano;
+//        Data novaData;
+//        String senha,confirSenha;
+//        listarVendedores();
+//        System.out.println("Qual vendedor deseja alterar?");
+//        vendedor = (input.nextInt() - 1);
+//        if (listaMotocicletas.size() == 0) 
+//            System.out.println("\nNão há motocicletas cadastradas.");
+//        else{
+//            do{
+//                System.out.println("\nQual dado deseja alterar?");
+//                System.out.println("1 - Alterar Nome");
+//                System.out.println("2 - Alterar RG");
+//                System.out.println("3 - Alterar Data de Nascimento");
+//                System.out.println("4 - Alterar Data de Admissão");
+//                System.out.println("5 - Alterar Salário");
+//                System.out.println("6 - Alterar Tempo restante de experiência");
+//                System.out.println("7 - Alterar Gerente Responsável");
+//                System.out.println("8 - Alterar login");
+//                System.out.println("9 - Alterar senha");
+//                System.out.println("10 - Sair");
+//                System.out.println("\nDigite a opção desejada: ");
+//                op = input.nextInt();
+//                input.nextLine();
+//                
+//                switch(op){
+//                    case 1:
+//                        System.out.print("\nDigite o novo nome: ");
+//                        listaVendedores.get(vendedor).setNome(input.nextLine());  
+//                        input.nextLine();  
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 2:
+//                        System.out.print("\nDigite o novo RG: ");
+//                        listaVendedores.get(vendedor).setRG(input.nextLong());  
+//                        input.nextLine();  
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 3:
+//                        System.out.println("\nDigite a nova data de nascimento: ");
+//                        do{
+//                            System.out.print("Dia: ");
+//                            dia = input.nextInt();
+//                        }while(!Data.validarDia(dia));
+//
+//                        do{
+//                            System.out.print("Mês: ");
+//                            mes = input.nextInt();
+//                        }while(!Data.validarMes(mes));
+//
+//                        do{
+//                            System.out.print("Ano: ");
+//                            ano = input.nextInt();
+//                        }while(!Data.validarAno(ano));
+//                        novaData = new Data(dia, mes, ano);
+//                        listaVendedores.get(vendedor).setDataNasc(novaData);
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 4:
+//                        System.out.println("\nDigite a nova data de admissão: ");
+//                        do{
+//                            System.out.print("Dia: ");
+//                            dia = input.nextInt();
+//                        }while(!Data.validarDia(dia));
+//
+//                        do{
+//                            System.out.print("Mês: ");
+//                            mes = input.nextInt();
+//                        }while(!Data.validarMes(mes));
+//
+//                        do{
+//                            System.out.print("Ano: ");
+//                            ano = input.nextInt();
+//                        }while(!Data.validarAno(ano));
+//                        novaData = new Data(dia, mes, ano);
+//                        listaVendedores.get(vendedor).setDataAdmissao(novaData);
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 5:
+//                        System.out.print("\nDigite o novo Salário: R$ ");
+//                        listaVendedores.get(vendedor).setSalario(input.nextLong());  
+//                        input.nextLine();  
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 6:
+//                        System.out.print("\nDigite o novo tempo restante: ");
+//                        listaVendedores.get(vendedor).setSalario(input.nextInt());  
+//                        input.nextLine();  
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 7:
+//                        System.out.print("\nDigite o login do novo gerente responsável: ");
+//                        input.nextLine();
+//                        String login_adm = input.nextLine();
+//                        Gerente pesquisa = Sistema.getMapGerentes().get(login_adm);
+//                        if(pesquisa != null){
+//                            listaVendedores.get(vendedor).setGerente(pesquisa);
+//                            System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                        }
+//                        else{
+//                            System.out.print("Digite um login válido!");
+//                        }
+//                    break;
+//                    case 8:
+//                        System.out.print("\nDigite o novo login: ");
+//                        listaVendedores.get(vendedor).setLogin(input.nextLine());  
+//                        input.nextLine();  
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    case 9:
+//                        do{
+//                            System.out.print("Digite a nova senha: ");
+//                            senha = input.nextLine();
+//                            System.out.print("Confirme a senha: ");
+//                            confirSenha = input.nextLine();
+//                            if(!senha.equals(confirSenha))
+//                                System.out.println("As senhas digitadas não são iguais! Tente novamente");
+//                        }while(!senha.equals(confirSenha));
+//                        listaVendedores.get(vendedor).setSenha(senha);
+//                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+//                    break;
+//                    default:
+//                        System.out.println("Digite uma opção válida!");
+//                    break;
+//
+//                }
+//            }while(op != 10);
+//    }
+//    arqVendedor.delete();
+//    escreverVendedoresNoArquivo();
+//    }
 
-		    if (listaVendedores.size() == 0) {
-    			System.out.println("\nNão há vendedores cadastrados.");            
-    		}
-        else{
-           listaVendedores.remove(vendedor);
-    		    System.out.println("\n\nVendedor excluído com sucesso!");
+    public static void alterarVendedor()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o login do vendedor que deseja remover: ");
+        System.out.print("Login: ");
+        Funcionario pesquisa = usuarios.get(sc.nextLine());
+        if(pesquisa != null && pesquisa instanceof Vendedor)
+        {  
+            Vendedor vend = (Vendedor) pesquisa;
+            String auxLogin = vend.getLogin();
+            vend.alterar();
+            if(!auxLogin.equals(vend.getLogin())) //Chave do hashmap (login) foi alterada
+            {
+                //atualiza a chave no hashmap (remove e reinsere com a chave nova)
+                usuarios.remove(auxLogin);
+                usuarios.put(vend.getLogin(),vend);
+            }
+            System.out.println("Vendedor alterado com sucesso!");
         }
+        else if(pesquisa != null && !(pesquisa instanceof Vendedor))
+        {
+            System.out.println("O usuário especificado não é um vendedor!");
+        }
+        else System.out.println("Usuário não encontrado");
+ 
+    }
+    public static void removerVendedor(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o login do vendedor que deseja remover: ");
+        System.out.print("Login: ");
+        Funcionario pesquisa = usuarios.get(sc.nextLine());
+        if(pesquisa != null && pesquisa instanceof Vendedor)
+        {
+           usuarios.remove(pesquisa.getLogin());
+           System.out.println("Vendedor excluído com sucesso!");
+        }
+        else if(pesquisa != null && !(pesquisa instanceof Vendedor))
+        {
+            System.out.println("O usuário especificado não é um vendedor!");
+        }
+        else System.out.println("Usuário não encontrado");
+ 
+//        listarVendedores();
+//        System.out.println("Qual vendedor deseja excluir?");
+//        vendedor = (input.nextInt() - 1);		
+//    		input.nextLine();		
+//
+//		    if (listaVendedores.size() == 0) {
+//    			System.out.println("\nNão há vendedores cadastrados.");            
+//    		}
+//        else{
+//           listaVendedores.remove(vendedor);
+//    		    System.out.println("\n\nVendedor excluído com sucesso!");
+   }
 
 
     //CLIENTE
@@ -1276,8 +1336,6 @@ public class Sistema {
 
     }
     
-    
-}
 
     public static Map<String,Funcionario> getMapUsuarios()
     {
@@ -1286,6 +1344,8 @@ public class Sistema {
 
     public static void usuariosWriteFile()
     {
+        Gerente g;
+        Vendedor v;
             try
             {
                 File arquivo = new File("registroGerentes");
@@ -1295,12 +1355,12 @@ public class Sistema {
                 {
                     if(f instanceof Gerente)
                     {
-                        Gerente g = (Gerente) f;
+                        g = (Gerente) f;
                         gWriter.write(g.getRG() + ";" + g.getNome() + ";" + g.getDataNasc().criarData() + ";" + g.getDataAdmissao().criarData() + ";" + g.getSalario() + ";" + g.getAnosExp() + ";" + g.getLogin() + ";" + g.getSenha()+"\n");
                     }
                     else if(f instanceof Vendedor)
                     {
-                        Vendedor v = (Vendedor) f;
+                        v = (Vendedor) f;
                         //Pra parte do gerente, ele vai salvar o login do gerente no arquivo.
                         vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";" + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";" + v.getGerente().getLogin() + ";" + v.getLogin() + ";" + v.getSenha()+"\n");
                     }
