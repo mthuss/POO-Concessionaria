@@ -901,6 +901,7 @@ public class Sistema {
             if (f instanceof Vendedor) {
                 v = (Vendedor) f;
                 v.imprimirDados();
+                System.out.println("");
             }
     }
 
@@ -1403,8 +1404,8 @@ public class Sistema {
             BufferedReader reader = new BufferedReader(arquivo);
             while (reader.ready()) {
                 String dados[] = reader.readLine().split(";");
-                for (int i = 0; i < dados.length; i++)
-                    System.out.println("dados[" + i + "] : " + dados[i]);
+//                for (int i = 0; i < dados.length; i++)
+  //                  System.out.println("dados[" + i + "] : " + dados[i]);
 
                 String DMA[] = dados[2].split("/");
                 Data dataNasc = new Data(Integer.parseInt(DMA[0]), Integer.parseInt(DMA[1]), Integer.parseInt(DMA[2]));
@@ -1494,8 +1495,8 @@ public class Sistema {
             BufferedReader reader = new BufferedReader(arquivo);
             while (reader.ready()) {
                 String dados[] = reader.readLine().split(";");
-                for (int i = 0; i < dados.length; i++)
-                    System.out.println("dados[" + i + "] : " + dados[i]);
+//                for (int i = 0; i < dados.length; i++)
+//                    System.out.println("dados[" + i + "] : " + dados[i]);
                 long CPF = Long.parseLong(dados[0]);
                 String nome = dados[1];
                 String DMA[] = dados[2].split("/");
