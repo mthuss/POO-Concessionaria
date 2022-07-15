@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class Sistema {
 
 	  public static Map<String,Funcionario> usuarios = new HashMap<>();  //Idealmente, mover isso para o Sistema.java. 
-    public static ArrayList <Carro> carros = new ArrayList<>();
+    public static ArrayList <Carro> carros = new ArrayList<>();        
+    public static ArrayList<Cliente> listaClientes = new ArrayList<>();
     public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
     
     public static void menuVendedor(Vendedor vendedor)
@@ -98,13 +99,13 @@ public class Sistema {
 
             //aqui seria o status mas será falso por padrão
 
-            System.out.print("Potência em cavalos: "); //em cavalos?
+            System.out.print("Potência em cavalos: "); //int
             int auxPotencia = scan.nextInt();
 
-            System.out.print("Número de cilindros: ");
+            System.out.print("Número de cilindros: "); //int
             int auxCilindros = scan.nextInt();
 
-            System.out.print("Numero de assentos: ");
+            System.out.print("Numero de assentos: "); //int
             int auxAssentos = scan.nextInt();
 
             int auxTipo; //para o tipo de carro
@@ -134,7 +135,6 @@ public class Sistema {
 
             carros.add(car);
             carrosWriteFile();
-
     }
 
     //------------------------------------------
@@ -154,7 +154,6 @@ public class Sistema {
                 indice = sc.nextInt();
                 sc.nextLine();
                 indice--;
-
                 if (indice<0 || indice>carros.size()-1)
                     System.out.println("\tIndice inválido!");
 
@@ -186,7 +185,6 @@ public class Sistema {
                         System.out.print("\nDigite o numero do chassi: ");
                         auxChassi = sc.nextLong();
                         carros.get(indice).setNumChassi(auxChassi);
-
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
 
@@ -195,7 +193,6 @@ public class Sistema {
                         System.out.print("\nDigite a marca: ");
                         auxMarca = sc.nextLine();
                         carros.get(indice).setMarca(auxMarca);
-
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
 
@@ -377,50 +374,10 @@ public class Sistema {
         }
     }
 
-
 	 
     //------------------------------------------
     //Motos
     //------------------------------------------
-    public void menuMotocicletaGerente(){
-        //o Gerente pode alterar
-        int op;
-        Scanner input = new Scanner(System.in);
-        do{
-            System.out.println("Menu Motocicleta");
-            System.out.println("1 - Cadastrar motocicleta");
-            System.out.println("2 - Visualizar motocicletas");
-            System.out.println("3 - Alterar informações de motocicletas");
-            System.out.println("4 - Excluir motocicleta");
-            System.out.println("5 - Sair");
-
-            op = input.nextInt();
-            input.nextLine();
-        
-        
-            switch(op){
-                case 1: 
-                    cadastrarMotocicletas();
-                break;
-                case 2:
-                    visualizarMotocicletas();
-                break;
-                case 3:
-                    alterarMotocicletas();
-                break;
-                case 4:
-                    removerMotocicleta();
-                break;
-                case 5:
-                break;               
-                default: 
-                    System.out.println("Digite uma opção válida!");
-                break;
-            }
-        }while(op != 5);      
-    }
-
-    
     public static void cadastrarMotocicletas(){        
         Motocicleta novaMotocicleta = new Motocicleta();
         Scanner input = new Scanner(System.in);
@@ -491,18 +448,16 @@ public class Sistema {
         escreverMotosNoArquivo();  
     }
 
-
     //------------------------------------------
-
 
     public static void alterarMotocicletas(){                
         int opMenu;
         int ano;
         Scanner input = new Scanner(System.in);
-        int moto;
-
-
         visualizarMotocicletas();
+        System.out.println("Qual motocicleta deseja alterar?");
+        int moto = (input.nextInt() - 1);
+
         
         if (motocicletas.size() == 0) 
         System.out.println("\nNão há motocicletas cadastradas.");
@@ -631,9 +586,10 @@ public class Sistema {
 
     public static void removerMotocicleta(){
         Scanner input = new Scanner(System.in);
-        int moto=0;
-
         visualizarMotocicletas();
+        System.out.println("Qual motocicleta deseja remover?");
+        int moto = (input.nextInt() - 1);
+        
         if (motocicletas.size() == 0) {
             System.out.println("\nNão há motocicletas cadastradas.");            
         }
@@ -712,22 +668,24 @@ public class Sistema {
 
 
         do  {
-            System.out.println("\nMenu Gerente: ");
+                        System.out.println("\nMenu Gerente: ");
             System.out.println("\n\t--Cadastros:--");
-            System.out.println("1 - Cadastrar Vendedor");
-            System.out.println("2 - Cadastrar Carro");
-            System.out.println("3 - Cadastrar Motocicleta");
+            System.out.println("1 - Cadastrar Cliente");
+            System.out.println("2 - Cadastrar Vendedor");
+            System.out.println("3 - Cadastrar Carro");
+            System.out.println("4 - Cadastrar Motocicleta");            
 
             System.out.println("\n\t--Alteração:--");
-            System.out.println("4 - Alterar dados do Vendedor");
-            System.out.println("5 - Alterar dados do Carro");
-            System.out.println("6 - Alterar dados do Motocicleta");
-            System.out.println("99 - Alterar meu cadastro");
+            System.out.println("5 - ALterar dados do Cliente");
+            System.out.println("6 - Alterar dados do Vendedor");
+            System.out.println("7 - Alterar dados do Carro");
+            System.out.println("8 - Alterar dados do Motocicleta");
         
             System.out.println("\n\t--Exclusão:--");
-            System.out.println("7 - Remover dados do Vendedor");
-            System.out.println("8 - Remover dados do Carro");
-            System.out.println("9 - Remover dados do Motocicleta");
+            System.out.println("9 - Remover Cliente");
+            System.out.println("10 - Remover Vendedor");
+            System.out.println("11 - Remover Carro");
+            System.out.println("12 - Remover Motocicleta");
 
             System.out.println("\n0 - Sair");
 
@@ -1073,21 +1031,252 @@ public class Sistema {
         listarVendedores();
         System.out.println("Qual vendedor deseja excluir?");
         vendedor = (input.nextInt() - 1);		
-		input.nextLine();		
+    		input.nextLine();		
 
-		if (listaVendedores.size() == 0) {
-			System.out.println("\nNão há vendedores cadastrados.");            
-		}
+		    if (listaVendedores.size() == 0) {
+    			System.out.println("\nNão há vendedores cadastrados.");            
+    		}
         else{
-            listaVendedores.remove(vendedor);
-		    System.out.println("\n\nVendedor excluído com sucesso!");
+           listaVendedores.remove(vendedor);
+    		    System.out.println("\n\nVendedor excluído com sucesso!");
         }
 
-        arqVendedor.delete();
-        escreverVendedoresNoArquivo();
+
+    //CLIENTE
+    //Parte de arquivos 
+    //METODOS DA CLASSE
+    // CLIENTE
+    public static void cadastrarCliente(){
+        Scanner input = new Scanner(System.in);
+        int dia, mes, ano;     
+        Data novaData = new Data(); 
+        Cliente novoCliente = new Cliente();
+        
+        System.out.println("Digite o CPF: ");
+        novoCliente.setCPF(input.nextInt());
+        input.nextLine();
+
+        System.out.println("Digite o nome: ");
+        novoCliente.setNome(input.nextLine());
+        input.nextLine();
+
+        System.out.println("Digite a data de nascimento: ");
+        do{
+            System.out.print("Dia: ");
+            dia = input.nextInt();
+            input.nextLine();
+        } while(Data.validarDia(dia));
+          
+        novaData.setDia(dia);
+      
+        do {
+            System.out.print("Mês: ");
+            mes = input.nextInt();
+            input.nextLine();
+        }while(Data.validarMes(mes));
+          
+        novaData.setMes(mes);
+          
+        do {
+            System.out.print("Ano: ");
+            ano = input.nextInt();
+            input.nextLine();
+        } while(Data.validarAno(ano));
+          
+        novaData.setAno(ano);
+        novoCliente.setDataNasc(novaData);
+        input.nextLine();
+
+        System.out.println("Digite o endereço: ");
+        System.out.println("Rua: ");
+        novoCliente.setRua(input.nextLine());
+        System.out.println("Número: ");
+        novoCliente.setNumeroCasa(input.nextInt());
+        input.nextLine();
+        System.out.println("Bairro: ");
+        novoCliente.setBairro(input.nextLine());
+        System.out.println("Cidade: ");
+        novoCliente.setCidade(input.nextLine());  
+        
+        System.out.println("Digite a renda: ");
+        novoCliente.setRenda(input.nextFloat());
+        input.nextLine();
+
+        System.out.println("Digite o número de dependentes: ");
+        novoCliente.setDependentes(input.nextInt());
+        input.nextLine();
 
     }
+                
 
+    public static void escreverClientesNoArquivo(){
+        String arquivoClientes = "clientes.txt";
+        File arq = new File(arquivoClientes);      
+        try {            
+            FileWriter escritor = new FileWriter(arq, false);
+            for(Cliente cli: listaClientes)
+            escritor.write(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
+                ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda() + 
+                ";" + cli.getDependentes() + ";" + "\n");
+
+           escritor.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
+        
+    }
+
+
+    public static void visualizarCliente(){
+        int i=1;
+
+        for (Cliente cli : listaClientes)    {
+            System.out.printf("Cliente %d:\n", i);
+            System.out.println(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
+            ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda() + 
+            ";" + cli.getDependentes() + ";" + "\n");
+        i++;
+        System.out.printf("\n");
+        }
+    }
+
+    public static void alterarCliente(){                
+        Scanner input = new Scanner(System.in);
+        int opMenu;
+        int dia, mes, ano;
+        Data novaData = new Data();
+        visualizarCliente();
+        System.out.println("Qual cliente deseja alterar?");
+        int cliente = (input.nextInt() - 1);
+        
+        if (listaClientes.size() == 0) 
+            System.out.println("\nNão há clientes cadastrados.");
+        else{
+            do {                                     
+                System.out.println("\nQual dado deseja alterar?");
+                System.out.println("1 - Alterar CPF");
+                System.out.println("2 - Alterar nome");
+                System.out.println("3 - Alterar data de nascimento");
+                System.out.println("4 - Alterar rua");
+                System.out.println("5 - Alterar número da casa");
+                System.out.println("6 - Alterar bairro");
+                System.out.println("7 - Alterar cidade");
+                System.out.println("8 - Alterar renda");
+                System.out.println("9 - Alterar número de dependentes");               
+                System.out.println("10 - Sair");
+                System.out.println("\nDigite a opção desejada: ");
+                opMenu = input.nextInt();
+                input.nextLine();
+    
+                switch (opMenu) {
+                    case 1:
+                        System.out.print("\nDigite o novo CPF: ");
+                        listaClientes.get(cliente).setCPF(input.nextInt());  
+                        input.nextLine();  
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 2:                
+                        System.out.print("\nDigite o novo nome: ");                                                
+                        listaClientes.get(cliente).setNome(input.nextLine());               
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 3:
+                        System.out.print("\nDigite a nova data de nascimento: ");
+                        do{
+                            System.out.print("Dia: ");
+                            dia = input.nextInt();
+                            input.nextLine();
+                        } while(Data.validarDia(dia));
+                          
+                        novaData.setDia(dia);
+                      
+                        do {
+                            System.out.print("Mês: ");
+                            mes = input.nextInt();
+                            input.nextLine();
+                        }while(Data.validarMes(mes));
+                          
+                        novaData.setMes(mes);
+                          
+                        do {
+                            System.out.print("Ano: ");
+                            ano = input.nextInt();
+                            input.nextLine();
+                        } while(Data.validarAno(ano));
+                          
+                        novaData.setAno(ano);
+                        listaClientes.get(cliente).setDataNasc(novaData);
+                        input.nextLine();                         
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 4:
+                        System.out.print("\nDigite a nova rua: ");
+                        listaClientes.get(cliente).setRua(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 5:
+                        System.out.print("\nDigite o novo número da casa: ");
+                        listaClientes.get(cliente).setNumeroCasa(input.nextInt());
+                        input.nextLine();    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 6:
+                        System.out.print("\nDigite o novo bairro: ");
+                        listaClientes.get(cliente).setBairro(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 7:
+                        System.out.print("\nDigite a nova cidade: ");
+                        listaClientes.get(cliente).setCidade(input.nextLine());    
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 8:
+                        System.out.print("\nDigite a nova renda: ");
+                        listaClientes.get(cliente).setRenda(input.nextFloat());    
+                        input.nextLine();
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;
+                    case 9:
+                        System.out.print("\nDigite o novo número de dependentes: ");
+                        listaClientes.get(cliente).setDependentes(input.nextInt()); 
+                        input.nextLine();     
+                        System.out.println("\n\n==> Dados atualizados com sucesso!");
+                    break;                
+                    case 10:
+                    break;
+                    default:
+                        System.out.println("\nDigite uma opção válida!\n");
+                    break;
+                }
+            } while(opMenu != 10);
+        }
+            
+        escreverClientesNoArquivo();
+       
+
+    }   
+
+    public static void removerCliente(){
+        Scanner input = new Scanner(System.in);
+        visualizarCliente();
+        System.out.println("Qual cliente deseja remover?");
+        int cliente = (input.nextInt() - 1);		
+		input.nextLine();		
+
+		if (listaClientes.size() == 0) {
+			System.out.println("\nNão há clientes cadastradas.");            
+		}
+        else{
+            listaClientes.remove(cliente);
+		    System.out.println("\n\nCliente removido com sucesso!");
+        }
+
+        escreverClientesNoArquivo();
+
+    }
+    
+    
 }
 
     public static Map<String,Funcionario> getMapUsuarios()
