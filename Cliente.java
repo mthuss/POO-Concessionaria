@@ -19,6 +19,18 @@ public class Cliente
     //------------------------------
     private float renda;
     private int dependentes;
+
+    public void imprimirDados()
+    {
+        System.out.println("Nome: " + this.nome);
+        System.out.println("CPF: " + this.CPF);
+        System.out.println("Data de Nascimento: " + this.dataNasc.criarData());
+        System.out.println("Endereço:\n  Rua: " + this.rua + ",nº " + this.numeroCasa);
+        System.out.println("  Bairro: " + this.bairro);
+        System.out.println("  Cidade: "+ this.cidade);
+        System.out.println("Renda: R$" + this.renda);
+        System.out.println("Número de dependentes: " + this.dependentes);
+    }
     //getters e setters
     //-------------------------------------
     public long getCPF() {
@@ -79,7 +91,7 @@ public class Cliente
     //Construtor
     //-----------------------------------------------------------------------
     public Cliente(long CPF, String nome, Data dataNasc, String rua, int numeroCasa, String bairro, String cidade,
-            float renda) {
+            float renda,int dependentes) {
         this.CPF = CPF;
         this.nome = nome;
         this.dataNasc = dataNasc;
@@ -88,6 +100,7 @@ public class Cliente
         this.bairro = bairro;
         this.cidade = cidade;
         this.renda = renda;
+        this.dependentes = dependentes;
     }
 
     public Cliente(){

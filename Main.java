@@ -112,6 +112,7 @@ public class Main {
 		Sistema.gerentesWriteFile();
 		Sistema.vendedoresWriteFile();
 		Sistema.carrosWriteFile();
+		Sistema.clientesWriteFile();
 		// Sistema.motosWriteFile();
 
 	}

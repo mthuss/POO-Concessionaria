@@ -9,7 +9,7 @@ public class Sistema {
     int indiceVenda = 0;
     public static Map<String, Funcionario> usuarios = new HashMap<>(); // Idealmente, mover isso para o Sistema.java.
     public static ArrayList<Carro> carros = new ArrayList<>();
-    public static ArrayList<Cliente> listaClientes = new ArrayList<>();
+    public static ArrayList<Cliente> clientes = new ArrayList<>();
     public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
     public static ArrayList<Venda> vendas = new ArrayList<>();
 
@@ -1155,33 +1155,24 @@ public class Sistema {
 
         System.out.println("Digite o nome: ");
         novoCliente.setNome(input.nextLine());
-        input.nextLine();
 
         System.out.println("Digite a data de nascimento: ");
         do {
             System.out.print("Dia: ");
             dia = input.nextInt();
-            input.nextLine();
-        } while (Data.validarDia(dia));
-
-        novaData.setDia(dia);
+        } while (!Data.validarDia(dia));
 
         do {
             System.out.print("Mês: ");
             mes = input.nextInt();
-            input.nextLine();
-        } while (Data.validarMes(mes));
-
-        novaData.setMes(mes);
+        } while (!Data.validarMes(mes));
 
         do {
             System.out.print("Ano: ");
             ano = input.nextInt();
-            input.nextLine();
-        } while (Data.validarAno(ano));
+        } while (!Data.validarAno(ano));
 
-        novaData.setAno(ano);
-        novoCliente.setDataNasc(novaData);
+        novoCliente.setDataNasc(new Data(dia,mes,ano));
         input.nextLine();
 
         System.out.println("Digite o endereço: ");
@@ -1203,17 +1194,16 @@ public class Sistema {
         novoCliente.setDependentes(input.nextInt());
         input.nextLine();
 
-        listaClientes.add(novoCliente);
+        clientes.add(novoCliente);
 
     }
 
-    public static void escreverClientesNoArquivo() {
-        String arquivoClientes = "clientes";
-        File arq = new File(arquivoClientes);
+    public static void clientesWriteFile() {
+        File arq = new File("registroClientes");
         try {
             FileWriter escritor = new FileWriter(arq, false);
-            for (Cliente cli : listaClientes)
-                escritor.write(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
+            for (Cliente cli : clientes)
+                escritor.write(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc().criarData() + ";" + cli.getRua() +
                         ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda()
                         +
                         ";" + cli.getDependentes() + ";" + "\n");
@@ -1229,11 +1219,12 @@ public class Sistema {
     public static void visualizarCliente() {
         int i = 1;
 
-        for (Cliente cli : listaClientes) {
-            System.out.printf("Cliente %d:\n", i);
-            System.out.println(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
-                    ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda() +
-                    ";" + cli.getDependentes() + ";" + "\n");
+        for (Cliente cli : clientes) {
+//            System.out.printf("Cliente %d:\n", i);
+//            System.out.println(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
+//                    ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda() +
+//                    ";" + cli.getDependentes() + ";" + "\n");
+            cli.imprimirDados();
             i++;
             System.out.printf("\n");
         }
@@ -1248,7 +1239,7 @@ public class Sistema {
         System.out.println("Qual cliente deseja alterar?");
         int cliente = (input.nextInt() - 1);
 
-        if (listaClientes.size() == 0)
+        if (clientes.size() == 0)
             System.out.println("\nNão há clientes cadastrados.");
         else {
             do {
@@ -1270,13 +1261,13 @@ public class Sistema {
                 switch (opMenu) {
                     case 1:
                         System.out.print("\nDigite o novo CPF: ");
-                        listaClientes.get(cliente).setCPF(input.nextInt());
+                        clientes.get(cliente).setCPF(input.nextInt());
                         input.nextLine();
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 2:
                         System.out.print("\nDigite o novo nome: ");
-                        listaClientes.get(cliente).setNome(input.nextLine());
+                        clientes.get(cliente).setNome(input.nextLine());
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 3:
@@ -1304,40 +1295,40 @@ public class Sistema {
                         } while (Data.validarAno(ano));
 
                         novaData.setAno(ano);
-                        listaClientes.get(cliente).setDataNasc(novaData);
+                        clientes.get(cliente).setDataNasc(novaData);
                         input.nextLine();
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 4:
                         System.out.print("\nDigite a nova rua: ");
-                        listaClientes.get(cliente).setRua(input.nextLine());
+                        clientes.get(cliente).setRua(input.nextLine());
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 5:
                         System.out.print("\nDigite o novo número da casa: ");
-                        listaClientes.get(cliente).setNumeroCasa(input.nextInt());
+                        clientes.get(cliente).setNumeroCasa(input.nextInt());
                         input.nextLine();
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 6:
                         System.out.print("\nDigite o novo bairro: ");
-                        listaClientes.get(cliente).setBairro(input.nextLine());
+                        clientes.get(cliente).setBairro(input.nextLine());
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 7:
                         System.out.print("\nDigite a nova cidade: ");
-                        listaClientes.get(cliente).setCidade(input.nextLine());
+                        clientes.get(cliente).setCidade(input.nextLine());
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 8:
                         System.out.print("\nDigite a nova renda: ");
-                        listaClientes.get(cliente).setRenda(input.nextFloat());
+                        clientes.get(cliente).setRenda(input.nextFloat());
                         input.nextLine();
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
                     case 9:
                         System.out.print("\nDigite o novo número de dependentes: ");
-                        listaClientes.get(cliente).setDependentes(input.nextInt());
+                        clientes.get(cliente).setDependentes(input.nextInt());
                         input.nextLine();
                         System.out.println("\n\n==> Dados atualizados com sucesso!");
                         break;
@@ -1350,7 +1341,7 @@ public class Sistema {
             } while (opMenu != 10);
         }
 
-        escreverClientesNoArquivo();
+        clientesWriteFile();
 
     }
 
@@ -1361,14 +1352,14 @@ public class Sistema {
         int cliente = (input.nextInt() - 1);
         input.nextLine();
 
-        if (listaClientes.size() == 0) {
+        if (clientes.size() == 0) {
             System.out.println("\nNão há clientes cadastradas.");
         } else {
-            listaClientes.remove(cliente);
+            clientes.remove(cliente);
             System.out.println("\n\nCliente removido com sucesso!");
         }
 
-        escreverClientesNoArquivo();
+        clientesWriteFile();
 
     }
 
@@ -1545,6 +1536,33 @@ public class Sistema {
             System.out.println("Erro: " + e);
         }
 
+        //Ler clientes
+        try {
+            
+            FileReader arquivo = new FileReader("registroClientes");
+            BufferedReader reader = new BufferedReader(arquivo);
+            while (reader.ready()) {
+                String dados[] = reader.readLine().split(";");
+                for (int i = 0; i < dados.length; i++)
+                    System.out.println("dados[" + i + "] : " + dados[i]);
+                long CPF = Long.parseLong(dados[0]);
+                String nome = dados[1];
+                String DMA[] = dados[2].split("/");
+                Data dataNasc = new Data(Integer.parseInt(DMA[0]), Integer.parseInt(DMA[1]), Integer.parseInt(DMA[2]));
+                String rua = dados[3];
+                int numCasa = Integer.parseInt(dados[4]);
+                String bairro = dados[5];
+                String cidade = dados[6];
+                float renda = Float.parseFloat(dados[7]);
+                int dependentes = Integer.parseInt(dados[8]);
+                Cliente cli = new Cliente(CPF, nome, dataNasc, rua, numCasa, bairro, cidade, renda,dependentes);
+                clientes.add(cli);
+                //User writer.close() tava dando um IOException
+            }
+        } catch (Exception e) {
+            System.out.println("Erro clientes: " + e);
+        }
+
     }
     /*
      * escritor.write(motocicletas.get(i).getCilindradas() + ";");
@@ -1565,7 +1583,7 @@ public class Sistema {
      * 
      * visualizarCliente();
      * System.out.println("Digite o cliente: ");
-     * novaVenda.setCliente(listaClientes.get(input.nextInt() - 1);
+     * novaVenda.setCliente(clientes.get(input.nextInt() - 1);
      * System.out.println("Qual é o veículo?");
      * System.out.println("1 - Carro");
      * System.out.println("2 - Motocicleta");
@@ -1690,7 +1708,7 @@ public class Sistema {
      * case 2:
      * visualizarClientes();
      * System.out.print("\nDigite o novo cliente: ");
-     * v.setCliente(listaClientes(input.nextInt() - 1);
+     * v.setCliente(clientes(input.nextInt() - 1);
      * input.nextLine();
      * System.out.println("\n\n==> Dados atualizados com sucesso!");
      * break;
