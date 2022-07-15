@@ -12,8 +12,8 @@ public class Vendedor extends Funcionario
 
     //Construtor
     public Vendedor(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, float tempoRestante,
-            Gerente gerente) {
-        super(RG, nome, dataNasc, dataAdmissao, salario);
+            Gerente gerente, String login, String senha) {
+        super(RG, nome, dataNasc, dataAdmissao, salario,senha,login);
         this.tempoRestante = tempoRestante;
         this.gerente = gerente;
     }
