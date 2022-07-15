@@ -5,6 +5,20 @@ public class Carro extends Veiculo {
     private int tipo;
     private int dimensoes[] = new int[3]; // AxLxC
 
+    public void imprimirDados()
+    {   
+        String tipo[] = {"Utilitário","Pickup","Sedan","Hatch","Esportivo"};
+        String status = this.getStatus() ? "Vendida" : "À venda";
+        System.out.println("Numero do chassi: " + this.getNumChassi() + "\nMarca: " + this.getMarca() + "\nModelo: "
+        + this.getModelo() + "\nAno: " + this.getAno() +
+        "\nKilometragem: " + this.getKilometragem() + "\nTipo de Combustivel: " + this.getTipoCombustivel()
+        + "\nPeso: " + this.getPeso() + "\nStatus de venda: " + status +
+        "\nPotencia: " + this.getPotencia() + "\nNumero de Cilindros: " + this.getNumCilindros()
+        + "\nNumero de assentos: " + this.getNumeroOcupantes() + "\nTipo de thisro: " + tipo[this.getTipo() - 1] +
+        "\nDimensões (altura x largura x comprimento): " + this.getAltura() + "x" + this.getLargura() + "x"
+        + this.getComprimento() + "\n");
+ 
+    }
     // getters e setters
     // -------------------------------------------------------
     public int getPotencia() {

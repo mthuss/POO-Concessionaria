@@ -341,19 +341,9 @@ public class Sistema {
     // ------------------------------------------
 
     public static void mostraArrayCarros() {
-        int i = 1;
-
-        for (Carro car : carros) {
-            System.out.printf("Carro %d:\n", i);
-            System.out.println("Numero do chassi: " + car.getNumChassi() + "\nMarca: " + car.getMarca() + "\nModelo: "
-                    + car.getModelo() + "\nAno: " + car.getAno() +
-                    "\nKilometragem: " + car.getKilometragem() + "\nTipo de Combustivel: " + car.getTipoCombustivel()
-                    + "\nPeso: " + car.getPeso() + "\nStatus de venda: " + car.getStatus() +
-                    "\nPotencia: " + car.getPotencia() + "\nNumero de Cilindros: " + car.getNumCilindros()
-                    + "\nNumero de assentos: " + car.getNumeroOcupantes() + "\nTipo de carro: " + car.getTipo() +
-                    "\nDimensões (altura x largura x comprimento): " + car.getAltura() + "x" + car.getLargura() + "x"
-                    + car.getComprimento() + "\n");
-            i++;
+        for (int i = 0; i < carros.size(); i++) {
+            System.out.printf("Carro %d:\n", i+1);
+            carros.get(i).imprimirDados();
             System.out.printf("\n");
         }
     }
@@ -389,32 +379,19 @@ public class Sistema {
         int ano;
         System.out.println("Digite as cilidradas: ");
         novaMotocicleta.setCilindradas(input.nextInt());
-        input.nextLine();
 
+        int tipo;
         do {
             System.out.println("Qual o tipo da motocicleta?");
             System.out.println("1 - Trail");
             System.out.println("2 - Street");
             System.out.println("3 - Esportiva");
             System.out.println("4 - Custom");
-            switch (input.nextInt()) {
-                case 1:
-                    novaMotocicleta.setTipo("Trail");
-                    break;
-                case 2:
-                    novaMotocicleta.setTipo("Street");
-                    break;
-                case 3:
-                    novaMotocicleta.setTipo("Esportiva");
-                    break;
-                case 4:
-                    novaMotocicleta.setTipo("Custom");
-                    break;
-                default:
-                    System.out.println("Digite uma opção válida!");
-                    break;
-            }
-        } while (input.nextInt() < 1 || input.nextInt() > 4);
+            tipo = input.nextInt();
+            if(tipo < 1 || tipo > 4)
+                System.out.println("Digite uma opção válida!");
+        } while (tipo < 1 || tipo > 4);
+        novaMotocicleta.setTipo(tipo);
 
         System.out.println("Digite o número do chassi: ");
         novaMotocicleta.setNumChassi(input.nextInt());
@@ -445,8 +422,7 @@ public class Sistema {
         novaMotocicleta.setPeso(input.nextFloat());
         input.nextLine();
 
-        System.out.println("Digite o status: ");
-        novaMotocicleta.setStatus(input.nextBoolean());
+        novaMotocicleta.setStatus(false);
 
         motocicletas.add(novaMotocicleta);
         escreverMotosNoArquivo();
@@ -489,7 +465,7 @@ public class Sistema {
             System.out.println("\nDigite a opção desejada: ");
             opMenu = input.nextInt();
             input.nextLine();
-
+            int tipo;
             switch (opMenu) {
                 case 1:
                     System.out.print("\nDigite as novas cilindradas: ");
@@ -504,25 +480,11 @@ public class Sistema {
                         System.out.println("2 - Street");
                         System.out.println("3 - Esportiva");
                         System.out.println("4 - Custom");
-                        switch (input.nextInt()) {
-                            case 1:
-                                motocicletas.get(moto).setTipo("Trail");
-                                break;
-                            case 2:
-                                motocicletas.get(moto).setTipo("Street");
-                                break;
-                            case 3:
-                                motocicletas.get(moto).setTipo("Esportiva");
-                                break;
-                            case 4:
-                                motocicletas.get(moto).setTipo("Custom");
-                                break;
-                            default:
+                        tipo = input.nextInt();
+                            if(tipo < 1 || tipo > 4)
                                 System.out.println("Digite uma opção válida!");
-                                break;
-                        }
 
-                    } while (input.nextInt() < 1 || input.nextInt() > 4);
+                    } while (tipo < 1 || tipo > 4);
 
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
@@ -645,17 +607,9 @@ public class Sistema {
     public static void visualizarMotocicletas() {
         for (int i = 0; i < motocicletas.size(); i++) {
             System.out.printf("\nMotocicleta %d\n", i + 1);
-            System.out.println("Cilidradas: " + motocicletas.get(i).getCilindradas());
-            System.out.println("Tipo: " + motocicletas.get(i).getTipo());
-            System.out.println("Número do chassi: " + motocicletas.get(i).getNumChassi());
-            System.out.println("Marca: " + motocicletas.get(i).getMarca());
-            System.out.println("Modelo: " + motocicletas.get(i).getModelo());
-            System.out.println("Ano: " + motocicletas.get(i).getAno());
-            System.out.println("Kilometragem: " + motocicletas.get(i).getKilometragem());
-            System.out.println("Tipo de Combustível: " + motocicletas.get(i).getTipoCombustivel());
-            System.out.println("Peso: " + motocicletas.get(i).getPeso());
-            System.out.println("Status: " + motocicletas.get(i).getStatus());
-        }
+            motocicletas.get(i).imprimirDados();
+            System.out.println("");
+       }
     }
 
     // ------------------------------------------
@@ -1517,7 +1471,7 @@ public class Sistema {
             while (reader.ready()) {
                 String dados[] = reader.readLine().split(";");
                 int cilindradas = Integer.parseInt(dados[0]);
-                String tipo = dados[1];
+                int tipo = Integer.parseInt(dados[1]);
                 long numChassi = Long.parseLong(dados[2]);
                 String marca = dados[3];
                 String modelo = dados[4];
