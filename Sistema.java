@@ -551,9 +551,7 @@ public class Sistema {
     public static void removerMotocicleta() {
         Scanner input = new Scanner(System.in);
         visualizarMotocicletas();
-        System.out.println("Qual motocicleta deseja remover?");
-        int moto = (input.nextInt() - 1);
-
+        int moto;
         if (motocicletas.size() == 0) {
             System.out.println("\nNão há motocicletas cadastradas.");
         }
@@ -562,7 +560,6 @@ public class Sistema {
             do {
                 System.out.println("Qual motocicleta deseja remover?");
                 moto = (input.nextInt() - 1);
-                input.nextLine();
 
                 if (moto < 0 || moto > motocicletas.size() - 1)
                     System.out.println("\tValor Invalido");
@@ -581,7 +578,7 @@ public class Sistema {
     public static void escreverMotosNoArquivo() {
         try {
             File arq = new File("registroMotocicletas");
-            FileWriter escritor = new FileWriter(arq, true);
+            FileWriter escritor = new FileWriter(arq, false);
             // lembrar que a escrita do arquivo prossegue do ponto que parou
             for (int i = 0; i < motocicletas.size(); i++) {
                 escritor.write(motocicletas.get(i).getCilindradas() + ";");
