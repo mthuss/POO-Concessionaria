@@ -22,6 +22,7 @@ public class Sistema {
             System.out.println("2 - Visualizar Clientes");
             System.out.println("3 - Visualizar Vendas");
             System.out.println("4 - Realizar uma Venda");
+            System.out.println("5 - Alterar venda");
             System.out.println("0 - Sair");
 
             op = input.nextInt();
@@ -35,7 +36,7 @@ public class Sistema {
                     input.nextLine();
                     switch (subop) {
                         case 1:
-                            // Método de exibir carros
+                            mostraArrayCarros();
                             break;
                         case 2:
                             visualizarMotocicletas();
@@ -43,14 +44,16 @@ public class Sistema {
                     }
                     break;
                 case 2:
-                    // método listar clientes
+                    visualizarCliente();
                     break;
                 case 3:
-                    // método listar vendas
+                    mostraVendas();
                     break;
                 case 4:
-                    // ???
+                    cadastroVenda(vendedor);
                     break;
+                case 5:
+                    alterarVenda();
                 case 0:
                     break;
                 default:
@@ -790,7 +793,7 @@ public class Sistema {
         Cliente novoCliente = new Cliente();
 
         System.out.println("Digite o CPF: ");
-        novoCliente.setCPF(input.nextInt());
+        novoCliente.setCPF(input.nextLong());
         input.nextLine();
 
         System.out.println("Digite o nome: ");
@@ -979,6 +982,7 @@ public class Sistema {
         int i = 1;
 
         for (Cliente cli : clientes) {
+            System.out.printf("Cliente %d:\n", i);
             cli.imprimirDados();
             i++;
             System.out.printf("\n");
@@ -1337,37 +1341,41 @@ public class Sistema {
         System.out.println("Menu Venda: ");
     
         visualizarCliente();
-        System.out.println("Digite o cliente: ");
+        System.out.println("Digite o indice do cliente: ");
         novaVenda.setCliente(clientes.get(input.nextInt() - 1));
         System.out.println("Qual é o veículo?");
-        System.out.println("1 - Carro");
-        System.out.println("2 - Motocicleta");
+        System.out.println("1 - Motocicleta");
+        System.out.println("2 - Carro");
         op = input.nextInt();
+        input.nextLine();
         do{
             switch(op){
                 case 1:
                     visualizarMotocicletas();
-                    System.out.println("Digite a motocicleta vendida:");
+                    System.out.print("Digite o indice da motocicleta vendida: ");
                     ind = input.nextInt();
+                    input.nextLine();
                     ind--;
                     novaVenda.setVeiculo(motocicletas.get(ind));
-                    input.nextLine();
                     motocicletas.get(ind).setStatus(true);
                     break;
+
                 case 2:
                     mostraArrayCarros();
-                    System.out.println("Digite o carro vendido:");
+                    System.out.print("Digite o indice do carro vendido:");
                     ind = input.nextInt();
+                    input.nextLine();
                     ind--;
                     novaVenda.setVeiculo(carros.get(ind));
                     input.nextLine();
                     carros.get(ind).setStatus(true);
                     break;
+
                 default:
                     System.out.println("Digite uma opção válida!");
                     break;
                 }
-        } while(input.nextInt() != 1 || input.nextInt() != 2);
+        } while(op < 1 || op > 2);
         input.nextLine();
     
         System.out.println("Digite o valor da venda");
