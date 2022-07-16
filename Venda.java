@@ -18,6 +18,10 @@ public class Venda
         this.horario = horario;
     }
 
+    public Venda()  {
+        
+    }
+
     public int getID() {
         return ID;
     }
