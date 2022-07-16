@@ -22,7 +22,7 @@ public class Sistema {
             System.out.println("2 - Visualizar Clientes");
             System.out.println("3 - Visualizar Vendas");
             System.out.println("4 - Realizar uma Venda");
-            System.out.println("5 - Sair");
+            System.out.println("0 - Sair");
 
             op = input.nextInt();
             input.nextLine();
@@ -51,14 +51,14 @@ public class Sistema {
                 case 4:
                     // ???
                     break;
-                case 5:
+                case 0:
                     break;
                 default:
                     System.out.println("Digite uma opção válida!");
                     break;
             }
 
-        } while (op != 5);
+        } while (op != 0);
 
     }
 
@@ -425,7 +425,7 @@ public class Sistema {
         novaMotocicleta.setStatus(false);
 
         motocicletas.add(novaMotocicleta);
-        escreverMotosNoArquivo();
+        motosWriteFile();
     }
 
     // ------------------------------------------
@@ -543,7 +543,7 @@ public class Sistema {
             }
         }
 
-        escreverMotosNoArquivo();
+        motosWriteFile();
     }
 
     // ------------------------------------------
@@ -570,12 +570,12 @@ public class Sistema {
             System.out.println("\n\nMotocicleta removida com sucesso!");
         }
 
-        escreverMotosNoArquivo();
+        motosWriteFile();
     }
 
     // ------------------------------------------
-
-    public static void escreverMotosNoArquivo() {
+    
+    public static void motosWriteFile() {
         try {
             File arq = new File("registroMotocicletas");
             FileWriter escritor = new FileWriter(arq, false);
@@ -610,157 +610,10 @@ public class Sistema {
     }
 
     // ------------------------------------------
-    // Menu ADM
+    // Menu Vendedor
     // ------------------------------------------
-    public static void menuADM(Gerente adm) {
-        Scanner sc = new Scanner(System.in);
-        int op_adm;
 
-        do {
-            System.out.println("\nMenu Gerente: ");
-            System.out.println("\n\t--Cadastros:--");
-            System.out.println("1 - Cadastrar Cliente");
-            System.out.println("2 - Cadastrar Vendedor");
-            System.out.println("3 - Cadastrar Carro");
-            System.out.println("4 - Cadastrar Motocicleta");
-
-            System.out.println("\n\t--Alteração:--");
-            System.out.println("5 - ALterar dados do Cliente");
-            System.out.println("6 - Alterar dados do Vendedor");
-            System.out.println("7 - Alterar dados do Carro");
-            System.out.println("8 - Alterar dados do Motocicleta");
-
-            System.out.println("\n\t--Exclusão:--");
-            System.out.println("9 - Remover Cliente");
-            System.out.println("10 - Remover Vendedor");
-            System.out.println("11 - Remover Carro");
-            System.out.println("12 - Remover Motocicleta");
-
-            System.out.println("\n\t--Mostrar:--");
-            System.out.println("13 - Mostrar Cliente");
-            System.out.println("14 - Mostrar Vendedor");
-            System.out.println("15 - Mostrar Carro");
-            System.out.println("16 - Mostrar Motocicleta");
-
-            System.out.println("\n0 - Sair");
-
-            System.out.print("\nComando: ");
-            op_adm = sc.nextInt();
-            sc.nextLine();
-
-            switch (op_adm) {
-                case 1:
-                    cadastrarCliente();
-                    break;
-                case 2:
-                    cadastrarVendedor();
-                    break;
-                case 3:
-                    cadastrarCarro();
-                    break;
-                case 4:
-                    cadastrarMotocicletas();
-                    break;
-                case 5:
-                    alterarCliente();
-                    break;
-                case 6:
-                    alterarVendedor();
-                    break;
-                case 7:
-                    alterarCarros();
-                    break;
-                case 8:
-                    alterarMotocicletas();
-                    break;
-                case 9:
-                    removerCliente();
-                    break;
-                case 10:
-                    removerVendedor();
-                    break;
-                case 11:
-                    removerCarro();
-                    break;
-                case 12:
-                    removerMotocicleta();
-                    break;
-                case 13:
-                    visualizarCliente();
-                    break;
-                case 14:
-                    listarVendedores();
-                    break;
-                case 15:
-                    mostraArrayCarros();
-                    break;
-                case 16:
-                    visualizarMotocicletas();
-                    break;
-
-                case 99:
-                    String auxLogin = adm.getLogin();
-                    adm.alterar();
-                    if (!auxLogin.equals(adm.getLogin())) // Chave do hashmap (login) foi alterada
-                    {
-                        // atualiza a chave no hashmap (remove e reinsere com a chave nova)
-                        usuarios.remove(auxLogin);
-                        usuarios.put(adm.getLogin(), adm);
-                    }
-                default:
-                    break;
-            }
-
-        } while (op_adm != 0);
-    }
-
-    public static void addGerente(Gerente novoGerente) {
-        usuarios.put(novoGerente.getLogin(), novoGerente);
-    }
-
-    public static void addVendedor(Vendedor novoVendedor) {
-        usuarios.put(novoVendedor.getLogin(), novoVendedor);
-    }
-
-    // Vendedor -------------------------------------------------
-    // PASSAR AS FUNÇÕES DESSE MENU PRO MENU GERENTE PRINCIPAL
-
-    // public void menuVendedoresGerente(){
-    // int op;
-    //
-    // Scanner input = new Scanner(System.in);
-    // do{
-    // System.out.println("Menu Vendedores");
-    // System.out.println("1 - Cadastrar um novo vendedor");
-    // System.out.println("2 - Visualizar vendedores");
-    // System.out.println("3 - Alterar informações de um vendedor");
-    // System.out.println("4 - Excluir um vendedor");
-    // System.out.println("5 - Sair");
-    //
-    // op = input.nextInt();
-    // input.nextLine();
-    //
-    // switch(op){
-    // case 1:
-    // cadastrarVendedor();
-    // break;
-    // case 2:
-    // listarVendedores();
-    // break;
-    // case 3:
-    // alterarVendedor();
-    // break;
-    // case 4:
-    // removerVendedor();
-    // break;
-    // case 5:
-    // break;
-    // default:
-    // System.out.println("Digite uma opção válida!");
-    // break;
-    // }
-    // }while(op != 5);
-    // }
+    // ------------------------------------------
 
     public static void cadastrarVendedor() {
         Scanner input = new Scanner(System.in);
@@ -813,7 +666,7 @@ public class Sistema {
         novoVendedor.setSalario(input.nextFloat());
 
         System.out.print("Digite o tempo de treinamento:");
-        novoVendedor.setTempoRestante(input.nextFloat());
+        novoVendedor.setTempoTreinamento(input.nextFloat());
 
         input.nextLine();
         String login_adm;
@@ -863,28 +716,7 @@ public class Sistema {
         usuarios.put(novoVendedor.getLogin(), novoVendedor);
     }
 
-    // Função substituida por usuariosWriteFile();
-    // public void escreverVendedoresNoArquivo(){
-    // try{
-    //
-    // FileWriter escritor = new FileWriter("registroVendedores", true);
-    // for(int i = 0; i < listaVendedores.size(); i++){
-    // escritor.write(listaVendedores.get(i).getNome() + "\n");
-    // escritor.write(listaVendedores.get(i).getRG() + "\n");
-    // escritor.write(listaVendedores.get(i).getDataNasc() + "\n");
-    // escritor.write(listaVendedores.get(i).getDataAdmissao() + "\n");
-    // escritor.write(listaVendedores.get(i).getSalario() + "\n");
-    // escritor.write(listaVendedores.get(i).getTempoRestante() + "\n");
-    // escritor.write(listaVendedores.get(i).getGerente().getNome() + "\n");
-    // escritor.write("\n");
-    // }
-    // escritor.close();
-    // }
-    // catch(IOException e)
-    // {
-    // System.out.println("Erro" + e);
-    // }
-    // }
+    // ------------------------------------------
 
     public static void listarNomeVendedores() {
         Vendedor v;
@@ -894,6 +726,8 @@ public class Sistema {
                 System.out.println("Nome: " + v.getNome() + "\nLogin: " + v.getLogin() + "\n");
             }
     }
+
+    // ------------------------------------------
 
     public static void listarVendedores() {
         Vendedor v;
@@ -905,146 +739,11 @@ public class Sistema {
             }
     }
 
-    // VAI SER SUBSTITUIDA POR UMA OPÇÃO NO MENU VENDEDOR USANDO O MÉTODO DA CLASSE
-    // NAO VAI NAO. PRECISA EXISTIR PRO GERENTE PODER ALTERAR OS DADOS DO VENDEDOR
-    // TBM
-    // public static void alterarVendedor(){
-    // int op;
-    // int dia, mes, ano;
-    // Data novaData;
-    // String senha,confirSenha;
-    // listarVendedores();
-    // System.out.println("Qual vendedor deseja alterar?");
-    // vendedor = (input.nextInt() - 1);
-    // if (listaMotocicletas.size() == 0)
-    // System.out.println("\nNão há motocicletas cadastradas.");
-    // else{
-    // do{
-    // System.out.println("\nQual dado deseja alterar?");
-    // System.out.println("1 - Alterar Nome");
-    // System.out.println("2 - Alterar RG");
-    // System.out.println("3 - Alterar Data de Nascimento");
-    // System.out.println("4 - Alterar Data de Admissão");
-    // System.out.println("5 - Alterar Salário");
-    // System.out.println("6 - Alterar Tempo restante de experiência");
-    // System.out.println("7 - Alterar Gerente Responsável");
-    // System.out.println("8 - Alterar login");
-    // System.out.println("9 - Alterar senha");
-    // System.out.println("10 - Sair");
-    // System.out.println("\nDigite a opção desejada: ");
-    // op = input.nextInt();
-    // input.nextLine();
-    //
-    // switch(op){
-    // case 1:
-    // System.out.print("\nDigite o novo nome: ");
-    // listaVendedores.get(vendedor).setNome(input.nextLine());
-    // input.nextLine();
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 2:
-    // System.out.print("\nDigite o novo RG: ");
-    // listaVendedores.get(vendedor).setRG(input.nextLong());
-    // input.nextLine();
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 3:
-    // System.out.println("\nDigite a nova data de nascimento: ");
-    // do{
-    // System.out.print("Dia: ");
-    // dia = input.nextInt();
-    // }while(!Data.validarDia(dia));
-    //
-    // do{
-    // System.out.print("Mês: ");
-    // mes = input.nextInt();
-    // }while(!Data.validarMes(mes));
-    //
-    // do{
-    // System.out.print("Ano: ");
-    // ano = input.nextInt();
-    // }while(!Data.validarAno(ano));
-    // novaData = new Data(dia, mes, ano);
-    // listaVendedores.get(vendedor).setDataNasc(novaData);
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 4:
-    // System.out.println("\nDigite a nova data de admissão: ");
-    // do{
-    // System.out.print("Dia: ");
-    // dia = input.nextInt();
-    // }while(!Data.validarDia(dia));
-    //
-    // do{
-    // System.out.print("Mês: ");
-    // mes = input.nextInt();
-    // }while(!Data.validarMes(mes));
-    //
-    // do{
-    // System.out.print("Ano: ");
-    // ano = input.nextInt();
-    // }while(!Data.validarAno(ano));
-    // novaData = new Data(dia, mes, ano);
-    // listaVendedores.get(vendedor).setDataAdmissao(novaData);
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 5:
-    // System.out.print("\nDigite o novo Salário: R$ ");
-    // listaVendedores.get(vendedor).setSalario(input.nextLong());
-    // input.nextLine();
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 6:
-    // System.out.print("\nDigite o novo tempo restante: ");
-    // listaVendedores.get(vendedor).setSalario(input.nextInt());
-    // input.nextLine();
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 7:
-    // System.out.print("\nDigite o login do novo gerente responsável: ");
-    // input.nextLine();
-    // String login_adm = input.nextLine();
-    // Gerente pesquisa = Sistema.getMapGerentes().get(login_adm);
-    // if(pesquisa != null){
-    // listaVendedores.get(vendedor).setGerente(pesquisa);
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // }
-    // else{
-    // System.out.print("Digite um login válido!");
-    // }
-    // break;
-    // case 8:
-    // System.out.print("\nDigite o novo login: ");
-    // listaVendedores.get(vendedor).setLogin(input.nextLine());
-    // input.nextLine();
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // case 9:
-    // do{
-    // System.out.print("Digite a nova senha: ");
-    // senha = input.nextLine();
-    // System.out.print("Confirme a senha: ");
-    // confirSenha = input.nextLine();
-    // if(!senha.equals(confirSenha))
-    // System.out.println("As senhas digitadas não são iguais! Tente novamente");
-    // }while(!senha.equals(confirSenha));
-    // listaVendedores.get(vendedor).setSenha(senha);
-    // System.out.println("\n\n==> Dados atualizados com sucesso!");
-    // break;
-    // default:
-    // System.out.println("Digite uma opção válida!");
-    // break;
-    //
-    // }
-    // }while(op != 10);
-    // }
-    // arqVendedor.delete();
-    // escreverVendedoresNoArquivo();
-    // }
+    // ------------------------------------------
 
     public static void alterarVendedor() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o login do vendedor que deseja remover: ");
+        System.out.println("Digite o login do vendedor que deseja alterar: ");
         System.out.print("Login: ");
         Funcionario pesquisa = usuarios.get(sc.nextLine());
         if (pesquisa != null && pesquisa instanceof Vendedor) {
@@ -1062,8 +761,9 @@ public class Sistema {
             System.out.println("O usuário especificado não é um vendedor!");
         } else
             System.out.println("Usuário não encontrado");
-
     }
+
+    // ------------------------------------------
 
     public static void removerVendedor() {
         Scanner sc = new Scanner(System.in);
@@ -1077,24 +777,12 @@ public class Sistema {
             System.out.println("O usuário especificado não é um vendedor!");
         } else
             System.out.println("Usuário não encontrado");
-
-        // listarVendedores();
-        // System.out.println("Qual vendedor deseja excluir?");
-        // vendedor = (input.nextInt() - 1);
-        // input.nextLine();
-        //
-        // if (listaVendedores.size() == 0) {
-        // System.out.println("\nNão há vendedores cadastrados.");
-        // }
-        // else{
-        // listaVendedores.remove(vendedor);
-        // System.out.println("\n\nVendedor excluído com sucesso!");
     }
 
-    // CLIENTE
-    // Parte de arquivos
-    // METODOS DA CLASSE
-    // CLIENTE
+    // ------------------------------------------
+    // Clientes
+    // ------------------------------------------
+
     public static void cadastrarCliente() {
         Scanner input = new Scanner(System.in);
         int dia, mes, ano;
@@ -1148,39 +836,9 @@ public class Sistema {
 
         clientes.add(novoCliente);
 
-    }
+    }    
 
-    public static void clientesWriteFile() {
-        File arq = new File("registroClientes");
-        try {
-            FileWriter escritor = new FileWriter(arq, false);
-            for (Cliente cli : clientes)
-                escritor.write(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc().criarData() + ";" + cli.getRua() +
-                        ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda()
-                        +
-                        ";" + cli.getDependentes() + ";" + "\n");
-
-            escritor.close();
-
-        } catch (IOException e) {
-            System.out.println("Erro: " + e);
-        }
-
-    }
-
-    public static void visualizarCliente() {
-        int i = 1;
-
-        for (Cliente cli : clientes) {
-//            System.out.printf("Cliente %d:\n", i);
-//            System.out.println(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc() + ";" + cli.getRua() +
-//                    ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda() +
-//                    ";" + cli.getDependentes() + ";" + "\n");
-            cli.imprimirDados();
-            i++;
-            System.out.printf("\n");
-        }
-    }
+    // ------------------------------------------
 
     public static void alterarCliente() {
         Scanner input = new Scanner(System.in);
@@ -1294,8 +952,9 @@ public class Sistema {
         }
 
         clientesWriteFile();
-
     }
+
+    // ------------------------------------------
 
     public static void removerCliente() {
         Scanner input = new Scanner(System.in);
@@ -1312,11 +971,161 @@ public class Sistema {
         }
 
         clientesWriteFile();
-
     }
+
+    // ------------------------------------------
+
+    public static void visualizarCliente() {
+        int i = 1;
+
+        for (Cliente cli : clientes) {
+            cli.imprimirDados();
+            i++;
+            System.out.printf("\n");
+        }
+    }
+
+    // ------------------------------------------
 
     public static Map<String, Funcionario> getMapUsuarios() {
         return usuarios;
+    }
+
+    
+    // ------------------------------------------
+    // Menu ADM
+    // ------------------------------------------
+    public static void menuADM(Gerente adm) {
+        Scanner sc = new Scanner(System.in);
+        int op_adm;
+
+        do {
+            System.out.println("\nMenu Gerente: ");
+            System.out.println("\n\t--Cadastros:--");
+            System.out.println("1 - Cadastrar Cliente");
+            System.out.println("2 - Cadastrar Vendedor");
+            System.out.println("3 - Cadastrar Carro");
+            System.out.println("4 - Cadastrar Motocicleta");
+
+            System.out.println("\n\t--Alteração:--");
+            System.out.println("5 - ALterar dados do Cliente");
+            System.out.println("6 - Alterar dados do Vendedor");
+            System.out.println("7 - Alterar dados do Carro");
+            System.out.println("8 - Alterar dados do Motocicleta");
+
+            System.out.println("\n\t--Exclusão:--");
+            System.out.println("9 - Remover Cliente");
+            System.out.println("10 - Remover Vendedor");
+            System.out.println("11 - Remover Carro");
+            System.out.println("12 - Remover Motocicleta");
+
+            System.out.println("\n\t--Mostrar:--");
+            System.out.println("13 - Mostrar Cliente");
+            System.out.println("14 - Mostrar Vendedor");
+            System.out.println("15 - Mostrar Carro");
+            System.out.println("16 - Mostrar Motocicleta");
+
+            System.out.println("\n0 - Sair");
+
+            System.out.print("\nComando: ");
+            op_adm = sc.nextInt();
+            sc.nextLine();
+
+            switch (op_adm) {
+                case 1:
+                    cadastrarCliente();
+                    break;
+                case 2:
+                    cadastrarVendedor();
+                    break;
+                case 3:
+                    cadastrarCarro();
+                    break;
+                case 4:
+                    cadastrarMotocicletas();
+                    break;
+                case 5:
+                    alterarCliente();
+                    break;
+                case 6:
+                    alterarVendedor();
+                    break;
+                case 7:
+                    alterarCarros();
+                    break;
+                case 8:
+                    alterarMotocicletas();
+                    break;
+                case 9:
+                    removerCliente();
+                    break;
+                case 10:
+                    removerVendedor();
+                    break;
+                case 11:
+                    removerCarro();
+                    break;
+                case 12:
+                    removerMotocicleta();
+                    break;
+                case 13:
+                    visualizarCliente();
+                    break;
+                case 14:
+                    listarVendedores();
+                    break;
+                case 15:
+                    mostraArrayCarros();
+                    break;
+                case 16:
+                    visualizarMotocicletas();
+                    break;
+
+                case 99:
+                    String auxLogin = adm.getLogin();
+                    adm.alterar();
+                    if (!auxLogin.equals(adm.getLogin())) // Chave do hashmap (login) foi alterada
+                    {
+                        // atualiza a chave no hashmap (remove e reinsere com a chave nova)
+                        usuarios.remove(auxLogin);
+                        usuarios.put(adm.getLogin(), adm);
+                    }
+                default:
+                    break;
+            }
+
+        } while (op_adm != 0);
+    }
+
+    public static void addGerente(Gerente novoGerente) {
+        usuarios.put(novoGerente.getLogin(), novoGerente);
+    }
+
+    public static void addVendedor(Vendedor novoVendedor) {
+        usuarios.put(novoVendedor.getLogin(), novoVendedor);
+    }
+
+
+    // CLIENTE
+    // Parte de arquivos
+    // METODOS DA CLASSE
+    // CLIENTE
+
+    public static void clientesWriteFile() {
+        File arq = new File("registroClientes");
+        try {
+            FileWriter escritor = new FileWriter(arq, false);
+            for (Cliente cli : clientes)
+                escritor.write(cli.getCPF() + ";" + cli.getNome() + ";" + cli.getDataNasc().criarData() + ";" + cli.getRua() +
+                        ";" + cli.getNumeroCasa() + ";" + cli.getBairro() + ";" + cli.getCidade() + ";" + cli.getRenda()
+                        +
+                        ";" + cli.getDependentes() + ";" + "\n");
+
+            escritor.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
     }
 
     public static void gerentesWriteFile() {
@@ -1347,21 +1156,17 @@ public class Sistema {
                 if (f instanceof Vendedor) {
                     Vendedor v = (Vendedor) f;
                     // Pra parte do gerente, ele vai salvar o login do gerente no arquivo.
-                    if(v.getLogin() != null)
+                   if(v.getLogin() != null)
                     vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";"
-                            + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";"
+                            + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoTreinamento() + ";"
                             + v.getGerente().getLogin() + ";" + v.getLogin() + ";" + v.getSenha() + "\n");
-                    else
-                    vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";"
-                            + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoRestante() + ";"
-                            + "null" + ";" + v.getLogin() + ";" + v.getSenha() + "\n");
-//                if(v.getLogin() == null)
-//                    System.out.println("PROBLEMA NO LOGIN");
-//                if(v.getDataAdmissao() == null)
-//                    System.out.println("PROBLEMA NA DATA DE ADMISSAO");
-//                if(v.getDataNasc() == null)
-//                    System.out.println("PROBLEMA NA DATA DE NASCIMENTO");
-                }
+                    else{
+                        Gerente aux = new Gerente();
+                        vWriter.write(v.getRG() + ";" + v.getNome() + ";" + v.getDataNasc().criarData() + ";"
+                        + v.getDataAdmissao().criarData() + ";" + v.getSalario() + ";" + v.getTempoTreinamento() + ";"
+                        + aux.getLogin() + ";" + v.getLogin() + ";" + v.getSenha() + "\n");
+                        }
+                    }
             }
             vWriter.close();
         }

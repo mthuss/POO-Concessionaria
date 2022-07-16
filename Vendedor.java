@@ -1,14 +1,10 @@
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.*;
 import java.util.Map;
 
 public class Vendedor extends Funcionario {
-    private float tempoRestante; // em horas(?)
+    private float tempoTreinamento; // em horas(?)
     private Gerente gerente;
     private String login, senha;
-    // String dadosVendedores = "vendedores.txt";
-    // File arq = new File(dadosVendedores);
 
     public void imprimirDados() {
         System.out.println("Nome: " + this.getNome());
@@ -16,11 +12,11 @@ public class Vendedor extends Funcionario {
         System.out.println("Data de Nascimento: " + this.getDataNasc().criarData());
         System.out.println("Data de Admissão: " + this.getDataAdmissao().criarData());
         System.out.println("Salário: " + this.getSalario());
-        System.out.println("Tempo de Treinamento: " + this.getTempoRestante() + "h");
+        System.out.println("Tempo de Treinamento: " + this.getTempoTreinamento() + "h");
         if (this.getGerente() != null)
             System.out.println("Gerente Responsável: " + this.getGerente().getNome());
         else
-            System.out.println("Gerente Responsável: Não tem " + this.getGerente().getNome());
+            System.out.println("Gerente Responsável: Não tem ");
         System.out.println("Login: " + this.getLogin());
         System.out.println("Senha: " + this.getSenha());
 
@@ -76,7 +72,7 @@ public class Vendedor extends Funcionario {
         this.setSalario(input.nextFloat());
 
         System.out.print("Digite o tempo de treinamento:");
-        this.setTempoRestante(input.nextFloat());
+        this.setTempoTreinamento(input.nextFloat());
         input.nextLine();
 
         String login_adm;
@@ -100,8 +96,16 @@ public class Vendedor extends Funcionario {
                     System.out.println("Digite um login válido!");
                 }
             } while (pesquisa == null || !(pesquisa instanceof Gerente));
-        } else
-            this.setGerente(null);
+        } 
+        else
+        {
+            System.out.println("\nNão há gerentes cadastrados.\nCadastre um Gerente:");
+            Gerente novoGerente = new Gerente();
+            novoGerente.cadastrar();
+            Sistema.addGerente(novoGerente);
+            this.setGerente(novoGerente);
+            System.out.println("\nVoltando ao cadastro do cliente:");
+        }
 
         System.out.println("Crie uma senha para o vendedor:");
         // input.nextLine();
@@ -244,10 +248,10 @@ public class Vendedor extends Funcionario {
     }
 
     // Construtor
-    public Vendedor(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, float tempoRestante,
+    public Vendedor(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, float tempoTreinamento,
             Gerente gerente, String login, String senha) {
         super(RG, nome, dataNasc, dataAdmissao, salario, login, senha);
-        this.tempoRestante = tempoRestante;
+        this.tempoTreinamento = tempoTreinamento;
         this.gerente = gerente;
     }
 
@@ -256,12 +260,12 @@ public class Vendedor extends Funcionario {
     }
 
     // Getters e Setters
-    public float getTempoRestante() {
-        return tempoRestante;
+    public float getTempoTreinamento() {
+        return tempoTreinamento;
     }
 
-    public void setTempoRestante(float tempoRestante) {
-        this.tempoRestante = tempoRestante;
+    public void setTempoTreinamento(float tempoTreinamento) {
+        this.tempoTreinamento = tempoTreinamento;
     }
 
     public Gerente getGerente() {
