@@ -1,6 +1,6 @@
 public class Venda
 {
-    private int ID;
+    private long ID;
     private Cliente cliente;
     private Vendedor vendedor;
     private Veiculo veiculo;
@@ -8,7 +8,7 @@ public class Venda
     private Data data;
     private Horario horario;
 
-    public Venda(int ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario) {
+    public Venda(long ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario) {
         this.ID = ID;
         this.cliente = cliente;
         this.vendedor = vendedor;
@@ -22,10 +22,10 @@ public class Venda
         
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
     public Cliente getCliente() {
