@@ -216,7 +216,7 @@ public class Vendedor extends Funcionario {
                         if(login_adm.equals("0"))
                             break;
                         if(Sistema.getMapUsuarios().get(login_adm) instanceof Gerente)
-                            pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm); // REVER ISSO AQUI
+                            pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm);
                         if (pesquisa != null) {
                             this.setGerente(pesquisa);
                             System.out.println("\n\n==> Dados atualizados com sucesso!");

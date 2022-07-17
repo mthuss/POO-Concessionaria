@@ -1,3 +1,4 @@
+//Feito por Ana Catarina, Bruno Rodrigues, Douglas e Matheus Moriel 👍
 import java.util.Scanner;
 
 public class Main {
