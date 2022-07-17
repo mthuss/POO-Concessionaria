@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Vendedor extends Funcionario {
     private float tempoTreinamento; // em horas(?)
@@ -21,6 +22,8 @@ public class Vendedor extends Funcionario {
         System.out.println("Vendas realizadas: " + this.getVendas());
         System.out.println("Login: " + this.getLogin());
         System.out.println("Senha: " + this.getSenha());
+        if(this.vendas != 0)
+            System.out.println(this.maisVendido());
 
     }
 
@@ -252,6 +255,66 @@ public class Vendedor extends Funcionario {
     public void addVenda()
     {
         this.vendas++;
+    }
+
+    public String maisVendido()
+    {
+        ArrayList<Venda> vendas = Sistema.getArrayVendas();
+        Carro car;
+        Motocicleta moto;
+        int tiposMoto[] = new int[5];
+        int tiposCarro[] = new int[6];
+        tiposMoto[0] = 0;
+        tiposCarro[0] = 0;
+        for(Venda v : vendas)
+        {
+            if(v.getVendedor() != null)
+                if(this.login.equals(v.getVendedor().getLogin()))
+                    if(v.getVeiculo() != null)
+                    {
+                        if(v.getVeiculo() instanceof Carro)
+                        {
+                            car = (Carro) v.getVeiculo();
+                            tiposCarro[car.getTipo()]++;
+                        }
+                        else if(v.getVeiculo() instanceof Motocicleta)
+                        {
+                            moto = (Motocicleta) v.getVeiculo();
+                            tiposMoto[moto.getTipo()]++;
+                        }
+                    }
+
+        }
+        System.out.printf("array dos carro: [");
+        for(int i=0;i < tiposCarro.length; i++)
+            System.out.printf("%d, ",tiposCarro[i]);
+        System.out.printf("] \n");
+        System.out.printf("array das moto: [");
+        for(int i=0;i < tiposMoto.length; i++)
+            System.out.printf("%d, ",tiposMoto[i]);
+        System.out.printf("] \n");
+        int maiorMoto=0;
+        int maiorCarro=0;
+
+        for(int i = 0; i < 6; i++)
+        {
+            if(i==0)
+                maiorCarro = i;
+            if(tiposCarro[i] > tiposCarro[maiorCarro])
+                maiorCarro = i;
+        }
+        
+        for(int i = 0; i < 5; i++)
+        {
+            if(i==0)
+                maiorMoto = i;
+            if(tiposMoto[i] > tiposMoto[maiorMoto])
+                maiorMoto = i;
+        }
+        
+        String tipoMoto[] = {"Nenhuma","Trail","Street","Esportiva","Custom"};
+        String tipoCar[] = {"Nenhum","Utilitário","Pickup","Sedan","Hatch","Esportivo"};
+        return String.format("Tipos mais vendidos:\n- Carro: " + tipoCar[maiorCarro] + "\n- Motocicletas: " + tipoMoto[maiorMoto]);
     }
 
     // Construtor

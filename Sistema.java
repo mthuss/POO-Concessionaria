@@ -1957,4 +1957,9 @@ public class Sistema {
         }
     }
 
+    public static ArrayList<Venda> getArrayVendas()
+    {
+        return vendas;
+    }
+
 }
