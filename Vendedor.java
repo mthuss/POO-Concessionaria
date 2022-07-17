@@ -285,14 +285,6 @@ public class Vendedor extends Funcionario {
                     }
 
         }
-        System.out.printf("array dos carro: [");
-        for(int i=0;i < tiposCarro.length; i++)
-            System.out.printf("%d, ",tiposCarro[i]);
-        System.out.printf("] \n");
-        System.out.printf("array das moto: [");
-        for(int i=0;i < tiposMoto.length; i++)
-            System.out.printf("%d, ",tiposMoto[i]);
-        System.out.printf("] \n");
         int maiorMoto=0;
         int maiorCarro=0;
 

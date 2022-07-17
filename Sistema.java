@@ -23,6 +23,7 @@ public class Sistema {
             System.out.println("3 - Visualizar Vendas");
             System.out.println("4 - Realizar uma Venda");
             System.out.println("5 - Alterar venda");
+            System.out.println("6 - Remover venda");
             System.out.println("0 - Sair");
 
             System.out.print("\nSeleção: ");
@@ -63,6 +64,8 @@ public class Sistema {
                     break;
                 case 5:
                     alterarVenda();
+                case 6:
+                    removerVenda();
                 case 0:
                     break;
                 default:
@@ -1937,6 +1940,39 @@ public class Sistema {
                 }
             }
         vendasWriteFile(); // repassa pro File os dados alterados
+    }
+
+    public static void removerVenda()
+    {
+        Scanner input = new Scanner(System.in);
+        if(vendas.size() == 0)
+        {
+            System.out.println("Não há vendas cadastradas!");
+            return;
+        }
+        mostraVendas();
+        System.out.println("Digite o ID da venda a ser deletada: ");
+        Venda pesquisa = null;
+        do {
+            for(Venda v : vendas)
+                if(v.getID() == input.nextInt())
+                    pesquisa = v;
+            if(pesquisa == null)
+                System.out.println("ID inválido!");
+
+        } while (pesquisa == null);
+
+        if(pesquisa.getVeiculo() != null)
+            pesquisa.getVeiculo().setStatus(false);
+
+        if(pesquisa.getVendedor() != null)
+            pesquisa.getVendedor().setVendas(pesquisa.getVendedor().getVendas() - 1);
+
+        vendas.remove(pesquisa);
+        vendasWriteFile();
+        vendedoresWriteFile();
+        carrosWriteFile();
+        motosWriteFile();
     }
 
     public static void vendasWriteFile() {
