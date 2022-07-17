@@ -570,18 +570,26 @@ public class Sistema {
         Scanner input = new Scanner(System.in);
         visualizarMotocicletas();
         int moto;
+
+        boolean disponivel = false;
+        for(int i = 0; i < motocicletas.size(); i++)
+            if(!motocicletas.get(i).getStatus())
+                disponivel = true;
+
         if (motocicletas.size() == 0) {
-            System.out.println("\nNão há motocicletas cadastradas.");
+            System.out.println("\nNão há motocicletas cadastradas ou estão todas vendidas");
         }
 
         else {
             do {
-                System.out.println("Qual motocicleta deseja remover?");
+                System.out.println("Digite o índice da motocicleta que deseja remover: ");
                 moto = (input.nextInt() - 1);
 
-                if (moto < 0 || moto > motocicletas.size() - 1)
+                if (moto < -1 || moto > motocicletas.size() - 1)
                     System.out.println("\tValor Invalido");
-                if((moto > 0 && moto < motocicletas.size() - 1) && motocicletas.get(moto).getStatus())
+                if(moto == -1)
+                    return;
+                if((moto >= 0 && moto <= motocicletas.size() - 1) && motocicletas.get(moto).getStatus())
                     System.out.println("Esta moto já foi vendida e não pode ser removida!");
 
             } while (moto < 0 || moto > motocicletas.size() - 1 || motocicletas.get(moto).getStatus());
@@ -1676,6 +1684,9 @@ public class Sistema {
     veiculo.setStatus(true);
     vendas.add(new Venda(ID, cli, vendedor, veiculo, valor, auxData, auxHorario));
     vendasWriteFile();
+    motosWriteFile();
+    carrosWriteFile();
+    vendedoresWriteFile();
     }
     
     public static void mostraVendas() {
@@ -1835,6 +1846,7 @@ public class Sistema {
                             System.out.println("\tValor inválido");
                             break;
                         }
+                    break;
         
                 case 4:
                     System.out.println("Valor atual: " + v.getValor() + "\n");
@@ -1901,9 +1913,11 @@ public class Sistema {
             FileWriter escritor = new FileWriter(arq);
 
             for (Venda vend : vendas)
+            {
                 escritor.write(vend.getID() + ";" + vend.getCliente().getCPF() + ";" + vend.getVendedor().getLogin() + ";" +
                 vend.getVeiculo().getNumChassi() + ";" + vend.getValor() + ";" + vend.getData().criarData() + ";" + vend.getHorario().criarHorario() + "\n");
-
+            }
+                
             escritor.close();
 
         } catch (IOException e) {
