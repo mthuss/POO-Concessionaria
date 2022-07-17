@@ -735,6 +735,7 @@ public class Sistema {
         novoVendedor.setLogin(login);
         novoVendedor.setSenha(senha);
         usuarios.put(novoVendedor.getLogin(), novoVendedor);
+        vendedoresWriteFile();
     }
 
     // ------------------------------------------
@@ -782,6 +783,8 @@ public class Sistema {
             System.out.println("O usuário especificado não é um vendedor!");
         } else
             System.out.println("Usuário não encontrado");
+        
+        vendedoresWriteFile();
     }
 
     // ------------------------------------------
@@ -798,6 +801,8 @@ public class Sistema {
             System.out.println("O usuário especificado não é um vendedor!");
         } else
             System.out.println("Usuário não encontrado");
+
+        vendedoresWriteFile();
     }
 
     // ------------------------------------------
@@ -856,6 +861,7 @@ public class Sistema {
         input.nextLine();
 
         clientes.add(novoCliente);
+        clientesWriteFile();
 
     }    
 
@@ -1139,10 +1145,12 @@ public class Sistema {
 
     public static void addGerente(Gerente novoGerente) {
         usuarios.put(novoGerente.getLogin(), novoGerente);
+        gerentesWriteFile();
     }
 
     public static void addVendedor(Vendedor novoVendedor) {
         usuarios.put(novoVendedor.getLogin(), novoVendedor);
+        vendedoresWriteFile();
     }
 
     // ------------------------------------------
@@ -1800,7 +1808,10 @@ public class Sistema {
                                     if (ind < 0 || ind > motocicletas.size()-1)
                                     System.out.println("\tValor invalido");
                                 } while (ind < 0 || ind > motocicletas.size()-1);
+                                if(v.getVeiculo() != null)
+                                    v.getVeiculo().setStatus(false);
                                 v.setVeiculo(motocicletas.get(ind-1));
+                                v.getVeiculo().setStatus(true);
                             }
                             break;
 
@@ -1814,7 +1825,10 @@ public class Sistema {
                                 if (ind < 0 || ind > carros.size()-1)
                                 System.out.println("\tValor invalido");
                             } while (ind < 0 || ind > carros.size()-1);
+                            if(v.getVeiculo() != null)
+                                v.getVeiculo().setStatus(false);
                             v.setVeiculo(carros.get(ind - 1));
+                            v.getVeiculo().setStatus(true);
                             }
                             break;
                         default:
