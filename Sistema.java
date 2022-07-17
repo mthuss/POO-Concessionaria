@@ -25,6 +25,7 @@ public class Sistema {
             System.out.println("5 - Alterar venda");
             System.out.println("0 - Sair");
 
+            System.out.print("\nSeleção: ");
             op = input.nextInt();
             input.nextLine();
             switch (op) {
@@ -1440,6 +1441,7 @@ public class Sistema {
                 Data data = new Data(Integer.parseInt(DMA[0]), Integer.parseInt(DMA[1]), Integer.parseInt(DMA[2]));
                 String HM[] = dados[6].split(":");
                 Horario horario = new Horario(Integer.parseInt(HM[0]), Integer.parseInt(HM[1]));
+                boolean aVista= Boolean.parseBoolean(dados[7]);
 
 //                if(pesquisa == null)
 //                    System.out.println("TEM PROBLEMA NO VEICULO");
@@ -1448,7 +1450,7 @@ public class Sistema {
 //                if(cli == null)
 //                    System.out.println("TEM PROBLEMA NO CLIENTE");
 
-                Venda venda = new Venda(ID, cli, vendedor, pesquisa, valor, data, horario);
+                Venda venda = new Venda(ID, cli, vendedor, pesquisa, valor, data, horario,aVista);
                 vendas.add(venda);
 //Não consegui fazer essa parte tava ocupadinho
 //                Venda ven = new Venda(ID, Cliente, vendedor, veiculo, valor, data, horario);
@@ -1640,6 +1642,18 @@ public class Sistema {
         System.out.println("Digite o valor da venda");
         float valor = input.nextFloat();
 
+        int metodopag;
+        do{
+            System.out.println("Digite o método de pagamento: ");
+            System.out.println("1 - À prazo");
+            System.out.println("2 - Á vista");
+            metodopag = input.nextInt();
+            if(metodopag != 1 && metodopag != 2)
+                System.out.println("Opção inválida!");
+        }while(metodopag != 1 && metodopag != 2);
+
+        boolean aVista = (metodopag == 2);
+
         System.out.println("Digite a data da venda:");
         
         int indiceId=0;
@@ -1682,7 +1696,7 @@ public class Sistema {
     vendedor.addVenda();
     
     veiculo.setStatus(true);
-    vendas.add(new Venda(ID, cli, vendedor, veiculo, valor, auxData, auxHorario));
+    vendas.add(new Venda(ID, cli, vendedor, veiculo, valor, auxData, auxHorario,aVista));
     vendasWriteFile();
     motosWriteFile();
     carrosWriteFile();
@@ -1696,11 +1710,12 @@ public class Sistema {
         String vendedor = (v.getVendedor() == null) ? "Não tem" : v.getVendedor().getNome();
         String cliente = (v.getCliente() == null) ? "Não tem" : v.getCliente().getNome();
         String veiculo = (v.getVeiculo() == null) ? "Não tem" : v.getVeiculo().getModelo();
+        String parcelamento = v.getAVista() ? "À vista" : "À prazo";
         System.out.println("ID: " + v.getID() + "\nCliente: " +
         cliente + "\nVendedor: " + vendedor + "\nVeículo: " +
         veiculo +
         "\nValor: " + v.getValor() + "\nData: " +
-        v.getData().criarData() + "\nHorário: " + v.getHorario().criarHorario() + "\n");
+        v.getData().criarData() + "\nHorário: " + v.getHorario().criarHorario() + "\nParcelamento: " + parcelamento + "\n");
         i++;
         System.out.printf("\n");
         }
@@ -1742,6 +1757,7 @@ public class Sistema {
             System.out.println("4 - Alterar valor");
             System.out.println("5 - Alterar data");
             System.out.println("6 - Alterar horário");
+            System.out.println("7 - Alterar método de pagamento");
             System.out.print("\nDigite a opção desejada: ");
             int opMenu = input.nextInt();
             input.nextLine();
@@ -1899,6 +1915,22 @@ public class Sistema {
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
 
+
+                case 7:
+                    int metodopag;
+                    do{
+                        System.out.println("Digite o método de pagamento: ");
+                        System.out.println("1 - À prazo");
+                        System.out.println("2 - Á vista");
+                        metodopag = input.nextInt();
+                        if(metodopag != 1 && metodopag != 2)
+                            System.out.println("Opção inválida!");
+                    }while(metodopag != 1 && metodopag != 2);
+                
+                    boolean aVista = (metodopag == 2);
+                    v.setAVista(aVista);
+                    break;
+
                 default:
                     System.out.println("\nDigite uma opção válida!\n");
                     break;
@@ -1915,7 +1947,7 @@ public class Sistema {
             for (Venda vend : vendas)
             {
                 escritor.write(vend.getID() + ";" + vend.getCliente().getCPF() + ";" + vend.getVendedor().getLogin() + ";" +
-                vend.getVeiculo().getNumChassi() + ";" + vend.getValor() + ";" + vend.getData().criarData() + ";" + vend.getHorario().criarHorario() + "\n");
+                vend.getVeiculo().getNumChassi() + ";" + vend.getValor() + ";" + vend.getData().criarData() + ";" + vend.getHorario().criarHorario() + ";" + vend.getAVista() + "\n");
             }
                 
             escritor.close();

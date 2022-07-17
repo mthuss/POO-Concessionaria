@@ -7,8 +7,9 @@ public class Venda
     private float valor;
     private Data data;
     private Horario horario;
+    boolean aVista;
 
-    public Venda(long ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario) {
+    public Venda(long ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario, boolean aVista) {
         this.ID = ID;
         this.cliente = cliente;
         this.vendedor = vendedor;
@@ -16,6 +17,7 @@ public class Venda
         this.valor = valor;
         this.data = data;
         this.horario = horario;
+        this.aVista = aVista;
     }
 
     public Venda()  {
@@ -63,5 +65,13 @@ public class Venda
     }
     public void setHorario(Horario horario) {
         this.horario = horario;
+    }
+    public boolean getAVista()
+    {
+        return this.aVista;
+    }
+    public void setAVista(boolean aVista)
+    {
+        this.aVista = aVista;
     }
 }
