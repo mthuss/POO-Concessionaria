@@ -40,24 +40,24 @@ public class Sistema {
                         case 1:
                             if(carros.size() == 0)
                                 System.out.println("Não há carros disponíveis!");
-                            mostraArrayCarros();
+                            listarCarros();
                             break;
                         case 2:
                             if(motocicletas.size() == 0)
                                 System.out.println("Não há motocicletas disponíveis!");
-                            visualizarMotocicletas();
+                            listarMotocicletas();
                             break;
                     }
                     break;
                 case 2:
                     if(clientes.size() == 0)
                         System.out.println("Não há clientes cadastrados!");
-                    visualizarCliente();
+                    listarClientes();
                     break;
                 case 3:
                     if(vendas.size() == 0)
                         System.out.println("Não há vendas cadastradas!");
-                    mostraVendas();
+                    listarVendas();
                     break;
                 case 4:
                     cadastroVenda(vendedor);
@@ -158,7 +158,7 @@ public class Sistema {
         int indice = 0;
         Scanner sc = new Scanner(System.in);
 
-        mostraArrayCarros();
+        listarCarros();
 
         if (carros.size() == 0)
             System.out.println("\nNão há carros cadastradas.");
@@ -325,7 +325,7 @@ public class Sistema {
     // ------------------------------------------
 
     public static void removerCarro() {
-        mostraArrayCarros();
+        listarCarros();
         Scanner sc = new Scanner(System.in);
 
         int indice = 0;
@@ -362,7 +362,7 @@ public class Sistema {
 
     // ------------------------------------------
 
-    public static void mostraArrayCarros() {
+    public static void listarCarros() {
         for (int i = 0; i < carros.size(); i++) {
             System.out.printf("Carro %d:\n", i+1);
             carros.get(i).imprimirDados();
@@ -436,7 +436,7 @@ public class Sistema {
         int opMenu;
         int ano;
         Scanner input = new Scanner(System.in);
-        visualizarMotocicletas();
+        listarMotocicletas();
         System.out.println("Qual motocicleta deseja alterar?");
         int moto = (input.nextInt() - 1);
 
@@ -552,7 +552,7 @@ public class Sistema {
 
     public static void removerMotocicleta() {
         Scanner input = new Scanner(System.in);
-        visualizarMotocicletas();
+        listarMotocicletas();
         int moto;
 
         boolean disponivel = false;
@@ -589,7 +589,7 @@ public class Sistema {
     
     // ------------------------------------------
 
-    public static void visualizarMotocicletas() {
+    public static void listarMotocicletas() {
         for (int i = 0; i < motocicletas.size(); i++) {
             System.out.printf("\nMotocicleta %d\n", i + 1);
             motocicletas.get(i).imprimirDados();
@@ -838,7 +838,7 @@ public class Sistema {
         int opMenu;
         int dia, mes, ano;
         Data novaData = new Data();
-        visualizarCliente();
+        listarClientes();
         System.out.println("Qual cliente deseja alterar?");
         int cliente = (input.nextInt() - 1);
 
@@ -951,7 +951,7 @@ public class Sistema {
 
     public static void removerCliente() {
         Scanner input = new Scanner(System.in);
-        visualizarCliente();
+        listarClientes();
         System.out.println("Qual cliente deseja remover?");
         int cliente = (input.nextInt() - 1);
         input.nextLine();
@@ -968,7 +968,7 @@ public class Sistema {
 
     // ------------------------------------------
 
-    public static void visualizarCliente() {
+    public static void listarClientes() {
         int i = 1;
 
         for (Cliente cli : clientes) {
@@ -1002,7 +1002,7 @@ public class Sistema {
             System.out.println("4 - Cadastrar Motocicleta");
 
             System.out.println("\n\t--Alteração:--");
-            System.out.println("5 - ALterar dados do Cliente");
+            System.out.println("5 - Alterar dados do Cliente");
             System.out.println("6 - Alterar dados do Vendedor");
             System.out.println("7 - Alterar dados do Carro");
             System.out.println("8 - Alterar dados do Motocicleta");
@@ -1068,7 +1068,7 @@ public class Sistema {
                     removerMotocicleta();
                     break;
                 case 13:
-                    visualizarCliente();
+                    listarClientes();
                     if(clientes.size() == 0)
                         System.out.println("Não há clientes cadastrados.");
                     break;
@@ -1076,12 +1076,12 @@ public class Sistema {
                     listarVendedores();
                     break;
                 case 15:
-                    mostraArrayCarros();
+                    listarCarros();
                     if(carros.size() == 0)
                         System.out.println("Não há carros cadastrados.");
                     break;
                 case 16:
-                    visualizarMotocicletas();
+                    listarMotocicletas();
                     if(motocicletas.size() == 0)
                         System.out.println("Não há motos cadastradas.");
                     break;
@@ -1496,7 +1496,7 @@ public class Sistema {
                     System.out.println("Não há motoclicletas a venda");
                     return;
                 }
-                visualizarMotocicletas();
+                listarMotocicletas();
 
                 do{
                     System.out.print("Digite o indice da motocicleta vendida: ");
@@ -1541,7 +1541,7 @@ public class Sistema {
                     System.out.println("Não há carros a venda");
                     return;
                 }
-                mostraArrayCarros();
+                listarCarros();
                     do{
                         System.out.print("Digite o indice do carro vendido:");
                         ind = input.nextInt();
@@ -1595,7 +1595,7 @@ public class Sistema {
             }
             else return;
         }
-        visualizarCliente();
+        listarClientes();
         
         long CPF;
         Cliente cli = null;
@@ -1685,7 +1685,7 @@ public class Sistema {
     vendedoresWriteFile();
     }
     
-    public static void mostraVendas() {
+    public static void listarVendas() {
     int i=1;
     
     for (Venda v : vendas) {
@@ -1707,7 +1707,7 @@ public class Sistema {
         int indice = 0;
         Scanner sc = new Scanner(System.in);
         Venda v = null; 
-        mostraVendas();
+        listarVendas();
         
         if (vendas.size() == 0)
             System.out.println("\nNão há vendas cadastradas.");
@@ -1766,7 +1766,7 @@ public class Sistema {
                     break;
                 
                 case 2:
-                    visualizarCliente();
+                    listarClientes();
                     long CPF;
                     Cliente cli = null;
                     String sn;
@@ -1802,7 +1802,7 @@ public class Sistema {
                     System.out.println("\n2 - Carro");
                     switch(input.nextInt()){
                         case 1:
-                            visualizarMotocicletas();
+                            listarMotocicletas();
                             if (motocicletas.size() != 0) {
                                 do {
                                     System.out.print("\nDigite o indice da nova moto: ");
@@ -1819,7 +1819,7 @@ public class Sistema {
                             break;
 
                         case 2:
-                            mostraArrayCarros();
+                            listarCarros();
                             if (carros.size() != 0) {
                             do {
                                 System.out.print("\nDigite o indice do novo carro: ");
@@ -1923,7 +1923,7 @@ public class Sistema {
             System.out.println("Não há vendas cadastradas!");
             return;
         }
-        mostraVendas();
+        listarVendas();
         System.out.println("Digite o ID da venda a ser deletada: ");
         Venda pesquisa = null;
         do {
