@@ -1426,30 +1426,42 @@ public class Sistema {
             erro = false;
             switch(op){
                 case 1:
-                    visualizarMotocicletas();
-                    //verificações se há motocicletas cadastradas e a venda
-                    if (motocicletas.size() == 0) {
-                        System.out.println("\n\tNão há motoclicetas cadastradas");
-                        return;
-                    }
+                //verificações se há motocicletas cadastradas e a venda
+                if (motocicletas.size() == 0) {
+                    System.out.println("\n\tNão há motoclicetas cadastradas");
+                    return;
+                }
+                
+                for (Motocicleta moto : motocicletas) {
+                    if (!moto.getStatus())
+                    disponivel = true;
+                }
+                if (!disponivel) {
+                    System.out.println("Não há motoclicletas a venda");
+                    return;
+                }
+                visualizarMotocicletas();
 
-                    for (Motocicleta moto : motocicletas) {
-                        if (!moto.getStatus())
-                            disponivel = true;
-                    }
-                    if (!disponivel) {
-                        System.out.println("Não há motoclicletas a venda");
-                        return;
-                    }
-
+                do{
                     System.out.print("Digite o indice da motocicleta vendida: ");
                     ind = input.nextInt();
+
+                        if(ind == 0)
+                            return;
+                        if(ind < 1 || ind > carros.size())
+                            System.out.println("Digite um índice válido!");
+                }while(ind < 1 || ind > carros.size());
                     ind--;
                     veiculo = motocicletas.get(ind);
                     if(motocicletas.get(ind).getStatus())
                     {
                         System.out.println("Esta moto já foi vendida!");
                         erro = true;
+                        try {
+                            Thread.sleep(2000);
+                        } catch (Exception e) {
+                            //TODO: handle exception
+                        }
                     }
                     else
                     {
@@ -1459,30 +1471,40 @@ public class Sistema {
                     break;
 
                 case 2:
-                    mostraArrayCarros();
-                    //verificações se há carros cadastradas e a venda
-                    if (carros.size() == 0) {
-                        System.out.println("\n\tNão há carros cadastrados");
-                        return;
-                    }
-
-                    for (Carro car : carros) {
-                        if (!car.getStatus())
-                            disponivel = true;
-                    }
-                    if (!disponivel) {
-                        System.out.println("Não há carros a venda");
-                        return;
-                    }
-
-                    System.out.print("Digite o indice do carro vendido:");
-                    ind = input.nextInt();
+                //verificações se há carros cadastradas e a venda
+                if (carros.size() == 0) {
+                    System.out.println("\n\tNão há carros cadastrados");
+                    return;
+                }
+                
+                for (Carro car : carros) {
+                    if (!car.getStatus())
+                    disponivel = true;
+                }
+                if (!disponivel) {
+                    System.out.println("Não há carros a venda");
+                    return;
+                }
+                mostraArrayCarros();
+                    do{
+                        System.out.print("Digite o indice do carro vendido:");
+                        ind = input.nextInt();
+                        if(ind == 0)
+                            return;
+                        if(ind < 1 || ind > carros.size())
+                            System.out.println("Digite um índice válido!");
+                    }while(ind < 1 || ind > carros.size());
                     ind--;
                     veiculo = carros.get(ind);
                     if(carros.get(ind).getStatus())
                     {
                         System.out.println("Este carro já foi vendido!");
                         erro = true;
+                        try {
+                            Thread.sleep(2000);
+                        } catch (Exception e) {
+                            //TODO: handle exception
+                        }
                     }
                     else
                     {
