@@ -48,13 +48,13 @@ public class Horario {
 	}
 
 	public void setHoras(int horas) {
-		if (!(Horario.validarHora(horas))){
+		if ((Horario.validarHora(horas))){
 			this.horas = horas;	
 		}
 	}
 
 	public void setMinutos(int minutos) {
-		if (!(Horario.validarMinutos(minutos))) {
+		if ((Horario.validarMinutos(minutos))) {
 			this.minutos = minutos;
 		} 
 	}

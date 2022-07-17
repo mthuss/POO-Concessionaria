@@ -5,6 +5,7 @@ public class Vendedor extends Funcionario {
     private float tempoTreinamento; // em horas(?)
     private Gerente gerente;
     private String login, senha;
+    private int vendas;
 
     public void imprimirDados() {
         System.out.println("Nome: " + this.getNome());
@@ -17,6 +18,7 @@ public class Vendedor extends Funcionario {
             System.out.println("Gerente Responsável: " + this.getGerente().getNome());
         else
             System.out.println("Gerente Responsável: Não tem ");
+        System.out.println("Vendas realizadas: " + this.getVendas());
         System.out.println("Login: " + this.getLogin());
         System.out.println("Senha: " + this.getSenha());
 
@@ -247,12 +249,18 @@ public class Vendedor extends Funcionario {
 
     }
 
+    public void addVenda()
+    {
+        this.vendas++;
+    }
+
     // Construtor
     public Vendedor(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, float tempoTreinamento,
             Gerente gerente, String login, String senha) {
         super(RG, nome, dataNasc, dataAdmissao, salario, login, senha);
         this.tempoTreinamento = tempoTreinamento;
         this.gerente = gerente;
+        this.vendas = 0;
     }
 
     public Vendedor() {
@@ -290,5 +298,14 @@ public class Vendedor extends Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public int getVendas()
+    {
+        return this.vendas;
+    }
+    public void setVendas(int vendas)
+    {
+        this.vendas = vendas;
     }
 }
