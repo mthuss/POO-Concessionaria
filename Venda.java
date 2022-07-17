@@ -1,14 +1,15 @@
 public class Venda
 {
-    private int ID;
+    private long ID;
     private Cliente cliente;
     private Vendedor vendedor;
     private Veiculo veiculo;
     private float valor;
     private Data data;
     private Horario horario;
+    boolean aVista;
 
-    public Venda(int ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario) {
+    public Venda(long ID, Cliente cliente, Vendedor vendedor, Veiculo veiculo, float valor, Data data, Horario horario, boolean aVista) {
         this.ID = ID;
         this.cliente = cliente;
         this.vendedor = vendedor;
@@ -16,12 +17,17 @@ public class Venda
         this.valor = valor;
         this.data = data;
         this.horario = horario;
+        this.aVista = aVista;
     }
 
-    public int getID() {
+    public Venda()  {
+        
+    }
+
+    public long getID() {
         return ID;
     }
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
     public Cliente getCliente() {
@@ -59,5 +65,13 @@ public class Venda
     }
     public void setHorario(Horario horario) {
         this.horario = horario;
+    }
+    public boolean getAVista()
+    {
+        return this.aVista;
+    }
+    public void setAVista(boolean aVista)
+    {
+        this.aVista = aVista;
     }
 }

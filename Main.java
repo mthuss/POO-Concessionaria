@@ -6,23 +6,10 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 
-		// int opt;
-		// // String senha = "Gerente123";
 		System.out.println(
 				"           (                                                          (         ( /(      \n           )\\                  (      (               ) (  (     )    )\\ )      )\\()) (   \n         (((_)  (   (     (   ))\\(  ( )\\  (   (    ( /( )( )\\ ( /(   (()/( (   ((_)\\ ))\\  \n         )\\___  )\\  )\\ )  )\\ /((_)\\ )((_) )\\  )\\ ) )(_)|()((_))(_))   ((_)))\\   _((_)((_) \n        ((/ __|((_)_(_/( ((_|_))((_|(_|_)((_)_(_/(((_)_ ((_|_|(_)_    _| |((_) |_  (_))   \n         | (__/ _ \\ ' \\)) _|/ -_|_-<_-< / _ \\ ' \\)) _` | '_| / _` | / _` / _ \\  / // -_)  \n          \\___\\___/_||_|\\__|\\___/__/__/_\\___/_||_|\\__,_|_| |_\\__,_| \\__,_\\___/ /___\\___|  \n\n                                                 _________\n                                          _.--\"\"'-----,   `\"--.._\n                                       .-''   _/_      ; .'\"----,`-,\n                                     .'      :___:     ; :      ;;`.`.\n                                    .      _.- _.-    .' :      ::  `..\n                                 __;..----------------' :: ___  ::   ;;\n                            .--\"\". '           ___.....`:=(___)-' :--'`.\n                          .'   .'         .--''__       :       ==:    ;\n                      .--/    /        .'.''     ``-,   :         :   '`-.\n                   .\"', :    /       .'-`\\\\       .--.\\ :         :  ,   _\\\n                  ;   ; |   ;       /:'  ;;      /__  \\\\:         :  :  /_\\\\\n                  |\\_/  |   |      / \\__//      /\"--\\\\ \\:         :  : ;|`\\|    \n                  : \"  /\\__/\\____//   \"\"\"      /     \\\\ :         :  : :|'||\n                [\"\"\"\"\"\"\"\"\"--------........._  /      || ;      __.:--' :|//|\n                 \"------....______         ].'|      // |--\"\"\"'__...-'`\\ \\//\n                   `| DGC0C04 |__;_...--'\": :  \\    //  |---\"\"\"      \\__\\_/\n                     \"\"\"\"\"\"\"\"\"'            \\ \\  \\_.//  /\n                       ---'                \\ \\_     _'\n                                             `--`---'  \n");
 		System.out.println("BEM VINDO 😈");
-		//
-		// do{
-		// System.out.println("\nSelecione o tipo de usuário: ");
-		// System.out.println("1- Gerente");
-		// System.out.println("2- Usuário");
-		// System.out.println("3- Sair");
-		// System.out.print("\nSeleção: ");
-		// opt = sc.nextInt();
-		//
-		// switch(opt)
-		// {
-		// case 1:
+
 		String login;
 		do {
 			System.out.println("----Menu Principal----\n\n");
@@ -37,7 +24,7 @@ public class Main {
 			Funcionario pesquisa = Sistema.getMapUsuarios().get(login);
 			if (pesquisa != null) // Se existe usuario com o login especificado
 			{
-				if (pesquisa instanceof Gerente) {
+				if (pesquisa instanceof Gerente) { //verifica se é conta de gerente
 					Gerente gerente = (Gerente) pesquisa;
 					String auxSenha;
 					System.out.print("Digite a senha: ");
@@ -46,7 +33,8 @@ public class Main {
 						Sistema.menuADM(gerente);
 					else
 						System.out.println("Senha incorreta!");
-				} else if (pesquisa instanceof Vendedor) {
+
+				} else if (pesquisa instanceof Vendedor) { //verifica se é conta de vendedor
 					Vendedor vendedor = (Vendedor) pesquisa;
 					String auxSenha;
 					System.out.print("Digite a senha: ");
@@ -55,9 +43,12 @@ public class Main {
 						Sistema.menuVendedor(vendedor);
 					else
 						System.out.println("Senha incorreta!");
-				} else
+
+				} else	//não é suposto entrar aqui
 					System.out.println("Temos um problema!!");
-			} else {
+
+			} 
+			else { //caso não haja, realiza login
 				System.out.println("Login não encontrado!");
 				System.out.print("Deseja realizar cadastro? [S/N]: ");
 				String sn = sc.nextLine();
@@ -72,18 +63,18 @@ public class Main {
 					} while (selec != 0 && selec != 1 && selec != 2);
 					sc.nextLine();
 
-					if (selec == 1) {
+					if (selec == 1) { //cadastra gerente
 						Gerente novoGerente = new Gerente();
 						novoGerente.cadastrar(login); // usa o login previamente digitado e cria uma nova "conta"
-						// System.out.println(novoGerente.getDataAdmissao().criarData());
 						Sistema.addGerente(novoGerente);
-						// Sistema.gerentesWriteFile(); //atualiza o arquivo de gerentes
+
 						if (Sistema.getMapUsuarios().get(novoGerente.getLogin()) != null) // Verifica se o gerente foi
 																							// adicionado com sucesso
 							System.out.println("Cadastrado com sucesso! Tente fazer login novamente");
 						else
 							System.out.println("Algo deu errado!!");
-					} else if (selec == 2) {
+
+					} else if (selec == 2) { //cadastra o vendedor
 						Vendedor novoVendedor = new Vendedor();
 						novoVendedor.cadastrar(login);
 						Sistema.addVendedor(novoVendedor);
@@ -97,23 +88,14 @@ public class Main {
 				}
 			}
 		} while (!login.equals("0"));
-		// break;
-		// case 2:
-		// Sistema.menuVendedor();
-		// break;
-		// default:
-		// break;
-		// }
-		// }while(opt != 3);
-
-		// sc.close();
 
 		// Atualiza os arquivos de registro
 		Sistema.gerentesWriteFile();
 		Sistema.vendedoresWriteFile();
 		Sistema.carrosWriteFile();
 		Sistema.clientesWriteFile();
-		// Sistema.motosWriteFile();
+		Sistema.motosWriteFile();
 
+		sc.close();
 	}
 }
