@@ -338,16 +338,17 @@ public class Sistema {
             do {
                 System.out.print("Digite o indice do carro que deseja remover: ");
                 indice = sc.nextInt();
-                indice--; // diminui em 1 pra adequar ao valor do arrayList pois o "mostraArrayCarros"
-                          // Mostra os valores começando no indice 1 👍
-
-                if (indice < 0 || indice > carros.size() - 1)
-                    System.out.println("\tValor Inválido");
-                if((indice > 0 && indice < motocicletas.size() - 1) && carros.get(indice).getStatus())
-                    System.out.println("Esta moto já foi vendida e não pode ser removida!");
-            } while (indice < 0 || indice > motocicletas.size() - 1 || carros.get(indice).getStatus());
-
-            carros.remove(indice);
+                // Mostra os valores começando no indice 1 👍
+                
+                if (indice < 0 || indice > carros.size())
+                System.out.println("\tValor Inválido");
+                if(indice == 0)
+                return;
+                if((indice > 0 && indice < carros.size()) && carros.get(indice-1).getStatus())
+                System.out.println("Este carro já foi vendido e não pode ser removido!");
+            } while (indice < 0 || indice > carros.size() || carros.get(indice-1).getStatus());
+            
+            carros.remove(indice-1);
 
             System.out.println("\n==> Carro removido com sucesso!");
 
@@ -1424,12 +1425,12 @@ public class Sistema {
                 String HM[] = dados[6].split(":");
                 Horario horario = new Horario(Integer.parseInt(HM[0]), Integer.parseInt(HM[1]));
 
-                if(pesquisa == null)
-                    System.out.println("TEM PROBLEMA NO VEICULO");
-                if(vendedor == null)
-                    System.out.println("TEM PROBLEMA NO VENDEDOR");
-                if(cli == null)
-                    System.out.println("TEM PROBLEMA NO CLIENTE");
+//                if(pesquisa == null)
+//                    System.out.println("TEM PROBLEMA NO VEICULO");
+//                if(vendedor == null)
+//                    System.out.println("TEM PROBLEMA NO VENDEDOR");
+//                if(cli == null)
+//                    System.out.println("TEM PROBLEMA NO CLIENTE");
 
                 Venda venda = new Venda(ID, cli, vendedor, pesquisa, valor, data, horario);
                 vendas.add(venda);
@@ -1739,6 +1740,11 @@ public class Sistema {
                         if (pesquisa != null && pesquisa instanceof Vendedor) {
                         {
                             vendedor = (Vendedor) pesquisa;
+                            if(v.getVendedor() != null)
+                                //remove a venda do vendedor anterior e adiciona uma pro novo vendedor
+                                v.getVendedor().setVendas(v.getVendedor().getVendas() - 1); 
+
+                            vendedor.addVenda();
                             v.setVendedor(vendedor);
                         }
                         } else {
