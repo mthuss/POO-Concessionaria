@@ -1234,7 +1234,13 @@ public class Sistema {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Erro: " + e);
+            try {
+              (new File("registroGerentes")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
         }
 
         // Ler vendedores
@@ -1262,7 +1268,13 @@ public class Sistema {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Erro: " + e);
+             try {
+              (new File("registroVendedores")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
         }
 
         // Ler carros
@@ -1295,7 +1307,13 @@ public class Sistema {
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println("Erro: " + e);
+             try {
+              (new File("registroCarros")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
         }
 
         // Ler motos
@@ -1321,7 +1339,14 @@ public class Sistema {
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println("Erro: " + e);
+             try {
+              (new File("registroMotocicletas")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
+ 
         }
 
         //Ler clientes
@@ -1347,7 +1372,13 @@ public class Sistema {
                 //User writer.close() tava dando um IOException
             }
         } catch (Exception e) {
-            System.out.println("Erro clientes: " + e);
+             try {
+              (new File("registroClientes")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
         }
 
         //Ler vendas
@@ -1400,7 +1431,13 @@ public class Sistema {
             }
         
         } catch (Exception e) {
-        System.out.println("Erro clientes: " + e);
+             try {
+              (new File("registroVendas")).createNewFile();
+            } catch (Exception e2) {
+                //TODO: handle exception
+                System.out.println("Erro 1: " + e);
+                System.out.println("Erro 2: " + e2);
+            }
         }
 
     }
@@ -1411,7 +1448,7 @@ public class Sistema {
     public static void cadastroVenda(Vendedor vendedor)
     {
         Scanner input = new Scanner(System.in);
-        int op, dia, mes, ano, hora, minutos, ind;
+        int op, dia, mes, ano, hora, minutos, ind=0;
         Veiculo veiculo = null;
         boolean disponivel = false;
         boolean erro = false;
@@ -1506,11 +1543,6 @@ public class Sistema {
                             //TODO: handle exception
                         }
                     }
-                    else
-                    {
-                        carros.get(ind).setStatus(true);
-                        vendedor.addVenda();
-                    }
                     break;
 
                 case 0:
@@ -1532,11 +1564,11 @@ public class Sistema {
 
         System.out.println("Menu Venda: ");
     
-        visualizarCliente();
         if (clientes.size() == 0) {
             System.out.println("\n\tNão há clientes cadastrados\n");
             return;
         }
+        visualizarCliente();
         int indCliente;
 //        do {
 //            System.out.println("Digite o indice do cliente: ");
@@ -1548,6 +1580,7 @@ public class Sistema {
         
         long CPF;
         Cliente cli = null;
+        String sn;
         do{ //vai encontrar o cliente a partir do CPF dele
             System.out.println("Digite o CPF do cliente: "); //0 para sair
             CPF = input.nextInt();
@@ -1555,7 +1588,19 @@ public class Sistema {
                 if(CPF == clientes.get(i).getCPF())
                     cli = clientes.get(i);
             if(cli == null) //não encontrou o cliente
-                System.out.println("Cliente com esse CPF não encontrado! Tente novamente.");
+            {
+                System.out.println("Cliente com esse CPF não encontrado!");
+                System.out.println("Deseja realizar o cadastro? [S/N]: ");
+                input.nextLine();
+                sn = input.nextLine();
+                if(sn.equals("S") || sn.equals("s"))
+                {
+                    System.out.println("\nCadastro do Cliente:");
+                    cadastrarCliente();
+                    System.out.println("Cliente cadastrado! Tente continuar a venda.");
+                }
+
+            }
         }while(cli == null && CPF != 0);
 
    
@@ -1600,6 +1645,8 @@ public class Sistema {
         
         Horario auxHorario = new Horario(hora, minutos);
 
+    carros.get(ind).setStatus(true);
+    vendedor.addVenda();
     
     veiculo.setStatus(true);
     vendas.add(new Venda(ID, cli, vendedor, veiculo, valor, auxData, auxHorario));
@@ -1610,7 +1657,6 @@ public class Sistema {
     int i=1;
     
     for (Venda v : vendas) {
-        System.out.printf("Venda %d:\n", i);
         System.out.println("ID: " + v.getID() + "\nCliente: " +
         v.getCliente().getNome() + "\nVendedor: " + v.getVendedor().getNome() + "\nVeículo: " +
         v.getVeiculo().getModelo() +
@@ -1624,7 +1670,7 @@ public class Sistema {
     public static void alterarVenda() {
         int indice = 0;
         Scanner sc = new Scanner(System.in);
-        
+        Venda v = null; 
         mostraVendas();
         
         if (vendas.size() == 0)
@@ -1634,19 +1680,25 @@ public class Sistema {
             Scanner input = new Scanner(System.in);
 
             do {
-                System.out.print("Digite o índice da venda que deseja alterar: ");
+                System.out.print("Digite o ID da venda que deseja alterar: ");
                 indice = sc.nextInt();
-                sc.nextLine();
-                indice--;
-                if (indice < 0 || indice > vendas.size() - 1)
-                System.out.println("\tIndice inválido!");
+                for(int i = 0; i < vendas.size(); i++)
+                    if(vendas.get(i).getID() == indice)
+                        v = vendas.get(i);
+//                indice--;
+//                if (indice < 0 || indice > vendas.size() - 1)
+//                System.out.println("\tIndice inválido!");
                 
-            } while (indice < 0 || indice > vendas.size() - 1);
+//            } while(indice < 0 || indice > vendas.size() - 1);
+                if(v == null)
+                    System.out.println("ID inválido!");
+                
+            }while(v == null);
         
-            Venda v = vendas.get(indice);
+//            Venda v = vendas.get(indice);
             System.out.println("\nQual dado deseja alterar?");
-            System.out.println("1 - Alterar cliente");
-            System.out.println("2 - Alterar vendedor");
+            System.out.println("1 - Alterar vendedor");
+            System.out.println("2 - Alterar cliente");
             System.out.println("3 - Alterar veículo");
             System.out.println("4 - Alterar valor");
             System.out.println("5 - Alterar data");
@@ -1662,7 +1714,7 @@ public class Sistema {
                     Funcionario pesquisa;
                     Vendedor vendedor;
                     do {
-                        System.out.print("Digite o login do gerente responsável: ");
+                        System.out.print("Digite o login do vendedor: ");
                         auxLogin = input.nextLine();
                         pesquisa = Sistema.getMapUsuarios().get(auxLogin);
                         if (pesquisa != null && pesquisa instanceof Vendedor) {
@@ -1679,9 +1731,32 @@ public class Sistema {
                 
                 case 2:
                     visualizarCliente();
-                    System.out.print("\nDigite o novo cliente: ");
-                    v.setCliente(clientes.get(input.nextInt() - 1));
-                    input.nextLine();
+                    long CPF;
+                    Cliente cli = null;
+                    String sn;
+                    do{ //vai encontrar o cliente a partir do CPF dele
+                        System.out.println("Digite o CPF do cliente: "); //0 para sair
+                        CPF = input.nextInt();
+                        for(int i = 0; i < clientes.size(); i++)
+                            if(CPF == clientes.get(i).getCPF())
+                                cli = clientes.get(i);
+                        if(cli == null) //não encontrou o cliente
+                        {
+                            System.out.println("Cliente com esse CPF não encontrado!");
+                            System.out.println("Deseja realizar o cadastro? [S/N]: ");
+                            input.nextLine();
+                            sn = input.nextLine();
+                            if(sn.equals("S") || sn.equals("s"))
+                            {
+                                System.out.println("\nCadastro do Cliente:");
+                                cadastrarCliente();
+                                System.out.println("Cliente cadastrado! Tente continuar a venda.");
+                            }
+                        
+                        }
+                    }while(cli == null && CPF != 0);
+                    v.setCliente(cli);
+
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 3:
@@ -1694,7 +1769,7 @@ public class Sistema {
                             visualizarMotocicletas();
                             if (motocicletas.size() != 0) {
                                 do {
-                                    System.out.print("\nDigite o ID da nova moto: ");
+                                    System.out.print("\nDigite o indice da nova moto: ");
                                     ind = input.nextInt();
                                     input.nextLine();
                                     if (ind < 0 || ind > motocicletas.size()-1)
