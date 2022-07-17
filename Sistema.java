@@ -36,17 +36,25 @@ public class Sistema {
                     input.nextLine();
                     switch (subop) {
                         case 1:
+                            if(carros.size() == 0)
+                                System.out.println("Não há carros disponíveis!");
                             mostraArrayCarros();
                             break;
                         case 2:
+                            if(motocicletas.size() == 0)
+                                System.out.println("Não há motocicletas disponíveis!");
                             visualizarMotocicletas();
                             break;
                     }
                     break;
                 case 2:
+                    if(clientes.size() == 0)
+                        System.out.println("Não há clientes cadastrados!");
                     visualizarCliente();
                     break;
                 case 3:
+                    if(vendas.size() == 0)
+                        System.out.println("Não há vendas cadastradas!");
                     mostraVendas();
                     break;
                 case 4:
@@ -1564,9 +1572,18 @@ public class Sistema {
 
         System.out.println("Menu Venda: ");
     
+        String sn;
         if (clientes.size() == 0) {
             System.out.println("\n\tNão há clientes cadastrados\n");
-            return;
+            System.out.println("Deseja realizar o cadastro? [S/N]: ");
+            sn = input.nextLine();
+            if(sn.equals("S") || sn.equals("s"))
+            {
+                System.out.println("\nCadastro do Cliente:");
+                cadastrarCliente();
+                System.out.println("Cliente cadastrado! Tente continuar a venda.");
+            }
+            else return;
         }
         visualizarCliente();
         int indCliente;
@@ -1580,7 +1597,6 @@ public class Sistema {
         
         long CPF;
         Cliente cli = null;
-        String sn;
         do{ //vai encontrar o cliente a partir do CPF dele
             System.out.println("Digite o CPF do cliente: "); //0 para sair
             CPF = input.nextInt();
@@ -1657,9 +1673,12 @@ public class Sistema {
     int i=1;
     
     for (Venda v : vendas) {
+        String vendedor = (v.getVendedor() == null) ? "Não tem" : v.getVendedor().getNome();
+        String cliente = (v.getCliente() == null) ? "Não tem" : v.getCliente().getNome();
+        String veiculo = (v.getVeiculo() == null) ? "Não tem" : v.getVeiculo().getModelo();
         System.out.println("ID: " + v.getID() + "\nCliente: " +
-        v.getCliente().getNome() + "\nVendedor: " + v.getVendedor().getNome() + "\nVeículo: " +
-        v.getVeiculo().getModelo() +
+        cliente + "\nVendedor: " + vendedor + "\nVeículo: " +
+        veiculo +
         "\nValor: " + v.getValor() + "\nData: " +
         v.getData().criarData() + "\nHorário: " + v.getHorario().criarHorario() + "\n");
         i++;
