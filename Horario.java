@@ -5,7 +5,7 @@ public class Horario {
     //Utilização do horario: retorna apenas true ou false e um aviso de horário inválido, caso false
     //quando usamos a data, forçamos um do while que só seta o horário quando é retornado true
 
-	// ================= Métodos da Classe
+	// ----------------- Métodos da Classe
 	public String criarHorario() {
 		return String.format("%02d", this.horas) + ":" + String.format("%02d", this.minutos);
 	}
@@ -14,7 +14,7 @@ public class Horario {
         if (horas >= 0 && horas <= 23) {
           return true;
         } else {
-          System.out.println("\n==!== AVISO: Insira uma hora válida!\n");
+          System.out.println("\nAVISO: Insira uma hora válida!\n");
           return false;
         }
       }
@@ -23,12 +23,12 @@ public class Horario {
         if (minutos >= 0 && minutos <= 59) {
           return true;
         } else {
-          System.out.println("\n==!== AVISO: Insira minutos válidos!\n");
+          System.out.println("\nAVISO: Insira minutos válidos!\n");
           return false;
         }
       }
 
-	// ================= Construtores
+	// ----------------- Construtores
 	public Horario() {
 		this(0, 0);
 	}
@@ -38,7 +38,7 @@ public class Horario {
 		this.setMinutos(minutos);
 	}
 
-	// ================= Getters e Setters
+	// ----------------- Getters e Setters
 	public int getHoras() {
 		return this.horas;
 	}

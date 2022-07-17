@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Sistema {
 
     int indiceVenda = 0;
-    public static Map<String, Funcionario> usuarios = new HashMap<>(); // Idealmente, mover isso para o Sistema.java.
+    public static Map<String, Funcionario> usuarios = new HashMap<>();
     public static ArrayList<Carro> carros = new ArrayList<>();
     public static ArrayList<Cliente> clientes = new ArrayList<>();
     public static ArrayList<Motocicleta> motocicletas = new ArrayList<>();
@@ -372,26 +372,6 @@ public class Sistema {
 
     // ------------------------------------------
 
-    public static void carrosWriteFile() {
-        try {
-            File arq = new File("registroCarros");
-            FileWriter escritor = new FileWriter(arq);
-
-            for (Carro car : carros)
-                escritor.write(car.getNumChassi() + ";" + car.getMarca() + ";" + car.getModelo() + ";" + car.getAno() +
-                        ";" + car.getKilometragem() + ";" + car.getTipoCombustivel() + ";" + car.getPeso() + ";"
-                        + car.getStatus() +
-                        ";" + car.getPotencia() + ";" + car.getNumCilindros() + ";" + car.getNumeroOcupantes() + ";"
-                        + car.getTipo() +
-                        ";" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
-
-            escritor.close();
-
-        } catch (IOException e) {
-            System.out.println("Erro: " + e);
-        }
-    }
-
     // ------------------------------------------
     // Motos
     // ------------------------------------------
@@ -607,31 +587,6 @@ public class Sistema {
 
     // ------------------------------------------
     
-    public static void motosWriteFile() {
-        try {
-            File arq = new File("registroMotocicletas");
-            FileWriter escritor = new FileWriter(arq, false);
-            // lembrar que a escrita do arquivo prossegue do ponto que parou
-            for (int i = 0; i < motocicletas.size(); i++) {
-                Motocicleta moto = motocicletas.get(i);
-                escritor.write(moto.getCilindradas() + ";");
-                escritor.write(moto.getTipo() + ";");
-                escritor.write(moto.getNumChassi() + ";");
-                escritor.write(moto.getMarca() + ";");
-                escritor.write(moto.getModelo() + ";");
-                escritor.write(moto.getAno() + ";");
-                escritor.write(moto.getKilometragem() + ";");
-                escritor.write(moto.getTipoCombustivel() + ";");
-                escritor.write(moto.getPeso() + ";");
-                escritor.write(moto.getStatus() + ";");
-                escritor.write("\n");
-            }
-            escritor.close();
-        } catch (IOException e) {
-            System.out.println("Erro" + e);
-        }
-    }
-
     // ------------------------------------------
 
     public static void visualizarMotocicletas() {
@@ -728,7 +683,6 @@ public class Sistema {
             novoVendedor.setGerente(null);
 
         System.out.println("Crie um login e senha para o vendedor:");
-        // input.nextLine();
         String login;
         do {
             System.out.print("Login: ");
@@ -1115,15 +1069,21 @@ public class Sistema {
                     break;
                 case 13:
                     visualizarCliente();
+                    if(clientes.size() == 0)
+                        System.out.println("Não há clientes cadastrados.");
                     break;
                 case 14:
                     listarVendedores();
                     break;
                 case 15:
                     mostraArrayCarros();
+                    if(carros.size() == 0)
+                        System.out.println("Não há carros cadastrados.");
                     break;
                 case 16:
                     visualizarMotocicletas();
+                    if(motocicletas.size() == 0)
+                        System.out.println("Não há motos cadastradas.");
                     break;
 
                 case 17:
@@ -1135,6 +1095,7 @@ public class Sistema {
                         usuarios.remove(auxLogin);
                         usuarios.put(adm.getLogin(), adm);
                     }
+                    gerentesWriteFile();
                     break;
                 case 18:
                     adm.imprimirDados();
@@ -1238,10 +1199,56 @@ public class Sistema {
  
     }
 
+    public static void motosWriteFile() {
+        try {
+            File arq = new File("registroMotocicletas");
+            FileWriter escritor = new FileWriter(arq, false);
+            for (int i = 0; i < motocicletas.size(); i++) {
+                Motocicleta moto = motocicletas.get(i);
+                escritor.write(moto.getCilindradas() + ";");
+                escritor.write(moto.getTipo() + ";");
+                escritor.write(moto.getNumChassi() + ";");
+                escritor.write(moto.getMarca() + ";");
+                escritor.write(moto.getModelo() + ";");
+                escritor.write(moto.getAno() + ";");
+                escritor.write(moto.getKilometragem() + ";");
+                escritor.write(moto.getTipoCombustivel() + ";");
+                escritor.write(moto.getPeso() + ";");
+                escritor.write(moto.getStatus() + ";");
+                escritor.write("\n");
+            }
+            escritor.close();
+        } catch (IOException e) {
+            System.out.println("Erro" + e);
+        }
+    }
+
+    public static void carrosWriteFile() {
+        try {
+            File arq = new File("registroCarros");
+            FileWriter escritor = new FileWriter(arq);
+
+            for (Carro car : carros)
+                escritor.write(car.getNumChassi() + ";" + car.getMarca() + ";" + car.getModelo() + ";" + car.getAno() +
+                        ";" + car.getKilometragem() + ";" + car.getTipoCombustivel() + ";" + car.getPeso() + ";"
+                        + car.getStatus() +
+                        ";" + car.getPotencia() + ";" + car.getNumCilindros() + ";" + car.getNumeroOcupantes() + ";"
+                        + car.getTipo() +
+                        ";" + car.getAltura() + "x" + car.getLargura() + "x" + car.getComprimento() + "\n");
+
+            escritor.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro: " + e);
+        }
+    }
+
+
     // ------------------------------------------
 
     public static void loadFiles() {
-        // Organiza as coleções que serão lidas nos arquivos
+        //Lê todos os arquivos e reconstrói o estado do programa de antes de ser fechado
+        //A ORDEM DOS ITENS IMPORTA
 
         // Ler gerentes
         try {
@@ -1266,7 +1273,6 @@ public class Sistema {
             try {
               (new File("registroGerentes")).createNewFile();
             } catch (Exception e2) {
-                //TODO: handle exception
                 System.out.println("Erro 1: " + e);
                 System.out.println("Erro 2: " + e2);
             }
@@ -1300,7 +1306,6 @@ public class Sistema {
              try {
               (new File("registroVendedores")).createNewFile();
             } catch (Exception e2) {
-                //TODO: handle exception
                 System.out.println("Erro 1: " + e);
                 System.out.println("Erro 2: " + e2);
             }
@@ -1339,7 +1344,6 @@ public class Sistema {
              try {
               (new File("registroCarros")).createNewFile();
             } catch (Exception e2) {
-                //TODO: handle exception
                 System.out.println("Erro 1: " + e);
                 System.out.println("Erro 2: " + e2);
             }
@@ -1371,7 +1375,6 @@ public class Sistema {
              try {
               (new File("registroMotocicletas")).createNewFile();
             } catch (Exception e2) {
-                //TODO: handle exception
                 System.out.println("Erro 1: " + e);
                 System.out.println("Erro 2: " + e2);
             }
@@ -1398,13 +1401,11 @@ public class Sistema {
                 int dependentes = Integer.parseInt(dados[8]);
                 Cliente cli = new Cliente(CPF, nome, dataNasc, rua, numCasa, bairro, cidade, renda,dependentes);
                 clientes.add(cli);
-                //User writer.close() tava dando um IOException
             }
         } catch (Exception e) {
              try {
               (new File("registroClientes")).createNewFile();
             } catch (Exception e2) {
-                //TODO: handle exception
                 System.out.println("Erro 1: " + e);
                 System.out.println("Erro 2: " + e2);
             }
@@ -1419,7 +1420,6 @@ public class Sistema {
                 String dados[] = reader.readLine().split(";");
                 
                 Long ID = Long.parseLong(dados[0]);
-//                Cliente cliente = clientes.get(dados[1]); // NÃO SEI COMO FZER ESSA PARTE
                 Cliente cli = null;
                 long CPF = Long.parseLong(dados[1]);
                 for(int i = 0; i < clientes.size(); i++)
@@ -1446,18 +1446,8 @@ public class Sistema {
                 Horario horario = new Horario(Integer.parseInt(HM[0]), Integer.parseInt(HM[1]));
                 boolean aVista= Boolean.parseBoolean(dados[7]);
 
-//                if(pesquisa == null)
-//                    System.out.println("TEM PROBLEMA NO VEICULO");
-//                if(vendedor == null)
-//                    System.out.println("TEM PROBLEMA NO VENDEDOR");
-//                if(cli == null)
-//                    System.out.println("TEM PROBLEMA NO CLIENTE");
-
                 Venda venda = new Venda(ID, cli, vendedor, pesquisa, valor, data, horario,aVista);
                 vendas.add(venda);
-//Não consegui fazer essa parte tava ocupadinho
-//                Venda ven = new Venda(ID, Cliente, vendedor, veiculo, valor, data, horario);
-//                vendas.add(ven);
             }
         
         } catch (Exception e) {
@@ -1474,7 +1464,6 @@ public class Sistema {
     
     
     //VENDA
-    //sugestao: id da venda ser o indice + 1
     public static void cadastroVenda(Vendedor vendedor)
     {
         Scanner input = new Scanner(System.in);
@@ -1527,7 +1516,7 @@ public class Sistema {
                         try {
                             Thread.sleep(2000);
                         } catch (Exception e) {
-                            //TODO: handle exception
+                            System.out.println("Erro: " + e);
                         }
                     }
                     else
@@ -1570,7 +1559,7 @@ public class Sistema {
                         try {
                             Thread.sleep(2000);
                         } catch (Exception e) {
-                            //TODO: handle exception
+                            System.out.println("Erro: " + e);
                         }
                     }
                     break;
@@ -1590,7 +1579,6 @@ public class Sistema {
             ID = 0;
         else
             ID = vendas.get(vendas.size() - 1).getID() + 1; //ID da venda vai ser um a mais do que o atual maior ID
-//        Venda novaVenda = new Venda();
 
         System.out.println("Menu Venda: ");
     
@@ -1608,14 +1596,6 @@ public class Sistema {
             else return;
         }
         visualizarCliente();
-        int indCliente;
-//        do {
-//            System.out.println("Digite o indice do cliente: ");
-//            indCliente = input.nextInt();
-//            indCliente--;
-//            if (indCliente<0 || indCliente>clientes.size()-1)
-//                System.out.println("\n\tDigite um cliente valido\n");
-//        } while(indCliente<0 || indCliente>clientes.size()-1);
         
         long CPF;
         Cliente cli = null;
@@ -1659,7 +1639,6 @@ public class Sistema {
 
         System.out.println("Digite a data da venda:");
         
-        int indiceId=0;
         do {
             System.out.println("Digite o dia: ");
             dia = input.nextInt();
@@ -1742,17 +1721,11 @@ public class Sistema {
                 for(int i = 0; i < vendas.size(); i++)
                     if(vendas.get(i).getID() == indice)
                         v = vendas.get(i);
-//                indice--;
-//                if (indice < 0 || indice > vendas.size() - 1)
-//                System.out.println("\tIndice inválido!");
-                
-//            } while(indice < 0 || indice > vendas.size() - 1);
                 if(v == null)
                     System.out.println("ID inválido!");
                 
             }while(v == null);
         
-//            Venda v = vendas.get(indice);
             System.out.println("\nQual dado deseja alterar?");
             System.out.println("1 - Alterar vendedor");
             System.out.println("2 - Alterar cliente");

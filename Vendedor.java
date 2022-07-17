@@ -13,7 +13,7 @@ public class Vendedor extends Funcionario {
         System.out.println("RG: " + this.getRG());
         System.out.println("Data de Nascimento: " + this.getDataNasc().criarData());
         System.out.println("Data de Admissão: " + this.getDataAdmissao().criarData());
-        System.out.println("Salário: " + this.getSalario());
+        System.out.printf("Salário: R$%.2f\n", this.getSalario());
         System.out.println("Tempo de Treinamento: " + this.getTempoTreinamento() + "h");
         if (this.getGerente() != null)
             System.out.println("Gerente Responsável: " + this.getGerente().getNome());
@@ -113,7 +113,6 @@ public class Vendedor extends Funcionario {
         }
 
         System.out.println("Crie uma senha para o vendedor:");
-        // input.nextLine();
         do {
             System.out.print("Senha: ");
             senha = input.nextLine();
@@ -152,13 +151,11 @@ public class Vendedor extends Funcionario {
                 case 1:
                     System.out.print("\nDigite o novo nome: ");
                     this.setNome(input.nextLine());
-                    input.nextLine();
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 2:
                     System.out.print("\nDigite o novo RG: ");
                     this.setRG(input.nextLong());
-                    input.nextLine();
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 3:
@@ -204,31 +201,32 @@ public class Vendedor extends Funcionario {
                 case 5:
                     System.out.print("\nDigite o novo Salário: R$ ");
                     this.setSalario(input.nextLong());
-                    input.nextLine();
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 6:
                     System.out.print("\nDigite o novo tempo de treinamento: ");
                     this.setSalario(input.nextInt());
-                    input.nextLine();
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 7:
-                    System.out.print("\nDigite o login do novo gerente responsável: ");
-                    input.nextLine();
-                    String login_adm = input.nextLine();
-                    Gerente pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm); // REVER ISSO AQUI
-                    if (pesquisa != null) {
-                        this.setGerente(pesquisa);
-                        System.out.println("\n\n==> Dados atualizados com sucesso!");
-                    } else {
-                        System.out.print("Digite um login válido!");
-                    }
+                Gerente pesquisa = null;
+                do{
+                        System.out.print("\nDigite o login do novo gerente responsável: ");
+                        String login_adm = input.nextLine();
+                        if(login_adm.equals("0"))
+                            break;
+                        if(Sistema.getMapUsuarios().get(login_adm) instanceof Gerente)
+                            pesquisa = (Gerente) Sistema.getMapUsuarios().get(login_adm); // REVER ISSO AQUI
+                        if (pesquisa != null) {
+                            this.setGerente(pesquisa);
+                            System.out.println("\n\n==> Dados atualizados com sucesso!");
+                        } else
+                            System.out.print("Digite um login válido!");
+                    }while(pesquisa == null);
                     break;
                 case 8:
                     System.out.print("\nDigite o novo login: ");
                     this.setLogin(input.nextLine());
-                    input.nextLine();
                     System.out.println("\n\n==> Dados atualizados com sucesso!");
                     break;
                 case 9:

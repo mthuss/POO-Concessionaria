@@ -6,7 +6,7 @@ public class Data
         if (dia >= 1 && dia <= 31) {
             return true;
         } else {
-            System.out.println("\n==!== AVISO: Insira um dia válido!\n");
+            System.out.println("\nAVISO: Insira um dia válido!\n");
             return false;
         }
     }
@@ -15,7 +15,7 @@ public class Data
     if (mes >= 1 && mes <= 12) {
       return true;
     } else {
-      System.out.println("\n==!== AVISO: Insira um mês válido!\n");
+      System.out.println("\nAVISO: Insira um mês válido!\n");
       return false;
     }
   }
@@ -24,7 +24,7 @@ public class Data
     if (ano >= 1950 && ano < 2050) {
       return true;
     } else {
-      System.out.println("\n==!== AVISO: Insira um ano válido!\n");
+      System.out.println("\nAVISO: Insira um ano válido!\n");
       return false;
     }
   }
