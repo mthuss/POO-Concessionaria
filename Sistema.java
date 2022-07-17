@@ -1038,6 +1038,11 @@ public class Sistema {
             System.out.println("15 - Mostrar Carro");
             System.out.println("16 - Mostrar Motocicleta");
 
+            System.out.println("\n\t--Extra--");
+            System.out.println("17 - Alterar meus dados");
+            System.out.println("18 - Ver meus dados");
+            System.out.println("19 - Excluir esta conta");
+
             System.out.println("\n0 - Sair");
 
             System.out.print("\nComando: ");
@@ -1094,7 +1099,7 @@ public class Sistema {
                     visualizarMotocicletas();
                     break;
 
-                case 99:
+                case 17:
                     String auxLogin = adm.getLogin();
                     adm.alterar();
                     if (!auxLogin.equals(adm.getLogin())) // Chave do hashmap (login) foi alterada
@@ -1103,6 +1108,19 @@ public class Sistema {
                         usuarios.remove(auxLogin);
                         usuarios.put(adm.getLogin(), adm);
                     }
+                    break;
+                case 18:
+                    adm.imprimirDados();
+                    break;
+                case 19:
+                    System.out.println("Deseja mesmo apagar esta conta de gerente?");
+                    System.out.println("Confirme sua senha: ");
+                    if(sc.nextLine().equals(adm.getSenha()))
+                        usuarios.remove(adm.getLogin());
+                    if(usuarios.get(adm.getLogin()) == null)
+                        System.out.println("Conta excluida com sucesso!");
+                    else System.out.println("Algo deu bem errado!!");
+                    return;
                 default:
                     break;
             }

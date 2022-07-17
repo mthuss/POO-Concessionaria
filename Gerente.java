@@ -242,7 +242,6 @@ public class Gerente extends Funcionario
                 String senha,senhaConfirm;
                 sc.nextLine();
                 System.out.println("Crie uma nova senha:");
-                sc.nextLine();
                 do{
                     System.out.print("Senha: ");
                     senha = sc.nextLine();
@@ -251,6 +250,7 @@ public class Gerente extends Funcionario
                     if(!senha.equals(senhaConfirm))
                         System.out.println("As senhas digitadas não são iguais! Tente novamente");
                 }while(!senha.equals(senhaConfirm));
+                this.setSenha(senha);
                 break;
         }
      //   Sistema.gerentesWriteFile();
@@ -263,7 +263,7 @@ public class Gerente extends Funcionario
         System.out.println("RG: " + this.getRG());
         System.out.println("Data de nascimento: " + this.getDataNasc().criarData());
         System.out.println("Data de admissão: " + this.getDataAdmissao().criarData());
-        System.out.println("Salário: R$" + this.getSalario());
+        System.out.printf("Salário: R$%.2f\n", this.getSalario());
         System.out.println("Anos de experiencia: " + this.getAnosExp() + " anos");
     }
     public Gerente(long RG, String nome, Data dataNasc, Data dataAdmissao, float salario, int anosExp, String login,
