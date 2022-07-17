@@ -95,6 +95,7 @@ public class Main {
 		Sistema.carrosWriteFile();
 		Sistema.clientesWriteFile();
 		Sistema.motosWriteFile();
+		Sistema.vendasWriteFile();
 
 		sc.close();
 	}
